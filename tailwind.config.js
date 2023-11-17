@@ -13,7 +13,26 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                montserrat: ['Montserrat', 'sans-serif']
             },
+            colors: {
+                primary: {
+                    '1': '#F3CC10'
+                }
+            },
+            keyframes: {
+              navbar: {
+                  from: {
+                      left: '-160px'
+                  },
+                  to: {
+                      left: '0px'
+                  }
+              }
+            },
+            animation: {
+                'show-navbar': 'navbar .3s ease forwards'
+            }
         },
     },
 
