@@ -1,7 +1,4 @@
-<?php
-?>
-
-<nav class="w-full h-max bg-black py-4 px-8 flex flex-col gap-6" x-data="{open: true}">
+<nav class="w-full h-max bg-black py-4 px-8 flex flex-col gap-6" x-data="{open: false}">
     <div class="w-full h-max items-center justify-between hidden md:flex">
         <div class="w-max h-max flex flex-row items-center justify-center gap-10">
             <x-fab-instagram class="w-4 aspect-auto text-white"/>
@@ -17,9 +14,9 @@
     <div class="w-full h-max flex items-center justify-between">
         <img class="w-full aspect-auto max-w-[175px]" src="{{asset('images/logo.svg')}}"/>
         <div class="w-max h-max items-center justify-center gap-6 text-white font-medium text-base hidden md:flex">
-            <a href="#" wire:navigate>Contact</a>
-            <a href="#" wire:navigate>Login</a>
-            <a href="#" wire:navigate>Login</a>
+            <a href="#" wire:navigate>Examples</a>
+            <a href="#" wire:navigate>Shipment</a>
+            <a href="#" wire:navigate>About Us</a>
             <x-fas-shopping-basket class="text-white w-8 aspect-auto" />
         </div>
         <div class="w-10 h-max flex md:hidden flex-col gap-2 cursor-pointer" @click="open = !open">

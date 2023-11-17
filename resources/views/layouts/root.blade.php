@@ -16,6 +16,6 @@
 </head>
 <body class="antialiased">
     <livewire:layout.navbar />
-{{--    {{$slot}}--}}
+    {{$slot}}
 </body>
 </html>
