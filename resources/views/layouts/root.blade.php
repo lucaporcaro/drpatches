@@ -17,5 +17,6 @@
 <body class="antialiased">
     <livewire:layout.navbar />
     {{$slot}}
+    <livewire:layout.footer />
 </body>
 </html>
