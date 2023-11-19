@@ -2,19 +2,22 @@
 
 use function Livewire\Volt\{state};
 
-state(['open' => false, 'items' => [
-    asset('images/backing/1.png'),
-    asset('images/backing/2.png'),
-    asset('images/backing/3.png'),
-    asset('images/backing/4.png'),
-    asset('images/backing/5.png'),
-]]);
+state([
+    'open' => false,
+    'items' => [
+        'da_cucire' => asset('images/backing/1.png'),
+        'termoadesiva' => asset('images/backing/2.png'),
+        'velcro_a' => asset('images/backing/3.png'),
+        'velcro_b' => asset('images/backing/4.png'),
+        'velcro_a_b' => asset('images/backing/5.png'),
+    ],
+]);
 
 state(['value' => ''])->modelable();
 
 $toggleModal = fn() => $this->open = !$this->open;
-$selectItem = function(string $item) {
-    $this->value = $item;
+$selectItem = function (string $value, string $image) {
+    $this->value = $value;
     $this->toggleModal();
 };
 
@@ -25,7 +28,7 @@ $selectItem = function(string $item) {
         <span class="font-semibold text-xl">Selected Backing</span>
         <div class="bg-white w-max h-max rounded-md overflow-hidden cursor-pointer p-2" wire:click="toggleModal">
             @if($this->value)
-                <img src="{{$this->value}}" class="w-10 aspect-auto"/>
+                <img src="{{$this->items[$this->value]}}" class="w-10 aspect-auto"/>
             @else
                 <span class="font-semibold text-sm">Choose</span>
             @endif
@@ -35,9 +38,9 @@ $selectItem = function(string $item) {
         <div class="w-screen h-screen fixed top-0 left-0 bg-black/30 flex items-center justify-center">
             <div class="w-11/12 h-max max-w-[600px] py-10 px-6 bg-black rounded-lg grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-5 border-primary-1 border-2"
                  @click.away="$wire.toggleModal()">
-                @foreach($this->items as $item)
+                @foreach($this->items as $key => $item)
                     <div class="w-max h-max bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer"
-                         wire:click="selectItem('{{$item}}')">
+                         wire:click="selectItem('{{$key}}', '{{$item}}')">
                         <img class="w-16 aspect-auto" src="{{$item}}"/>
                     </div>
                 @endforeach

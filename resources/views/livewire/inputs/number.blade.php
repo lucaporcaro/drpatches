@@ -4,10 +4,10 @@ use function Livewire\Volt\{state};
 
 state(['value'])->modelable();
 
-state(['step' => 1, 'label' => '', 'unit' => '']);
+state(['step' => 1, 'label' => '', 'unit' => '', 'min' => 2.5, 'max' => 20]);
 
-$increase = fn() => $this->value += $this->step;
-$decrease = fn() => $this->value -= $this->step;
+$increase = fn() => $this->value >= $this->max ? null : $this->value += $this->step;
+$decrease = fn() => $this->value <= $this->min ? null : $this->value -= $this->step;
 
 ?>
 
