@@ -6,17 +6,17 @@
             <x-fab-whatsapp class="w-4 aspect-auto text-white"/>
         </div>
         <div class="w-max h-max flex items-center justify-center gap-6 text-white font-medium text-base">
-            <a href="#" wire:navigate>Contact</a>
-            <a href="#" wire:navigate>Login</a>
+            <a href="/#" wire:navigate>Contact</a>
+            <a href="/#" wire:navigate>Login</a>
             <span class="font-bold border-b-[.5px] border-b-white pb-1">EN</span>
         </div>
     </div>
     <div class="w-full h-max flex items-center justify-between">
         <img class="w-full aspect-auto max-w-[175px]" src="{{asset('images/logo.svg')}}"/>
         <div class="w-max h-max items-center justify-center gap-6 text-white font-medium text-base hidden md:flex">
-            <a href="#" wire:navigate>Examples</a>
-            <a href="#" wire:navigate>Shipment</a>
-            <a href="#" wire:navigate>About Us</a>
+            <a href="/#" wire:navigate>Examples</a>
+            <a href="/#" wire:navigate>Shipment</a>
+            <a href="/#" wire:navigate>About Us</a>
             <x-fas-shopping-basket class="text-white w-8 aspect-auto" />
         </div>
         <div class="w-10 h-max flex md:hidden flex-col gap-2 cursor-pointer" @click="open = !open">
