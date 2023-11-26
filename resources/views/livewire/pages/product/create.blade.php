@@ -46,8 +46,8 @@ $price = computed(function () {
             break;
     }
     return number_format(
-        (($pricePerOne + $backingPrice) * $this->quantity) * 1.22,
-        2,
+        round(($pricePerOne + $backingPrice) * 1.22, 2, PHP_ROUND_HALF_UP) * $this->quantity,
+        3,
         '.',
         ''
     );
