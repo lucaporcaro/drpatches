@@ -27,7 +27,7 @@ state([
 
 $price = computed(function () {
     $size = ($this->patchWidth + $this->patchHeight) / 2;
-    $pricePerOne = config('prices.size')[(string)$this->patchWidth];
+    $pricePerOne = config('prices.' . $this->type)[(string)format_print_size($size)] + ($this->type === 'image' ? ($this->camCost / $this->quantity) : 0);
     if (!$this->backingType)
         return 0;
     $backingPrice = 0;
@@ -46,7 +46,7 @@ $price = computed(function () {
             break;
     }
     return number_format(
-        (($pricePerOne + $backingPrice) * 1.22) * $this->quantity,
+        (($pricePerOne + $backingPrice) * $this->quantity) * 1.22,
         2,
         '.',
         ''
