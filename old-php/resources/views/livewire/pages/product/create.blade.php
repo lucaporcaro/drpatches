@@ -18,10 +18,10 @@ state([
     'quantity' => 50,
     'patchType' => '',
     'amount' => 1,
+    'backingType' => '',
 ])->url();
 
 state([
-    'backingType' => '',
     'camCost' => 39.
 ]);
 
