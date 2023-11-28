@@ -1,7 +1,6 @@
 import { locales } from "@app/middleware";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
-import { useState } from "react";
 
 export default function LanguageSelector() {
   const locale = useLocale();
@@ -9,8 +8,15 @@ export default function LanguageSelector() {
   const router = useRouter();
 
   const changeLocale = (l: string) => {
-    router.push(
-      pathname.replace(new RegExp(`^/${locale}`), `/${l.toLowerCase()}`)
+    fetch("/api/language", {
+      method: "POST",
+      body: JSON.stringify({
+        language: l.toLowerCase(),
+      }),
+    }).then(() =>
+      router.push(
+        pathname.replace(new RegExp(`^/${locale}`), `/${l.toLowerCase()}`)
+      )
     );
   };
 

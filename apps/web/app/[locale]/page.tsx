@@ -60,7 +60,10 @@ export default function Page(): JSX.Element {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10 place-items-center place-content-between">
           {items.map(({ key, Icon }, i) => {
             return (
-              <div className="w-max h-max flex flex-col items-center justify-center gap-8">
+              <div
+                className="w-max h-max flex flex-col items-center justify-center gap-8"
+                key={`${i}_${key}`}
+              >
                 <Icon className="aspect-auto text-black" size={44} />
                 <div className="w-max min-w-full flex flex-col items-center justify-center gap-3.5">
                   <span className="text-2xl font-bold">
