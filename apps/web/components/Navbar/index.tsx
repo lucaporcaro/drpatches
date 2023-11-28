@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import Link from "@app/components/Link";
 import { useState } from "react";
 import {
   FaInstagram,

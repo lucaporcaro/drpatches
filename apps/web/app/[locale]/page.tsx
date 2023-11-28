@@ -1,6 +1,6 @@
 import Button from "@app/components/Button";
 import HeroImage from "@app/assets/images/hero.jpeg";
-import Link from "next/link";
+import Link from "@app/components/Link";
 import { useTranslations } from "next-intl";
 import {
   FaCompassDrafting,
