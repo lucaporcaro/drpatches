@@ -45,7 +45,7 @@ export default function Page(): JSX.Element {
             {t("hero.title")}
           </h2>
           <p className="text-lg md:text-xl font-medium">{t("hero.subtitle")}</p>
-          <Link href="/create">
+          <Link href="/product/create">
             <Button>{t("hero.order_now")}</Button>
           </Link>
         </div>
@@ -77,7 +77,7 @@ export default function Page(): JSX.Element {
             );
           })}
         </div>
-        <Link href="/create">
+        <Link href="/product/create">
           <Button>{t("why_us.customize_now")}</Button>
         </Link>
       </section>

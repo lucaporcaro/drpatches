@@ -8,6 +8,7 @@ import NextIntelClientProvider from "@app/providers/NextIntelClientProvider";
 import { getLocalMessages } from "@app/utils/messages";
 import Navbar from "@app/components/Navbar";
 import Footer from "@app/components/Footer";
+import ReduxProvider from "@app/providers/ReduxProvider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -37,9 +38,11 @@ export default async function RootLayout({
           messages={messages}
           now={new Date()}
         >
-          <Navbar />
-          {children}
-          <Footer />
+          <ReduxProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </ReduxProvider>
         </NextIntelClientProvider>
       </body>
     </html>
