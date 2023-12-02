@@ -1,16 +1,13 @@
 "use client";
 
 import { setProductType } from "@app/store/slices/createProduct";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { FaImage, FaA } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
-import { RootState } from "@app/store";
 
 export default function SelectProductType() {
   const dispatch = useDispatch();
-  const type = useSelector((state: RootState) => state.createProduct.type);
   const t = useTranslations("components.select_product_type");
-  if (type) return null;
   return (
     <>
       <div className="w-full h-max flex flex-col items-center justify-center py-10 gap-6 px-8 text-center">
