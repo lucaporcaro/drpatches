@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SwatchesPicker } from "react-color";
 import { motion, AnimatePresence } from "framer-motion";
+import useOutsideEvent from "@app/hooks/useOutsideEvent";
 
 type Props = {
   label: string;
@@ -17,19 +18,12 @@ export default function ColorSelector({
   const [open, setOpen] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setOpen(false);
-      }
-    }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
+  useOutsideEvent({
+    ref,
+    callback() {
+      setOpen(false);
+    },
+  });
 
   return (
     <div

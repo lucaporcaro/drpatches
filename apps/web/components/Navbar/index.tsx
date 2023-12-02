@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import Link from "@app/components/Link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   FaInstagram,
   FaFacebookF,
@@ -12,15 +12,25 @@ import {
 import Logo from "@app/assets/images/logo.svg";
 import Image from "next/image";
 import LanguageSelector from "../LanguageSelector";
+import useOutsideEvent from "@app/hooks/useOutsideEvent";
 
 const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const t = useTranslations("components.navbar");
+
+  // Refs
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  // Hooks
+  useOutsideEvent({
+    ref,
+    callback() {
+      setOpen(false);
+    },
+  });
+
   return (
-    <nav
-      className="w-full h-max bg-black py-4 px-8 flex flex-col gap-6"
-      x-data="{open: false}"
-    >
+    <nav className="w-full h-max bg-black py-4 px-8 flex flex-col gap-6">
       <div className="w-full h-max items-center justify-between hidden md:flex">
         <div className="w-max h-max flex flex-row items-center justify-center gap-10">
           <FaInstagram className="w-max h-max text-white" size={18} />
@@ -50,14 +60,14 @@ const Navbar = () => {
         </div>
         <div
           className="w-10 h-max flex md:hidden flex-col gap-2 cursor-pointer"
-          onClick={() => setOpen(true)}
+          onClick={() => setOpen((open) => !open)}
         >
           <div
             className="w-full h-0.5 bg-white transition-all duration-300 data-[open=true]:-rotate-45"
             data-open={open}
           ></div>
           <div
-            className="w-full h-0.5 bg-white transition-all duration-300 data-[open]:hidden"
+            className="w-full h-0.5 bg-white transition-all duration-300 data-[open=true]:hidden"
             data-open={open}
           ></div>
           <div
@@ -66,7 +76,10 @@ const Navbar = () => {
           ></div>
         </div>
         {open ? (
-          <div className="flex md:hidden flex-col items-center justify-start py-4 gap-4 fixed top-0 left-0 z-20 animate-show-navbar w-40 h-screen bg-black border-r-primary-1 border-r-[1px]">
+          <div
+            ref={ref}
+            className="flex md:hidden flex-col items-center justify-start py-4 gap-4 fixed top-0 left-0 z-20 animate-show-navbar w-40 h-screen bg-black border-r-primary-1 border-r-[1px]"
+          >
             <span className="font-bold text-xl text-white py-4">
               Dr.Patches
             </span>
