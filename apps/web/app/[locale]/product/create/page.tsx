@@ -17,7 +17,7 @@ export default function CreateProduct() {
   const params = useSearchParams();
   const pathname = usePathname();
   const dispatch = useDispatch();
-  let routerTimeout: NodeJS.Timeout;
+  let routerTimeout: any;
 
   useEffect(() => {
     dispatch(calculateProductPrice(Object.assign({}, product)));
