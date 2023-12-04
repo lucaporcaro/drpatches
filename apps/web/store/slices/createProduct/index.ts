@@ -81,6 +81,12 @@ export const createProductSlice = createSlice({
         (pricePerOne + backingPrice) * 1.22 * payload.quantity
       );
     },
+
+    reset(state: any) {
+      for (const key in state) {
+        state[key] = (initialState as any)[key] || undefined;
+      }
+    },
   },
 });
 
@@ -89,6 +95,7 @@ export const {
   restoreCreateProduct,
   updateCreateProduct,
   calculateProductPrice,
+  reset,
 } = createProductSlice.actions;
 
 export default createProductSlice.reducer;
