@@ -18,8 +18,8 @@ export interface CreateProductState {
 }
 
 const initialState: CreateProductState = {
-  patchWidth: 20,
-  patchHeight: 20,
+  patchWidth: 10,
+  patchHeight: 10,
   quantity: 50,
   borderColor: "#111",
   textColor: "#111",
