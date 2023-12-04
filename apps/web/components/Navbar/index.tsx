@@ -38,7 +38,7 @@ const Navbar = () => {
           <FaWhatsapp className="w-max h-max text-white" size={18} />
         </div>
         <div className="w-max h-max flex items-center justify-center gap-6 text-white font-medium text-base">
-          <Link href="/#">{t("links.contact")}</Link>
+          <Link href="/contact">{t("links.contact")}</Link>
           <Link href="/#">{t("links.login")}</Link>
           <LanguageSelector />
         </div>
@@ -87,8 +87,8 @@ const Navbar = () => {
               <Link href="#">{t("links.login")}</Link>
               <Link href="#">{t("links.examples")}</Link>
               <Link href="#">{t("links.shipment")}</Link>
-              <Link href="#">{t("links.aboutus")}</Link>
-              <Link href="#">{t("links.contact")}</Link>
+              <Link href="/about">{t("links.aboutus")}</Link>
+              <Link href="/contact">{t("links.contact")}</Link>
             </div>
             <div className="text-white font-bold text-xs flex items-center justify-center gap-2 mt-auto">
               <span>{t("language")}:</span>
