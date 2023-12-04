@@ -77,9 +77,11 @@ export const createProductSlice = createSlice({
           break;
       }
       // console.dir(backingPrice);
-      state.price = Math.ceil(
-        (pricePerOne + backingPrice) * 1.22 * payload.quantity
-      );
+      state.price = (
+        (pricePerOne + backingPrice) *
+        1.22 *
+        payload.quantity
+      ).toFixed(2);
     },
 
     reset(state: any) {

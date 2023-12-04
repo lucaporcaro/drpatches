@@ -29,7 +29,10 @@ export default function CreateProduct() {
             ...product,
             image: undefined,
             price: 0,
-          })}`
+          })}`,
+        {
+          scroll: false,
+        }
       )
     );
   }, [product]);

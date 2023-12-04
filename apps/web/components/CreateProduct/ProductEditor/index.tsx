@@ -156,7 +156,6 @@ export default function ProductEditor() {
               </div>
             </>
           )}
-          F
         </div>
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
           <span className="font-bold text-3xl">{t("titels.patching")}</span>

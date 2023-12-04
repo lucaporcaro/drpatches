@@ -1,6 +1,6 @@
 export default {
   links: {
-    examples: "Examples",
+    examples: "Designs",
     shipment: "Shipment",
     aboutus: "About Us",
     contact: "Contact",
