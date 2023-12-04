@@ -60,7 +60,20 @@ export default function AboutPage() {
           className="w-full h-max p-8 flex flex-col items-center justify-end gap-8 text-center font-montserrat"
         >
           <figure className="m-0 relative w-full h-[458px] overflow-hidden rounded-xl">
-            <Image src={src} blurDataURL={blur} fill alt={key} loading="lazy" />
+            <Image
+              src={src}
+              blurDataURL={blur}
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "auto",
+                maxHeight: 458,
+              }}
+              width={1556}
+              height={458}
+              // fill
+              alt={key}
+            />
           </figure>
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
             {t(`items.${key}.title`)}
