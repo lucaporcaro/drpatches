@@ -169,7 +169,7 @@ export default function ProductEditor() {
           value={parseFloat(quantity as any)}
           onUpdate={update("quantity")}
           label={t("quantity")}
-          min={50}
+          min={1}
           max={50000}
         />
 
