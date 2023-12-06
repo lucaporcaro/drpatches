@@ -1,31 +1,22 @@
 export default {
   hero: {
-    title: "Create Your Own Patch",
-    subtitle: "You can create your custom patch with our simple platform",
-    order_now: "Order Now",
+    title: "Erstelle deinen eigenen Patch",
+    subtitle:
+      "Du kannst deinen individuellen Patch mit unserer einfachen Plattform erstellen",
+    order_now: "Jetzt bestellen",
   },
   why_us: {
-    title: "Why Choose Us?",
+    title: "Warum Uns Wählen?",
     description:
-      "When it comes to Dr. Patches, it's clear: you are passionate about embroidered patches. We share your passion for these pieces of art that add a unique touch to your style. At Dr. Patches, we recognize the value of feeling unique and that's why we always maintain the highest craft standards possible and focus on innovation. Regardless of the design or style you create, each embroidered patch carries a touch of personality, creativity, and craftsmanship. Your custom patches will have the ability to tell stories, spark conversations, and bring people together under a shared symbol. Additionally, from now on, you can transform your hat into a unique piece, creating your style without limits.",
+      "Wenn es um Dr. Patches geht, ist es klar: Du bist begeistert von gestickten Patches. Wir teilen deine Leidenschaft für diese Kunstwerke, die einen einzigartigen Touch zu deinem Stil hinzufügen. Bei Dr. Patches erkennen wir den Wert an, sich einzigartig zu fühlen, und deshalb halten wir immer die höchsten handwerklichen Standards aufrecht und konzentrieren uns auf Innovation. Unabhängig vom Design oder Stil, den du erstellst, trägt jeder gestickte Patch einen Hauch von Persönlichkeit, Kreativität und Handwerkskunst. Deine individuellen Patches haben die Fähigkeit, Geschichten zu erzählen, Gespräche anzuregen und Menschen unter einem gemeinsamen Symbol zusammenzubringen. Zusätzlich kannst du ab sofort deinen Hut in ein einzigartiges Stück verwandeln und deinen Stil ohne Grenzen kreieren.",
     items: {
-      free_design: {
-        title: "Free Design",
-        description: "Unlimited Revision",
-      },
-      fair_price: {
-        title: "Fair Price",
-        description: "Save 30%",
-      },
-      fast_turnaround: {
-        title: "Fast Turnaround",
-        description: "Less than 10 days",
-      },
-      guarantee: {
-        title: "Guarantee",
-        description: "100% money back",
-      },
+      free_design: "Qualität Made in Italy",
+      fair_price: "Bestpreisgarantie",
+      fast_turnaround:
+        "Sicheres Einkaufen mit Schnellem und Professionellem Support",
+      guarantee: "Kostenloses Digitales Muster",
+      fast_and_secure: "Schneller und Sicherer Versand",
     },
-    customize_now: "Customize Now",
+    customize_now: "Jetzt Anpassen",
   },
 };
