@@ -234,7 +234,7 @@ export default function ProductEditor() {
               <span className="font-semibold text-2xl">{price}$</span>
             </div>
             <div className="w-[249px] h-max">
-              <Button>Add to cart</Button>
+              <Button>{t("add_to_cart")}</Button>
             </div>
           </div>
         </div>

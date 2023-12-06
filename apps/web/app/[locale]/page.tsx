@@ -8,6 +8,7 @@ import {
   FaTruckMoving,
   FaShield,
 } from "react-icons/fa6";
+import { FaShippingFast } from "react-icons/fa";
 
 const items = [
   {
@@ -25,6 +26,10 @@ const items = [
   {
     key: "guarantee",
     Icon: FaShield,
+  },
+  {
+    key: "fast_and_secure",
+    Icon: FaShippingFast,
   },
 ];
 
@@ -57,7 +62,7 @@ export default function Page(): JSX.Element {
         <p className="w-11/12 max-w-[1134px] text-center text-base md:text-lg lg:text-2xl font-medium">
           {t("why_us.description")}
         </p>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-10 place-items-center place-content-between">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:my-6 gap-y-10 place-items-center place-content-between">
           {items.map(({ key, Icon }, i) => {
             return (
               <div
@@ -67,10 +72,7 @@ export default function Page(): JSX.Element {
                 <Icon className="aspect-auto text-black" size={44} />
                 <div className="w-max min-w-full flex flex-col items-center justify-center gap-3.5">
                   <span className="text-2xl font-bold">
-                    {t(`why_us.items.${key}.title`)}
-                  </span>
-                  <span className="text-xl font-medium">
-                    {t(`why_us.items.${key}.description`)}
+                    {t(`why_us.items.${key}`)}
                   </span>
                 </div>
               </div>
