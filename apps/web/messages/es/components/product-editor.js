@@ -14,4 +14,7 @@ export default {
   select_backing_type: "Respaldo Seleccionado",
   select_image: "Selecciona tu imagen",
   add_to_cart: "añadir a la cesta",
+  image_patch: "Parche de imagen",
+  text_patch: "Parche de texto personalizado",
+  preview: "Avance",
 };

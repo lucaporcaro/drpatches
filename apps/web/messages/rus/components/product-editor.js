@@ -14,4 +14,7 @@ export default {
   select_backing_type: "Выбранная подложка (Vybrannaja podlozhka)",
   select_image: "Выберите своё изображение (Vyberite svoe izobrazhenie)",
   add_to_cart: "добавить в корзину",
+  image_patch: "Патч изображения",
+  text_patch: "Пользовательский текстовый патч",
+  preview: "Предварительный просмотр",
 };

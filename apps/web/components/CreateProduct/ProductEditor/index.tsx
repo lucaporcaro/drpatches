@@ -202,7 +202,7 @@ export default function ProductEditor() {
         </div>
         {type === "text" ? (
           <div className="bg-primary-1 text-black relative flex flex-col items-center justify-center gap-6 py-10 px-6 rounded-xl lg:col-span-1 overflow-hidden">
-            <span className="font-bold text-3xl">Preview</span>
+            <span className="font-bold text-3xl">{t("preview")}</span>
             <div className="w-max h-max relative" style={{ backgroundColor }}>
               {patchType ? (
                 <img
@@ -227,11 +227,11 @@ export default function ProductEditor() {
           className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl data-[alone=true]:lg:col-span-4 lg:col-span-3 overflow-hidden"
         >
           <span className="font-bold text-3xl">
-            {type === "image" ? "Image" : "Custom Text"} Patch
+            {type === "image" ? t("image_patch") : t("text_patch")}
           </span>
           <div className="w-full h-max flex flex-col items-center justify-center gap-6 lg:flex-row lg:max-w-[500px]">
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
-              <span className="font-semibold text-2xl">{price}$</span>
+              <span className="font-semibold text-2xl">{price}€</span>
             </div>
             <div className="w-[249px] h-max">
               <Button>{t("add_to_cart")}</Button>

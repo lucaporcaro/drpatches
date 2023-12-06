@@ -14,4 +14,7 @@ export default {
   select_backing_type: "الدعم المحدد (Al-Da'm Al-Muhaddad)",
   select_image: "اختر صورتك (Iktar Sawratik)",
   add_to_cart: "أضف إلى السلة",
+  image_patch: "تصحيح الصورة",
+  text_patch: "تصحيح النص المخصص",
+  preview: "معاينة",
 };

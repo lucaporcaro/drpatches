@@ -14,4 +14,7 @@ export default {
   select_backing_type: "Selected Backing",
   select_image: "Select your image",
   add_to_cart: "Add To Cart",
+  image_patch: "Image Patch",
+  text_patch: "Custom Text Patch",
+  preview: "Preview",
 };

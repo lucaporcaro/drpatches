@@ -14,4 +14,7 @@ export default {
   select_backing_type: "选择的背衬 (Xuǎnzé de Bèichèn)",
   select_image: "选择您的图片 (Xuǎnzé Nín de Túpiàn)",
   add_to_cart: "添加到购物车",
+  image_patch: "图像补丁",
+  text_patch: "自定义文本补丁",
+  preview: "预览",
 };
