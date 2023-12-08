@@ -13,11 +13,12 @@ export default function LanguageSelector() {
       body: JSON.stringify({
         language: l.toLowerCase(),
       }),
-    }).then(() =>
+    }).then(() => {
       router.push(
         pathname.replace(new RegExp(`^/${locale}`), `/${l.toLowerCase()}`)
-      )
-    );
+      );
+      router.refresh();
+    });
   };
 
   return (
