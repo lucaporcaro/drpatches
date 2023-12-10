@@ -44,9 +44,10 @@ export default function NumberInput({
             step={step}
             min={min}
             max={max}
-            onChange={({ currentTarget: { value: v } }) =>
-              onUpdate(parseFloat(v))
-            }
+            onChange={({ currentTarget: { value: v } }) => {
+              const parsedValue = parseFloat(v);
+              onUpdate(parsedValue);
+            }}
             disabled={disabled}
           />
           {/* <span className="font-medium text-base">{value}</span> */}

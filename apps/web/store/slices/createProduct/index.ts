@@ -34,60 +34,54 @@ export const createProductSlice = createSlice({
     setProductType(state, { payload }: PayloadAction<"text" | "image">) {
       state.type = payload;
     },
-    restoreCreateProduct(state, { payload }: PayloadAction<any>) {
-      for (const key in payload)
+    restoreCreateProduct(state, { payload }) {
+      Object.entries(payload).forEach(([key, value]) => {
         (state as any)[key] = !/^\d+$/.test(payload[key])
           ? payload[key]
           : parseFloat(payload[key]);
+      });
     },
     updateCreateProduct(
       state,
-      { payload }: PayloadAction<{ key: string; value: string }>
+      { payload: { key, value } }: PayloadAction<{ key: string; value: string }>
     ) {
-      (state as any)[payload.key] = payload.value;
+      (state as any)[key] = value;
     },
     calculateProductPrice(
       state,
       { payload }: PayloadAction<CreateProductState>
     ) {
-      if (!payload.type || !payload.backingType) {
+      const { type, backingType, patchHeight, patchWidth, quantity } = payload;
+
+      if (!type || !backingType) {
         state.price = 0;
         return;
       }
-      const size = (payload.patchWidth + payload.patchHeight) / 2;
+      const size = (patchWidth + patchHeight) / 2;
+
+      const tablePrice = Object.entries(prices[type]).filter(
+        ([key]) => parseFloat(key) >= size
+      )[0];
+
       const pricePerOne =
-        (prices as any)[payload.type][formatPrintSize(size).toString() as any] +
-        (payload.type === "image" ? 39 / payload.quantity : 0);
-      // console.dir(state.backingType);
-      let backingPrice = 0;
-      switch (payload.backingType) {
-        case "termoadesiva":
-          backingPrice =
-            ((payload.patchWidth * payload.patchHeight * 8) / 7500) * 2;
-          break;
-        case "velcro_a":
-        case "velcro_b":
-        case "velcro_a_b":
-          backingPrice =
-            (payload.patchWidth *
-              payload.patchHeight *
-              (payload.backingType !== "velcro_a_b" ? 18 : 36)) /
-              2500 +
-            pricePerOne * 0.5;
-          break;
-      }
-      // console.dir(backingPrice);
-      state.price = (
-        (pricePerOne + backingPrice) *
-        1.22 *
-        payload.quantity
-      ).toFixed(2);
+        (tablePrice ? tablePrice[1] : 0) +
+        (type === "image" ? 39 / quantity : 0);
+
+      const backingPriceLookup: { [key: string]: number } = {
+        termoadesiva: ((patchWidth * patchHeight * 8) / 7500) * 2,
+        velcro_a: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
+        velcro_b: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
+        velcro_a_b: (patchWidth * patchHeight * 36) / 2500 + pricePerOne * 0.5,
+      };
+      const backingPrice = backingPriceLookup[backingType] || 0;
+
+      state.price = ((pricePerOne + backingPrice) * 1.22 * quantity).toFixed(2);
     },
 
     reset(state: any) {
-      for (const key in state) {
-        state[key] = (initialState as any)[key] || undefined;
-      }
+      Object.keys(state).forEach((key) => {
+        state[key] = (initialState as any)[key];
+      });
     },
   },
 });

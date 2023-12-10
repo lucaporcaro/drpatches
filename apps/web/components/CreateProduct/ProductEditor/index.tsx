@@ -165,7 +165,7 @@ export default function ProductEditor() {
             label={t("patch_width")}
             unit="CM"
             step={0.5}
-            disabled
+            // disabled
           />
           <NumberInput
             value={parseFloat(patchHeight as any)}
@@ -173,7 +173,7 @@ export default function ProductEditor() {
             label={t("patch_height")}
             unit="CM"
             step={0.5}
-            disabled
+            // disabled
           />
           <NumberInput
             value={parseFloat(quantity as any)}
