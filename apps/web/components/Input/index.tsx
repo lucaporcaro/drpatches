@@ -1,5 +1,3 @@
-import { twMerge } from "tailwind-merge";
-
 type Props = {
   disabled?: boolean;
   value?: string;
@@ -8,9 +6,9 @@ type Props = {
 };
 export default function Input({
   disabled = false,
-  value,
   onChange,
   label,
+  value,
 }: Props) {
   return (
     <div className="w-full h-max flex flex-col items-start justify-start gap-2">

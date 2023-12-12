@@ -1,6 +1,7 @@
 import { locales } from "@app/middleware";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
+import ReactCountryFlag from "react-country-flag";
 
 export default function LanguageSelector() {
   const locale = useLocale();
@@ -30,12 +31,15 @@ export default function LanguageSelector() {
         {locales.map((l) => (
           <div
             key={`locale_${l.code}`}
-            className="w-max h-max"
+            className="w-full h-max flex items-center justify-around gap-1 transition-colors duration-300 hover:bg-primary-1 cursor-pointer px-2 py-1.5"
             onClick={() => changeLocale(l.code)}
+            hidden={locale === l.code.toLowerCase()}
           >
+            <ReactCountryFlag
+              countryCode={l.flag}
+            />
             <span
-              className="text-black font-bold transition-colors duration-300 hover:bg-primary-1 cursor-pointer p-2"
-              hidden={locale === l.code.toLowerCase()}
+              className="text-black font-medium text-xs uppercase"
             >
               {l.label}
             </span>
