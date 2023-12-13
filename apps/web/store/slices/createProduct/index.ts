@@ -61,9 +61,12 @@ export const createProductSlice = createSlice({
 
       const tablePrice = Object.entries(prices[type]).filter(
         ([key]) => {
-          return (typeof key === 'number' ? key : parseFloat(key)) <= size
+          return (typeof key === 'number' ? key : parseFloat(key)) >= size
         }
-      ).sort((a, b) => parseFloat(a[0]) - parseFloat(b[0])).reverse()[0];
+      ).sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0];
+
+      console.log(`Current Table Price for size ${size}: ${tablePrice[0]} = ${tablePrice[1]}`)
+
       const pricePerOne =
         (tablePrice ? tablePrice[1] : 0) +
         (type === "image" ? 39 / quantity : 0);

@@ -61,7 +61,7 @@ const Navbar = () => {
         </div>
         <div
           className="w-10 h-max flex md:hidden flex-col gap-2 cursor-pointer"
-          onClick={() => setOpen((open) => !open)}
+          onClick={!open ? () => setOpen(true) : undefined}
         >
           <div
             className="w-full h-0.5 bg-white transition-all duration-300 data-[open=true]:-rotate-45"
