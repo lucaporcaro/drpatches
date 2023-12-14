@@ -1,8 +1,8 @@
 import createMiddleware from "next-intl/middleware";
 
 export const locales = [
-  { code: "en", label: "English", flag: 'us' },
-  { code: "ara", label: "Arabic", flag: 'ae' },
+  { code: "en", label: "English", flag: 'gb' },
+  { code: "ara", label: "Arabic", flag: 'sa' },
   { code: "chi", label: "Chinese", flag: 'cn' },
   { code: "deu", label: "German", flag: 'de' },
   { code: "es", label: "Spanish", flag: 'es' },
