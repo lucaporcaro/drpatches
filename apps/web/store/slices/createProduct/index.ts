@@ -63,7 +63,7 @@ export const createProductSlice = createSlice({
         ([key]) => {
           return (typeof key === 'number' ? key : parseFloat(key)) >= size
         }
-      ).sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0];
+      ).sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0] as any[];
 
       console.log(`Current Table Price for size ${size}: ${tablePrice[0]} = ${tablePrice[1]}`)
 
