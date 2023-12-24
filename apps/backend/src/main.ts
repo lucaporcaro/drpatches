@@ -1,7 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { INestApplication, VersioningType } from '@nestjs/common';
+import {
+  INestApplication,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+function setupPipes(app: INestApplication) {
+  app.useGlobalPipes(new ValidationPipe());
+}
 
 function setupCors(app: INestApplication) {
   app.enableCors({
@@ -32,6 +40,7 @@ function setupSwagger(app: INestApplication) {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   setupCors(app);
+  setupPipes(app);
   setupVersioning(app);
   setupSwagger(app);
   await app.listen(process.env.PORT || 3001);
