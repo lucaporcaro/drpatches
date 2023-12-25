@@ -4,6 +4,6 @@ import { UserModule } from './modules/user/user.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 
 @Module({
-  imports: [MikroOrmModule.forRoot(), UserModule, AuthenticationModule],
+  imports: [MikroOrmModule.forRoot(), AuthenticationModule, UserModule],
 })
 export class AppModule {}

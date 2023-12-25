@@ -9,3 +9,19 @@ services:
       POSTGRES_USER: drpatch
       POSTGRES_PASSWORD: drpatch
       POSTGRES_DB: drpatch
+    volumes:
+      - postgresql_volume:/var/lib/postgresql
+  cache:
+    image: redis:alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning 
+    volumes: 
+      - cache_volume:/data
+
+volumes:
+  postgresql_volume:
+    driver: local
+  cache_volume:
+    driver: local

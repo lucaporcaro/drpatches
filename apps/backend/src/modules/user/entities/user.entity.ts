@@ -1,5 +1,23 @@
-import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity,
+  Enum,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from '@mikro-orm/core';
 import { ulid } from 'ulid';
+import { Address } from './address.entity';
+
+export enum UserGender {
+  MALE = 'm',
+  FEMALE = 'f',
+}
+
+export enum UserRole {
+  ADMIN = 'admin',
+  CUSTOMER = 'customer',
+}
 
 @Entity({ tableName: 'users' })
 export default class User {
@@ -12,6 +30,9 @@ export default class User {
   @Property({ nullable: false })
   password: string;
 
+  @Enum({ items: () => UserRole, nullable: true, default: UserRole.CUSTOMER })
+  role!: UserRole;
+
   @Property({ name: 'first_name', nullable: false })
   firstName: string;
 
@@ -23,9 +44,7 @@ export default class User {
 
   @Enum({ items: () => UserGender, nullable: false })
   gender!: UserGender;
-}
 
-export enum UserGender {
-  MALE = 'm',
-  FEMALE = 'f',
+  @OneToMany(() => Address, (address) => address.user)
+  addresses = new Collection<Location>(this);
 }

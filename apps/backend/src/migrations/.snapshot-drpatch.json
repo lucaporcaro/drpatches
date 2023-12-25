@@ -33,6 +33,20 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "'customer'",
+          "enumItems": [
+            "admin",
+            "customer"
+          ],
+          "mappedType": "enum"
+        },
         "first_name": {
           "name": "first_name",
           "type": "varchar(255)",
@@ -116,6 +130,182 @@
       ],
       "checks": [],
       "foreignKeys": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "receiver_name": {
+          "name": "receiver_name",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "receiver_phone": {
+          "name": "receiver_phone",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "province": {
+          "name": "province",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "zip_code": {
+          "name": "zip_code",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        }
+      },
+      "name": "addresses",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "keyName": "addresses_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "columnNames": [
+            "receiver_name"
+          ],
+          "composite": false,
+          "keyName": "addresses_receiver_name_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "receiver_phone"
+          ],
+          "composite": false,
+          "keyName": "addresses_receiver_phone_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "province"
+          ],
+          "composite": false,
+          "keyName": "addresses_province_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "city"
+          ],
+          "composite": false,
+          "keyName": "addresses_city_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "zip_code"
+          ],
+          "composite": false,
+          "keyName": "addresses_zip_code_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "location"
+          ],
+          "composite": false,
+          "keyName": "addresses_location_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "user_id"
+          ],
+          "composite": false,
+          "keyName": "addresses_user_id_index",
+          "primary": false,
+          "unique": false
+        },
+        {
+          "keyName": "addresses_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "addresses_user_id_foreign": {
+          "constraintName": "addresses_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "public.addresses",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.users",
+          "updateRule": "cascade"
+        }
+      }
     }
   ]
 }
