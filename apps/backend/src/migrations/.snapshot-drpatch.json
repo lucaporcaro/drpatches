@@ -160,6 +160,15 @@
           "nullable": false,
           "mappedType": "string"
         },
+        "country": {
+          "name": "country",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
         "province": {
           "name": "province",
           "type": "varchar(255)",
@@ -217,60 +226,6 @@
           "keyName": "addresses_id_index",
           "primary": false,
           "unique": false
-        },
-        {
-          "columnNames": [
-            "receiver_name"
-          ],
-          "composite": false,
-          "keyName": "addresses_receiver_name_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "receiver_phone"
-          ],
-          "composite": false,
-          "keyName": "addresses_receiver_phone_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "province"
-          ],
-          "composite": false,
-          "keyName": "addresses_province_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "city"
-          ],
-          "composite": false,
-          "keyName": "addresses_city_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "zip_code"
-          ],
-          "composite": false,
-          "keyName": "addresses_zip_code_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "location"
-          ],
-          "composite": false,
-          "keyName": "addresses_location_unique",
-          "primary": false,
-          "unique": true
         },
         {
           "columnNames": [

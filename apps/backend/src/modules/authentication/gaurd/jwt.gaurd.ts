@@ -17,7 +17,8 @@ export default class JwtGaurd implements CanActivate {
 
   constructor(
     private readonly jwtService: JwtService,
-    @InjectRepository(User) private readonly userRepo: EntityRepository<User>,
+    @InjectRepository(User)
+    private readonly userRepo: EntityRepository<User>,
   ) {}
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {

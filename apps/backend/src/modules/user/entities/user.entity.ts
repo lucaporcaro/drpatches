@@ -6,8 +6,8 @@ import {
   PrimaryKey,
   Property,
 } from '@mikro-orm/core';
+import Address from 'src/modules/addresses/entities/address.entity';
 import { ulid } from 'ulid';
-import { Address } from './address.entity';
 
 export enum UserGender {
   MALE = 'm',

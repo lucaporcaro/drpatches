@@ -13,7 +13,8 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthenticationService {
   constructor(
-    @InjectRepository(User) private readonly user: EntityRepository<User>,
+    @InjectRepository(User)
+    private readonly user: EntityRepository<User>,
     private readonly jwtService: JwtService,
   ) {}
 

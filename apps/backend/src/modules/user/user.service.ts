@@ -14,7 +14,8 @@ export class UserService {
   private readonly logger = new Logger(UserService.name);
 
   constructor(
-    @InjectRepository(User) private readonly userRepo: EntityRepository<User>,
+    @InjectRepository(User)
+    private readonly userRepo: EntityRepository<User>,
   ) {}
 
   public async getUser(id: string) {
@@ -25,15 +26,11 @@ export class UserService {
     try {
       const user = await this.userRepo.findOne({ id });
       Object.assign(user, payload);
-      await this.userRepo.getEntityManager().persistAndFlush(user);
+      await this.userRepo.getEntityManager().flush();
       return await this.getUser(id);
     } catch (e) {
       this.logger.error(e);
       throw new InternalServerErrorException();
     }
-  }
-
-  private generateCacheKey(id) {
-    return `user_profile_${id}`;
   }
 }
