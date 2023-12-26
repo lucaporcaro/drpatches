@@ -1,5 +1,4 @@
 import prices from "@app/assets/data/prices";
-import { formatPrintSize } from "@app/utils/price";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface CreateProductState {
@@ -59,13 +58,15 @@ export const createProductSlice = createSlice({
       }
       const size = (patchWidth + patchHeight) / 2;
 
-      const tablePrice = Object.entries(prices[type]).filter(
-        ([key]) => {
-          return (typeof key === 'number' ? key : parseFloat(key)) >= size
-        }
-      ).sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0] as any[];
+      const tablePrice = Object.entries(prices[type])
+        .filter(([key]) => {
+          return (typeof key === "number" ? key : parseFloat(key)) >= size;
+        })
+        .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0] as any[];
 
-      console.log(`Current Table Price for size ${size}: ${tablePrice[0]} = ${tablePrice[1]}`)
+      console.log(
+        `Current Table Price for size ${size}: ${tablePrice[0]} = ${tablePrice[1]}`
+      );
 
       const pricePerOne =
         (tablePrice ? tablePrice[1] : 0) +

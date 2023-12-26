@@ -1,13 +1,7 @@
-import {
-  Collection,
-  Entity,
-  Enum,
-  OneToMany,
-  PrimaryKey,
-  Property,
-} from '@mikro-orm/core';
+import { Collection, Entity, Enum, OneToMany, Property } from '@mikro-orm/core';
+import BaseModel from 'src/common/entities/base-model.entity';
 import Address from 'src/modules/addresses/entities/address.entity';
-import { ulid } from 'ulid';
+import Product from 'src/modules/product/entities/product.entity';
 
 export enum UserGender {
   MALE = 'm',
@@ -20,10 +14,7 @@ export enum UserRole {
 }
 
 @Entity({ tableName: 'users' })
-export default class User {
-  @PrimaryKey({ index: true })
-  id: string = ulid();
-
+export default class User extends BaseModel {
   @Property({ unique: true, nullable: false })
   email: string;
 
@@ -47,4 +38,7 @@ export default class User {
 
   @OneToMany(() => Address, (address) => address.user)
   addresses = new Collection<Location>(this);
+
+  @OneToMany(() => Product, (product) => product.user)
+  products = new Collection<Product>(this);
 }

@@ -1,12 +1,9 @@
-import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { ulid } from 'ulid';
+import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 import User from '../../user/entities/user.entity';
+import BaseModel from 'src/common/entities/base-model.entity';
 
 @Entity({ tableName: 'addresses' })
-export default class Address {
-  @PrimaryKey({ index: true })
-  id: string = ulid();
-
+export default class Address extends BaseModel {
   @Property({ name: 'receiver_name' })
   receiverName: string;
 
