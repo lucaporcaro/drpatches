@@ -36,7 +36,7 @@ const items = [
 export default function Page(): JSX.Element {
   const t = useTranslations("pages.home");
   return (
-    <main>
+    <main className="w-full">
       <section className="w-full h-max flex flex-col items-center justify-center py-10 px-8 xl:flex-row-reverse xl:justify-between max-w-9xl">
         <div className="w-max h-max">
           <img

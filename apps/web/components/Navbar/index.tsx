@@ -39,7 +39,7 @@ const Navbar = () => {
         </div>
         <div className="w-max h-max flex items-center justify-center gap-6 text-white font-medium text-base">
           <Link href="/contact">{t("links.contact")}</Link>
-          <Link href="/#">{t("links.login")}</Link>
+          <Link href="/login">{t("links.login")}</Link>
           <LanguageSelector />
         </div>
       </div>
@@ -85,7 +85,7 @@ const Navbar = () => {
               Dr.Patches
             </span>
             <div className="w-max h-max flex flex-col items-center justify-center gap-6 text-white font-medium text-base">
-              <Link href="#">{t("links.login")}</Link>
+              <Link href="/login">{t("links.login")}</Link>
               <Link href="/product/create">{t("links.examples")}</Link>
               <Link href="/about">{t("links.aboutus")}</Link>
               <Link href="/contact">{t("links.contact")}</Link>

@@ -42,7 +42,7 @@ export default function CreateProduct() {
   }, []);
 
   return (
-    <div className="py-10 flex flex-col items-center justify-center">
+    <div className="w-full h-max py-10 flex flex-col items-center justify-center">
       {product.type ? <ProductEditor /> : <SelectProductType />}
     </div>
   );

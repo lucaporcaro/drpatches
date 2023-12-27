@@ -1,4 +1,4 @@
-import { locales } from "@app/middleware";
+import { locales } from "@app/middlewares/language.middleware";
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
 import ReactCountryFlag from "react-country-flag";
@@ -35,13 +35,8 @@ export default function LanguageSelector() {
             onClick={() => changeLocale(l.code)}
             hidden={locale === l.code.toLowerCase()}
           >
-            <ReactCountryFlag
-              countryCode={l.flag}
-              svg
-            />
-            <span
-              className="text-black font-medium text-xs uppercase"
-            >
+            <ReactCountryFlag countryCode={l.flag} svg />
+            <span className="text-black font-medium text-xs uppercase">
               {l.label}
             </span>
           </div>
