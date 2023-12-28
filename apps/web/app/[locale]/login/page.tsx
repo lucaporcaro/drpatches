@@ -3,6 +3,7 @@
 import { login } from "@app/actions/auth";
 import Button from "@app/components/Button";
 import Input from "@app/components/Input";
+import Link from "@app/components/Link";
 import { toast } from "react-toastify";
 
 async function loginWithErrors(formData: FormData) {
@@ -26,6 +27,9 @@ export default function LoginPage() {
           <Input label="Email" name="email" type="email" required />
           <Input label="Password" name="password" type="password" required />
           <Button>Login</Button>
+          <div className="w-max mx-auto font-semibold underline text-black">
+            <Link href="/register">Need an account?</Link>
+          </div>
         </form>
       </div>
     </div>

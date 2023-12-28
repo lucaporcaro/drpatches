@@ -16,3 +16,17 @@ export async function login(email: string, password: string): Promise<boolean> {
     return false;
   }
 }
+
+export async function register(payload: object) {
+  try {
+    const { status, data } = await httpClient.post(
+      "v1/authentication/register",
+      payload
+    );
+    if (status !== 201) throw new Error();
+    cookies().set("jwt_token", data.key);
+    return true;
+  } catch (e: any) {
+    return e.response.data.message[0];
+  }
+}
