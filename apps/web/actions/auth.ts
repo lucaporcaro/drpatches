@@ -10,7 +10,7 @@ export async function login(email: string, password: string): Promise<boolean> {
       password,
     });
     if (status !== 201) throw new Error();
-    cookies().set("jwt_token", data.key);
+    cookies().set("jwt_token", data.token);
     return true;
   } catch (e) {
     return false;
@@ -24,7 +24,7 @@ export async function register(payload: object) {
       payload
     );
     if (status !== 201) throw new Error();
-    cookies().set("jwt_token", data.key);
+    cookies().set("jwt_token", data.token);
     return true;
   } catch (e: any) {
     return e.response.data.message[0];
