@@ -13,6 +13,7 @@ export async function login(email: string, password: string): Promise<boolean> {
     cookies().set("jwt_token", data.token);
     return true;
   } catch (e) {
+    console.error(e);
     return false;
   }
 }
@@ -27,6 +28,7 @@ export async function register(payload: object) {
     cookies().set("jwt_token", data.token);
     return true;
   } catch (e: any) {
-    return e.response.data.message[0];
+    console.error(e);
+    return e.response?.data.message[0] || "Request faild";
   }
 }
