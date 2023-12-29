@@ -15,10 +15,10 @@ httpClient.interceptors.request.use(
 );
 
 function getToken() {
-  if (document)
+  if (typeof document !== "undefined")
     return (document as any).cookie
       .split(";")
       .filter((c: any) => c.includes("jwt_token="))[0]
       .split("=")[1];
-  else return cookies().get("jwt_token");
+  else return cookies().get("jwt_token")?.value;
 }

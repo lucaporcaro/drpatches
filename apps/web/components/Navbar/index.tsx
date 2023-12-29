@@ -1,7 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
-import Link from "@app/components/Link";
-import { useState, useRef } from "react";
+import Link from "next/link";
+import { useState, useRef, useMemo } from "react";
 import {
   FaInstagram,
   FaFacebookF,
@@ -13,10 +13,17 @@ import Logo from "@app/assets/images/logo.svg";
 import Image from "next/image";
 import LanguageSelector from "../LanguageSelector";
 import useOutsideEvent from "@app/hooks/useOutsideEvent";
+import { useSelector } from "react-redux";
+import { RootState } from "@app/store";
 
 const Navbar = () => {
+  // States
   const [open, setOpen] = useState<boolean>(false);
   const t = useTranslations("components.navbar");
+  const user: any = useSelector((state: RootState) => state.user);
+
+  // Memo
+  const isLoggedIn = useMemo(() => Object.keys(user).length !== 0, [user]);
 
   // Refs
   const ref = useRef<HTMLDivElement | null>(null);
@@ -39,7 +46,14 @@ const Navbar = () => {
         </div>
         <div className="w-max h-max flex items-center justify-center gap-6 text-white font-medium text-base">
           <Link href="/contact">{t("links.contact")}</Link>
-          <Link href="/login">{t("links.login")}</Link>
+          {isLoggedIn ? (
+            <Link
+              href="/profile"
+              className="border-white border-b-[1px] pb-1"
+            >{`${user.firstName} ${user.lastName}`}</Link>
+          ) : (
+            <Link href="/login">{t("links.login")}</Link>
+          )}
           <LanguageSelector />
         </div>
       </div>
@@ -85,7 +99,16 @@ const Navbar = () => {
               Dr.Patches
             </span>
             <div className="w-max h-max flex flex-col items-center justify-center gap-6 text-white font-medium text-base">
-              <Link href="/login">{t("links.login")}</Link>
+              {isLoggedIn ? (
+                <Link
+                  href="/profile"
+                  className="w-full max-w-[160px] text-center"
+                >
+                  {`${user.firstName} ${user.lastName}`}
+                </Link>
+              ) : (
+                <Link href="/login">{t("links.login")}</Link>
+              )}
               <Link href="/product/create">{t("links.examples")}</Link>
               <Link href="/about">{t("links.aboutus")}</Link>
               <Link href="/contact">{t("links.contact")}</Link>

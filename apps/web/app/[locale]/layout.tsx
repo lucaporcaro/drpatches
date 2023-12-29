@@ -1,24 +1,18 @@
 import "./global.scss";
 
-import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextIntelClientProvider from "@app/providers/NextIntelClientProvider";
 import { getLocalMessages } from "@app/utils/messages";
 import Navbar from "@app/components/Navbar";
 import Footer from "@app/components/Footer";
-import ReduxProvider from "@app/providers/ReduxProvider";
-import { ToastContainer } from "react-toastify";
 import { locales } from "@app/middlewares/language.middleware";
+import Providers from "../../providers/providers";
 
-const montserrat = Montserrat({
+export const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
 });
-
-export const metadata: Metadata = {
-  title: "Dr.Patch",
-};
 
 export default async function RootLayout({
   children,
@@ -31,8 +25,12 @@ export default async function RootLayout({
 }) {
   if (!locales.map((l) => l.code).includes(locale)) notFound();
   const messages = await getLocalMessages(locale);
+
   return (
     <html lang={locale}>
+      <head>
+        <title>Dr.Patch</title>
+      </head>
       <body
         className={[
           montserrat.className,
@@ -44,18 +42,11 @@ export default async function RootLayout({
           messages={messages}
           now={new Date()}
         >
-          <ReduxProvider>
+          <Providers>
             <Navbar />
             {children}
             <Footer />
-          </ReduxProvider>
-          <ToastContainer
-            autoClose={3000}
-            closeOnClick
-            position="bottom-right"
-            theme="dark"
-            toastClassName={montserrat.className}
-          />
+          </Providers>
         </NextIntelClientProvider>
       </body>
     </html>
