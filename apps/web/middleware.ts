@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import middlewares from "./middlewares";
 
 export default function middleware(request: NextRequest) {
+  const key = request.url;
   const matchedMiddlewares = middlewares
     .filter((middleware) => middleware.matcher.test(request.url))
     .map((m) => m.middleware);
