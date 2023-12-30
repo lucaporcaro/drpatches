@@ -23,10 +23,8 @@ export class AddressesService {
     return Object.assign(address, { user: undefined });
   }
 
-  public async getAll(userId: string) {
-    return await this.addressRepo.findAll({
-      populateWhere: { user: { id: userId } },
-    });
+  public async getAll(id: string) {
+    return await this.addressRepo.find({ user: { id } });
   }
 
   public async getOne(userId: string, id: string) {
