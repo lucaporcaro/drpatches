@@ -29,12 +29,7 @@ export default class JwtGaurd implements CanActivate {
 
     try {
       const { id } = await this.jwtService.verifyAsync(token);
-      request.user = await this.userRepo.findOneOrFail(
-        { id },
-        {
-          cache: 1000 * 60 * 10,
-        },
-      );
+      request.user = await this.userRepo.findOneOrFail({ id });
     } catch (e) {
       this.logger.debug(e);
       throw new UnauthorizedException();
