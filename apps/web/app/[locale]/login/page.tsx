@@ -11,7 +11,10 @@ async function loginWithErrors(formData: FormData) {
     formData.get("email") as string,
     formData.get("password") as string
   );
-  if (result) toast.success("You logged in successfully");
+  if (result) {
+    toast.success("You logged in successfully")
+    setTimeout(window.location.reload, 1000);
+  }
   else toast.error("Your email or password is incorrect");
 }
 
