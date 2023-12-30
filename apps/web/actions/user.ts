@@ -14,7 +14,6 @@ export async function updateUser(payload: object): Promise<string | UserState> {
       throw new Error('Updating the user faild');
     return data;
   } catch (e: any) {
-    console.dir(e)
     return (typeof e?.response?.data?.message === "string" ? e?.response?.data?.message : e?.response?.data?.message[0]) || e.message
   }
 }
