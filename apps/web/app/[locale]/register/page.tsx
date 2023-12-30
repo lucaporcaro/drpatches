@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
 import { register } from "@app/actions/auth";
 import Button from "@app/components/Button";
 import Input from "@app/components/Input";
 import Link from "@app/components/Link";
-import { PhoneInput } from "react-international-phone";
+import PhoneInput from "@app/components/PhoneInput";
 import { toast } from "react-toastify";
 
 async function registerWithErrors(formData: FormData) {
@@ -34,19 +34,26 @@ export default function RegisterPage() {
           <Input label="Email" name="email" type="email" required />
           <Input label="Password" name="password" type="password" required />
           <PhoneInput
-            className="bg-white w-full rounded-md"
-            inputClassName="w-full"
             required
             name="phone"
+            label="Phone"
           />
-          <select
+          <Input
             placeholder="Gender"
-            className="w-full h-8 text-black font-semibold px-4 rounded-md text-sm"
+            label="Gender"
             name="gender"
-          >
-            <option value="m">Male</option>
-            <option value="f">Female</option>
-          </select>
+            options={[
+              {
+                label: 'Male',
+                value: 'm',
+              },
+              {
+                label: 'Female',
+                value: 'f'
+              }
+            ]}
+            required
+          />
           <Button>Register</Button>
           <div className="w-max mx-auto font-semibold underline text-black">
             <Link href="/login">Already have one?</Link>

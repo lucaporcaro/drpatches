@@ -1,5 +1,4 @@
 import {
-  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -16,7 +15,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: EntityRepository<User>,
-  ) {}
+  ) { }
 
   public async getUser(id: string) {
     return await this.userRepo.findOne({ id });
@@ -25,7 +24,11 @@ export class UserService {
   public async updateUserInformation(id: string, payload: GetUserResponseDto) {
     try {
       const user = await this.userRepo.findOne({ id });
-      Object.assign(user, payload);
+      for (const key of Object.keys(payload)) {
+        const payloadValue = key !== 'phone' ? payload[key] : payload[key].replaceAll(' ', '')
+        if (user[key] != payloadValue)
+          user[key] = payloadValue
+      }
       await this.userRepo.getEntityManager().flush();
       return await this.getUser(id);
     } catch (e) {

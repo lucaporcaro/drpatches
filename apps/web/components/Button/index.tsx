@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
 export default function Button({
   children,
+  className,
   ...props
 }: { children: React.ReactNode } & DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -9,7 +10,7 @@ export default function Button({
 >) {
   return (
     <button
-      className="p-4 bg-black flex items-center justify-center rounded-xl font-semibold text-base text-white"
+      className={["p-4 bg-black flex items-center justify-center rounded-xl font-semibold text-base text-white", className].join(' ')}
       {...props}
     >
       {children}
