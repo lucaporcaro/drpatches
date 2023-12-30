@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 type Props = {
   disabled?: boolean;
@@ -28,10 +28,15 @@ export default function Input({
   type = "text",
   placeholder,
   options = [],
-  containerClassName = ''
+  containerClassName = "",
 }: Props) {
   return (
-    <div className={["w-full h-max flex flex-col items-start justify-start gap-2", containerClassName].join(' ')}>
+    <div
+      className={[
+        "w-full h-max flex flex-col items-start justify-start gap-2",
+        containerClassName,
+      ].join(" ")}
+    >
       <span className="font-semibold text-black text-xl">{label}</span>
       {type === "select" ? (
         <select
@@ -42,11 +47,20 @@ export default function Input({
           defaultValue={defaultValue}
           required={required}
           value={value}
-          onChange={onChange ? ({ currentTarget: { value } }) => onChange(value) : undefined}
+          onChange={
+            onChange
+              ? ({ currentTarget: { value } }) => onChange(value)
+              : undefined
+          }
         >
-          {options.map((option) =>
-            <option key={`option_${label ?? ''}_${option.value}`} value={option.value}>{option.label}</option>
-          )}
+          {options.map((option) => (
+            <option
+              key={`option_${label ?? ""}_${option.value}`}
+              value={option.value}
+            >
+              {option.label}
+            </option>
+          ))}
         </select>
       ) : (
         <input
