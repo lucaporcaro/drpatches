@@ -299,7 +299,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "enumItems": [
             "image",
             "text"
@@ -322,6 +322,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "default": "'#111'",
           "mappedType": "string"
         },
         "text_color": {
@@ -331,6 +332,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "default": "'#111'",
           "mappedType": "string"
         },
         "background_color": {
@@ -340,6 +342,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "default": "'#111'",
           "mappedType": "string"
         },
         "patch_width": {
@@ -349,6 +352,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "10",
           "mappedType": "integer"
         },
         "patch_height": {
@@ -358,6 +362,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "10",
           "mappedType": "integer"
         },
         "quantity": {
@@ -367,6 +372,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "50",
           "mappedType": "integer"
         },
         "patch_type_id": {
@@ -375,7 +381,7 @@
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "string"
         },
         "backing_type": {
@@ -385,6 +391,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "'da_cucire'",
           "enumItems": [
             "da_cucire",
             "termoadesiva",
@@ -410,6 +417,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "0",
           "mappedType": "double"
         },
         "status": {
@@ -419,6 +427,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "'created'",
           "enumItems": [
             "created",
             "paid",
@@ -516,6 +525,7 @@
             "id"
           ],
           "referencedTableName": "public.patch_types",
+          "deleteRule": "set null",
           "updateRule": "cascade"
         },
         "products_user_id_foreign": {

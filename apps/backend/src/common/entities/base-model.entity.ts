@@ -1,4 +1,6 @@
 import { PrimaryKey, Property } from '@mikro-orm/core';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 import { ulid } from 'ulid';
 
 export default class BaseModel {

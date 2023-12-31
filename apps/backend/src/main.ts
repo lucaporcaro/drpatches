@@ -39,6 +39,7 @@ function setupSwagger(app: INestApplication) {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableShutdownHooks()
   setupCors(app);
   setupPipes(app);
   setupVersioning(app);

@@ -1,4 +1,11 @@
-import { Entity, Enum, ManyToOne, Property } from '@mikro-orm/core';
+import {
+  AfterUpdate,
+  Entity,
+  Enum,
+  EventArgs,
+  ManyToOne,
+  Property,
+} from '@mikro-orm/core';
 import BaseModel from 'src/common/entities/base-model.entity';
 import PatchType from './patch-type.entity';
 import User from 'src/modules/user/entities/user.entity';
@@ -25,43 +32,51 @@ export enum ProductBackingType {
 
 @Entity({ tableName: 'products' })
 export default class Product extends BaseModel {
-  @Enum(() => ProductType)
+  @Enum({ items: () => ProductType, nullable: true })
   type!: ProductType;
 
   @Property({ nullable: true })
   text?: string;
 
-  @Property({ name: 'border_color', nullable: true })
+  @Property({ name: 'border_color', default: '#111' })
   borderColor?: string;
 
-  @Property({ name: 'text_color', nullable: true })
+  @Property({ name: 'text_color', default: '#111' })
   textColor?: string;
 
-  @Property({ name: 'background_color', nullable: true })
+  @Property({ name: 'background_color', default: '#111' })
   backgroundColor?: string;
 
-  @Property({ name: 'patch_width' })
+  @Property({ name: 'patch_width', default: 10 })
   patchWidth: number;
 
-  @Property({ name: 'patch_height' })
+  @Property({ name: 'patch_height', default: 10 })
   patchHeight: number;
 
-  @Property()
+  @Property({ default: 50 })
   quantity: number;
 
-  @ManyToOne(() => PatchType, { index: true })
+  @ManyToOne(() => PatchType, { index: true, nullable: true })
   patchType!: PatchType;
 
-  @Enum({ items: () => ProductBackingType, name: 'backing_type' })
-  backingType: string;
+  @Enum({
+    items: () => ProductBackingType,
+    name: 'backing_type',
+    default: ProductBackingType.DA_CUCIRE,
+  })
+  backingType!: ProductBackingType;
 
   @Property({ nullable: true })
   image?: string;
 
-  @Property({ type: 'double' })
+  @Property({ type: 'double', default: 0 })
   price: number | string;
 
-  @Enum({ items: () => ProductStatus, index: true })
+  @Enum({
+    items: () => ProductStatus,
+    index: true,
+    default: ProductStatus.CREATED,
+  })
   status!: ProductStatus;
 
   @ManyToOne(() => User, { index: true })
