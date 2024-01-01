@@ -12,26 +12,30 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiConsumes,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import JwtGaurd from '../authentication/gaurd/jwt.gaurd';
+
+import JwtGuard from '../authentication/gaurd/jwt.gaurd';
 import ProductService from './product.service';
 import GetProductResponseDto from './dtos/get-product.response.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import UpdateProductRequestDto from './dtos/update-product.request.dto';
 import { Request as ERequest } from 'express';
 import { diskStorage } from 'src/common/storages/dist';
+import { ProductType } from './entities/product.entity';
+import CreateProductRequestDto from './dtos/create-product.request.dto';
 
 @Controller({ path: 'product', version: '1' })
 @ApiTags('Products')
 @ApiBearerAuth()
-@UseGuards(JwtGaurd)
+@UseGuards(JwtGuard)
 export default class ProductController {
-  constructor(private readonly service: ProductService) {}
+  constructor(private readonly service: ProductService) { }
 
   @Get('all')
   @ApiOkResponse({ type: GetProductResponseDto, isArray: true })
@@ -51,8 +55,8 @@ export default class ProductController {
 
   @Post()
   @ApiCreatedResponse({ type: GetProductResponseDto })
-  public async create(@Request() { user }: any) {
-    return await this.service.createProduct(user);
+  public async create(@Request() { user }: any, @Body() payload: CreateProductRequestDto) {
+    return await this.service.createProduct(user, payload.type);
   }
 
   @Patch(':id')
