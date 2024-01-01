@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaLocationArrow, FaUser } from "react-icons/fa6";
+import { CiShop } from "react-icons/ci"
 
 const sidebarItems = [
   {
@@ -11,6 +12,11 @@ const sidebarItems = [
     label: "Addresses",
     Icon: FaLocationArrow,
     link: "/profile/addresses",
+  },
+  {
+    label: "Products",
+    Icon: CiShop,
+    link: "/profile/products",
   },
 ];
 

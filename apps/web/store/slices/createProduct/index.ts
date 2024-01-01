@@ -1,12 +1,15 @@
+import { updateProduct } from "@app/actions/product";
 import prices from "@app/assets/data/prices";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 export interface CreateProductState {
+  id?: string;
   type?: "text" | "image";
   text?: string;
-  borderColor?: string;
-  textColor?: string;
-  backgroundColor?: string;
+  borderColor: string;
+  textColor: string;
+  backgroundColor: string;
   patchWidth: number;
   patchHeight: number;
   quantity: number;
@@ -16,7 +19,9 @@ export interface CreateProductState {
   price: number | string;
 }
 
+
 const initialState: CreateProductState = {
+  id: undefined,
   patchWidth: 10,
   patchHeight: 10,
   quantity: 50,
@@ -24,27 +29,25 @@ const initialState: CreateProductState = {
   textColor: "#111",
   backgroundColor: "#111",
   price: 0,
+  type: undefined,
+  text: undefined,
+  patchType: undefined,
+  backingType: undefined,
+  image: undefined,
 };
 
 export const createProductSlice = createSlice({
   name: "create_product",
   initialState,
   reducers: {
-    setProductType(state, { payload }: PayloadAction<"text" | "image">) {
-      state.type = payload;
+    updateCreatedProduct(state: any, { payload: { key, value } }: PayloadAction<{ key: string, value: any }>) {
+      state[key] = value;
+
+
     },
-    restoreCreateProduct(state, { payload }) {
-      Object.entries(payload).forEach(([key, value]) => {
-        (state as any)[key] = !/^\d+$/.test(payload[key])
-          ? payload[key]
-          : parseFloat(payload[key]);
-      });
-    },
-    updateCreateProduct(
-      state,
-      { payload: { key, value } }: PayloadAction<{ key: string; value: string }>
-    ) {
-      (state as any)[key] = value;
+    loadCreatedProduct(state: any, { payload }) {
+      for (const key of Object.keys(payload))
+        state[key] = payload[key];
     },
     calculateProductPrice(
       state,
@@ -92,11 +95,10 @@ export const createProductSlice = createSlice({
 });
 
 export const {
-  setProductType,
-  restoreCreateProduct,
-  updateCreateProduct,
   calculateProductPrice,
   reset,
+  updateCreatedProduct,
+  loadCreatedProduct
 } = createProductSlice.actions;
 
 export default createProductSlice.reducer;

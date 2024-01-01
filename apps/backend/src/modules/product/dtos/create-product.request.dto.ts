@@ -6,7 +6,7 @@ export default class CreateProductRequestDto {
   @ApiProperty({
     enum: ProductType, default: ProductType.TEXT
   })
-  @IsEnum({ enum: ProductType })
+  @IsEnum(ProductType)
   @IsNotEmpty()
   type!: ProductType;
 }

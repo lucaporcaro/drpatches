@@ -47,10 +47,10 @@ export default class Product extends BaseModel {
   @Property({ name: 'background_color', default: '#111' })
   backgroundColor?: string;
 
-  @Property({ name: 'patch_width', default: 10 })
+  @Property({ name: 'patch_width', default: 10, type: 'double' })
   patchWidth: number;
 
-  @Property({ name: 'patch_height', default: 10 })
+  @Property({ name: 'patch_height', default: 10, type: 'double' })
   patchHeight: number;
 
   @Property({ default: 50 })

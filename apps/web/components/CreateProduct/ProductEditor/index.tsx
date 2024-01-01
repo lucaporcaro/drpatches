@@ -1,7 +1,9 @@
+'use client';
+
 import NumberInput from "@app/components/NumberInput";
 import Select, { SelectItem } from "@app/components/Select";
 import { RootState } from "@app/store";
-import { reset, updateCreateProduct } from "@app/store/slices/createProduct";
+import { CreateProductState, loadCreatedProduct, reset, updateCreatedProduct } from "@app/store/slices/createProduct";
 import { useTranslations } from "next-intl";
 import { useDispatch, useSelector } from "react-redux";
 import TypeImage from "@app/assets/images/select.png";
@@ -12,9 +14,11 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import { useRef } from "react";
+import { useEffect, useRef, useTransition } from "react";
 import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
+import { toast } from "react-toastify";
+import { httpClient } from "@app/lib/axios";
 
 const typeItems: SelectItem[] = [
   {
@@ -59,8 +63,55 @@ const backingItems: SelectItem[] = [
   { id: "velcro_a_b", image: VelcroABImage.src },
 ];
 
-export default function ProductEditor() {
+type Props = {
+  initialProduct: CreateProductState;
+}
+
+let updaterTimeout: NodeJS.Timeout;
+
+async function updateProductWithErrors(product: any) {
+  const id = product.id;
+  if (updaterTimeout)
+    clearTimeout(updaterTimeout)
+  updaterTimeout = setTimeout(async () => {
+    Object.assign(product, {
+      id: undefined, createdAt: undefined, updatedAt: undefined, price: undefined, user: undefined,
+    })
+    const payload = new FormData;
+    for (const key of Object.keys(product))
+      if (typeof product[key] !== 'undefined')
+        payload.append(key, product[key])
+    try {
+      return await toast.promise(httpClient.patchForm(`/v1/product/${id}`, payload, {
+        headers: {
+          "Content-Type": 'multipart/form-data'
+        }
+      }), {
+        pending: {
+          render: 'Syncing the product...',
+          autoClose: 25000
+        },
+        error: {
+          render: 'Syncing failed',
+          autoClose: 3000,
+        },
+        success: {
+          render: 'Synced successfully',
+          autoClose: 3000
+        }
+      })
+    } catch (e: any) {
+      console.dir(e.response.data)
+      throw new Error
+    }
+  }, 3000)
+
+
+}
+
+export default function ProductEditor({ initialProduct }: Props) {
   // States
+  const product = useSelector((state: RootState) => state.createProduct)
   const {
     type,
     text,
@@ -74,7 +125,7 @@ export default function ProductEditor() {
     backgroundColor,
     image,
     price,
-  } = useSelector((state: RootState) => state.createProduct);
+  } = product;
   const dispatch = useDispatch();
   const t = useTranslations("components.product_editor");
 
@@ -83,7 +134,13 @@ export default function ProductEditor() {
 
   // Functions
   const update = (key: string) => (value: any) =>
-    dispatch(updateCreateProduct({ key, value }));
+    dispatch(updateCreatedProduct({ key, value }));
+
+  // Effects
+  useEffect(() => { updateProductWithErrors({ ...product }) }, [product])
+  useEffect(() => {
+    dispatch(loadCreatedProduct(initialProduct))
+  }, [initialProduct])
 
   return (
     <>
@@ -165,7 +222,7 @@ export default function ProductEditor() {
             label={t("patch_width")}
             unit="CM"
             step={0.5}
-            // disabled
+          // disabled
           />
           <NumberInput
             value={parseFloat(patchHeight as any)}
@@ -173,7 +230,7 @@ export default function ProductEditor() {
             label={t("patch_height")}
             unit="CM"
             step={0.5}
-            // disabled
+          // disabled
           />
           <NumberInput
             value={parseFloat(quantity as any)}

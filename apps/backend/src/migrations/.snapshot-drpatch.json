@@ -347,23 +347,23 @@
         },
         "patch_width": {
           "name": "patch_width",
-          "type": "int",
+          "type": "double precision",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "default": "10",
-          "mappedType": "integer"
+          "mappedType": "double"
         },
         "patch_height": {
           "name": "patch_height",
-          "type": "int",
+          "type": "double precision",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
           "default": "10",
-          "mappedType": "integer"
+          "mappedType": "double"
         },
         "quantity": {
           "name": "quantity",
