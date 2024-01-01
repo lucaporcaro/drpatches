@@ -14,7 +14,7 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import { useEffect, useRef, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
 import { toast } from "react-toastify";
@@ -128,6 +128,7 @@ export default function ProductEditor({ initialProduct }: Props) {
   } = product;
   const dispatch = useDispatch();
   const t = useTranslations("components.product_editor");
+  const [updated, setUpdated] = useState<boolean>(false)
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
@@ -137,9 +138,10 @@ export default function ProductEditor({ initialProduct }: Props) {
     dispatch(updateCreatedProduct({ key, value }));
 
   // Effects
-  useEffect(() => { updateProductWithErrors({ ...product }) }, [product])
+  useEffect(() => { if (updated) updateProductWithErrors({ ...product }) }, [product])
   useEffect(() => {
     dispatch(loadCreatedProduct(initialProduct))
+    setTimeout(() => setUpdated(true), 1000)
   }, [initialProduct])
 
   return (
@@ -165,7 +167,7 @@ export default function ProductEditor({ initialProduct }: Props) {
                 {image ? (
                   <img
                     className="w-full h-full absolute inset-0"
-                    src={URL.createObjectURL(image)}
+                    src={typeof image === "string" ? `${httpClient.defaults.baseURL}/${image}` : URL.createObjectURL(image)}
                   />
                 ) : (
                   <>

@@ -8,12 +8,12 @@ export default async function AddressesProfilePage() {
   return <div className="w-full h-max flex flex-col items-start justify-start gap-4 p-8 max-h-full overflow-y-scroll">
     <div className="w-full h-max flex flex-col lg:flex-row items-start justify-start lg:justify-between lg:items-center">
       <h2 className="font-bold text-2xl">Addresses</h2>
-      <Link passHref href="/profile/addresses/create">
+      <Link passHref href="/product/create" replace>
         <Button>Create</Button>
       </Link>
     </div>
     <div className="w-full flex flex-col gap-10">
-      {addresses.map((product, i) => <Link key={`address_${i}_${product.id}`} href={`/product/editor/${product.id}`}><div
+      {addresses.map((product, i) => <Link key={`address_${i}_${product.id}`} href={`/product/editor/${product.id}`} replace><div
         className="w-full h-full overflow-y-scroll p-4 rounded-md bg-black text-white transition-colors hover:bg-black/80 cursor-pointer grid place-items-center place-content-center grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4">
           <span className="font-bold text-xl">ID: </span>
