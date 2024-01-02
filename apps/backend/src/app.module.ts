@@ -9,8 +9,6 @@ import { diskStorage } from './common/storages/dist';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-console.dir(join(__dirname, 'media'));
-
 @Module({
   imports: [
     MikroOrmModule.forRoot(),
@@ -27,4 +25,4 @@ console.dir(join(__dirname, 'media'));
     ProductModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
