@@ -37,6 +37,8 @@ function setupSwagger(app: INestApplication) {
   SwaggerModule.setup('/documentation', app, document);
 }
 
+
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableShutdownHooks()

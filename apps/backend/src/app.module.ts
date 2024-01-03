@@ -8,9 +8,11 @@ import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from './common/storages/dist';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AdminjsModule } from './common/adminjs/adminjs.module';
 
 @Module({
   imports: [
+    AdminjsModule,
     MikroOrmModule.forRoot(),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'media'),
@@ -25,4 +27,4 @@ import { join } from 'path';
     ProductModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
