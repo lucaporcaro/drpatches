@@ -1,7 +1,5 @@
-import { updateProduct } from "@app/actions/product";
 import prices from "@app/assets/data/prices";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
 
 export interface CreateProductState {
   id?: string;
