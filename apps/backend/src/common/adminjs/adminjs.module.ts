@@ -46,6 +46,10 @@ async function isAdmin(email: string, password: string) {
           adminJsOptions: {
             rootPath: '/admin',
             componentLoader,
+            branding: {
+              companyName: 'Dr.Patch',
+              withMadeWithLove: false,
+            },
             resources: [
               {
                 resource: { model: User, orm },

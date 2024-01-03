@@ -17,8 +17,8 @@ export interface CreateProductState {
   backingType?: string;
   image?: File;
   price: number | string;
+  status?: string;
 }
-
 
 const initialState: CreateProductState = {
   id: undefined,
@@ -40,14 +40,14 @@ export const createProductSlice = createSlice({
   name: "create_product",
   initialState,
   reducers: {
-    updateCreatedProduct(state: any, { payload: { key, value } }: PayloadAction<{ key: string, value: any }>) {
+    updateCreatedProduct(
+      state: any,
+      { payload: { key, value } }: PayloadAction<{ key: string; value: any }>
+    ) {
       state[key] = value;
-
-
     },
     loadCreatedProduct(state: any, { payload }) {
-      for (const key of Object.keys(payload))
-        state[key] = payload[key];
+      for (const key of Object.keys(payload)) state[key] = payload[key];
     },
     calculateProductPrice(
       state,
@@ -98,7 +98,7 @@ export const {
   calculateProductPrice,
   reset,
   updateCreatedProduct,
-  loadCreatedProduct
+  loadCreatedProduct,
 } = createProductSlice.actions;
 
 export default createProductSlice.reducer;
