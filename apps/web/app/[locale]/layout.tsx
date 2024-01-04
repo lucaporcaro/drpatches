@@ -8,8 +8,6 @@ import Navbar from "@app/components/Navbar";
 import Footer from "@app/components/Footer";
 import { locales } from "@app/middlewares/language.middleware";
 import Providers from "../../providers/providers";
-import UserProvider from "@app/providers/UserProvider";
-import PriceProvider from "@app/providers/PriceProvider";
 
 export const montserrat = Montserrat({
   subsets: ["latin"],
