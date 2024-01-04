@@ -1,9 +1,14 @@
-'use client';
+"use client";
 
 import NumberInput from "@app/components/NumberInput";
 import Select, { SelectItem } from "@app/components/Select";
 import { RootState } from "@app/store";
-import { CreateProductState, loadCreatedProduct, reset, updateCreatedProduct } from "@app/store/slices/createProduct";
+import {
+  CreateProductState,
+  loadCreatedProduct,
+  reset,
+  updateCreatedProduct,
+} from "@app/store/slices/createProduct";
 import { useTranslations } from "next-intl";
 import { useDispatch, useSelector } from "react-redux";
 import TypeImage from "@app/assets/images/select.png";
@@ -19,6 +24,7 @@ import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
 import { toast } from "react-toastify";
 import { httpClient } from "@app/lib/axios";
+import { useRouter } from "next/navigation";
 
 const typeItems: SelectItem[] = [
   {
@@ -65,53 +71,13 @@ const backingItems: SelectItem[] = [
 
 type Props = {
   initialProduct: CreateProductState;
-}
+};
 
 let updaterTimeout: NodeJS.Timeout;
 
-async function updateProductWithErrors(product: any) {
-  const id = product.id;
-  if (updaterTimeout)
-    clearTimeout(updaterTimeout)
-  updaterTimeout = setTimeout(async () => {
-    Object.assign(product, {
-      id: undefined, createdAt: undefined, updatedAt: undefined, price: undefined, user: undefined,
-    })
-    const payload = new FormData;
-    for (const key of Object.keys(product))
-      if (typeof product[key] !== 'undefined')
-        payload.append(key, product[key])
-    try {
-      return await toast.promise(httpClient.patchForm(`/v1/product/${id}`, payload, {
-        headers: {
-          "Content-Type": 'multipart/form-data'
-        }
-      }), {
-        pending: {
-          render: 'Syncing the product...',
-          autoClose: 25000
-        },
-        error: {
-          render: 'Syncing failed',
-          autoClose: 3000,
-        },
-        success: {
-          render: 'Synced successfully',
-          autoClose: 3000
-        }
-      })
-    } catch (e: any) {
-      console.dir(e.response.data)
-      throw new Error
-    }
-  }, 3000)
-
-
-}
-
 export default function ProductEditor({ initialProduct }: Props) {
   // States
-  const product = useSelector((state: RootState) => state.createProduct)
+  const product = useSelector((state: RootState) => state.createProduct);
   const {
     type,
     text,
@@ -127,8 +93,9 @@ export default function ProductEditor({ initialProduct }: Props) {
     price,
   } = product;
   const dispatch = useDispatch();
+  const [updatedPrice, setUpdatedPrice] = useState(price);
   const t = useTranslations("components.product_editor");
-  const [updated, setUpdated] = useState<boolean>(false)
+  const [updated, setUpdated] = useState<boolean>(false);
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
@@ -136,13 +103,64 @@ export default function ProductEditor({ initialProduct }: Props) {
   // Functions
   const update = (key: string) => (value: any) =>
     dispatch(updateCreatedProduct({ key, value }));
+  async function updateProductWithErrors(product: any) {
+    const id = product.id;
+
+    if (updaterTimeout) clearTimeout(updaterTimeout);
+
+    updaterTimeout = setTimeout(async () => {
+      Object.assign(product, {
+        id: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+        price: undefined,
+        user: undefined,
+        status: undefined,
+      });
+
+      const payload = new FormData();
+      for (const key of Object.keys(product))
+        if (typeof product[key] !== "undefined")
+          payload.append(key, product[key]);
+
+      try {
+        const { data }: any = await toast.promise(
+          httpClient.patchForm(`/v1/product/${id}`, payload, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }),
+          {
+            pending: {
+              render: "Syncing the product...",
+              autoClose: 25000,
+            },
+            error: {
+              render: "Syncing failed",
+              autoClose: 3000,
+            },
+            success: {
+              render: "Synced successfully",
+              autoClose: 3000,
+            },
+          }
+        );
+        setUpdatedPrice(data.price);
+      } catch (e: any) {
+        console.dir(e.response.data);
+        throw new Error();
+      }
+    }, 2000);
+  }
 
   // Effects
-  useEffect(() => { if (updated) updateProductWithErrors({ ...product }) }, [product])
   useEffect(() => {
-    dispatch(loadCreatedProduct(initialProduct))
-    setTimeout(() => setUpdated(true), 1000)
-  }, [initialProduct])
+    if (updated) updateProductWithErrors({ ...product });
+  }, [product]);
+  useEffect(() => {
+    dispatch(loadCreatedProduct(initialProduct));
+    setTimeout(() => setUpdated(true), 1000);
+  }, [initialProduct]);
 
   return (
     <>
@@ -167,7 +185,11 @@ export default function ProductEditor({ initialProduct }: Props) {
                 {image ? (
                   <img
                     className="w-full h-full absolute inset-0"
-                    src={typeof image === "string" ? `${httpClient.defaults.baseURL}/${image}` : URL.createObjectURL(image)}
+                    src={
+                      typeof image === "string"
+                        ? `${httpClient.defaults.baseURL}/${image}`
+                        : URL.createObjectURL(image)
+                    }
                   />
                 ) : (
                   <>
@@ -224,7 +246,7 @@ export default function ProductEditor({ initialProduct }: Props) {
             label={t("patch_width")}
             unit="CM"
             step={0.5}
-          // disabled
+            // disabled
           />
           <NumberInput
             value={parseFloat(patchHeight as any)}
@@ -232,7 +254,7 @@ export default function ProductEditor({ initialProduct }: Props) {
             label={t("patch_height")}
             unit="CM"
             step={0.5}
-          // disabled
+            // disabled
           />
           <NumberInput
             value={parseFloat(quantity as any)}
@@ -290,7 +312,9 @@ export default function ProductEditor({ initialProduct }: Props) {
           </span>
           <div className="w-full h-max flex flex-col items-center justify-center gap-6 lg:flex-row lg:max-w-[500px]">
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
-              <span className="font-semibold text-2xl">{price}€</span>
+              <span className="font-semibold text-2xl">
+                {updatedPrice || price}€
+              </span>
             </div>
             <div className="w-[249px] h-max">
               <Button>{t("add_to_cart")}</Button>

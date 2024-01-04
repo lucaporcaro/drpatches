@@ -1,10 +1,10 @@
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import Product, { ProductType } from './entities/product.entity';
+import Product, { ProductType } from '../entities/product.entity';
 import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
-import PatchType from './entities/patch-type.entity';
-import User from '../user/entities/user.entity';
-import UpdateProductRequestDto from './dtos/update-product.request.dto';
+import PatchType from '../entities/patch-type.entity';
+import User from '../../user/entities/user.entity';
+import UpdateProductRequestDto from '../dtos/update-product.request.dto';
 
 @Injectable()
 export default class ProductService {
@@ -22,7 +22,7 @@ export default class ProductService {
   public async createProduct(user: User, type: ProductType): Promise<Product> {
     const product = this.productRepo.create({
       user,
-      type
+      type,
     });
     await this.entityManager.persistAndFlush([product]);
     return Object.assign(product, { user: undefined });

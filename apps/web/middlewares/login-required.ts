@@ -4,5 +4,5 @@ export const LoginRequired = {
     if (!request.cookies.get("jwt_token"))
       return NextResponse.redirect(new URL("/login", request.url));
   },
-  matcher: /\/(create|profile)/,
+  matcher: /\/(create|profile|logout)/,
 };

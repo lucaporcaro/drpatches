@@ -9,9 +9,11 @@ import { diskStorage } from './common/storages/dist';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AdminjsModule } from './common/adminjs/adminjs.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
+    CacheModule.register({ isGlobal: true }),
     AdminjsModule,
     MikroOrmModule.forRoot(),
     ServeStaticModule.forRoot({

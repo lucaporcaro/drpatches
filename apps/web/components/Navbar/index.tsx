@@ -47,10 +47,15 @@ const Navbar = () => {
         <div className="w-max h-max flex items-center justify-center gap-6 text-white font-medium text-base">
           <Link href="/contact">{t("links.contact")}</Link>
           {isLoggedIn ? (
-            <Link
-              href="/profile"
-              className="border-white border-b-[1px] pb-1"
-            >{`${user.firstName} ${user.lastName}`}</Link>
+            <>
+              <Link
+                href="/profile"
+                className="border-white border-b-[1px] pb-1"
+              >{`${user.firstName} ${user.lastName}`}</Link>{" "}
+              <Link href="/logout" className="w-max max-w-[160px] text-center">
+                Logout
+              </Link>
+            </>
           ) : (
             <Link href="/login">{t("links.login")}</Link>
           )}
@@ -100,12 +105,20 @@ const Navbar = () => {
             </span>
             <div className="w-max h-max flex flex-col items-center justify-center gap-6 text-white font-medium text-base">
               {isLoggedIn ? (
-                <Link
-                  href="/profile"
-                  className="w-full max-w-[160px] text-center"
-                >
-                  {`${user.firstName} ${user.lastName}`}
-                </Link>
+                <>
+                  <Link
+                    href="/profile"
+                    className="w-full max-w-[160px] text-center"
+                  >
+                    {`${user.firstName} ${user.lastName}`}
+                  </Link>
+                  <Link
+                    href="/logout"
+                    className="w-full max-w-[160px] text-center"
+                  >
+                    Logout
+                  </Link>
+                </>
               ) : (
                 <Link href="/login">{t("links.login")}</Link>
               )}

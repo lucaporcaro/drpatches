@@ -45,43 +45,9 @@ export const createProductSlice = createSlice({
       state[key] = value;
     },
     loadCreatedProduct(state: any, { payload }) {
-      for (const key of Object.keys(payload)) state[key] = payload[key];
-    },
-    calculateProductPrice(
-      state,
-      { payload }: PayloadAction<CreateProductState>
-    ) {
-      const { type, backingType, patchHeight, patchWidth, quantity } = payload;
-
-      if (!type || !backingType) {
-        state.price = 0;
-        return;
+      for (const key of Object.keys(payload)) {
+        state[key] = payload[key];
       }
-      const size = (patchWidth + patchHeight) / 2;
-
-      const tablePrice = Object.entries(prices[type])
-        .filter(([key]) => {
-          return (typeof key === "number" ? key : parseFloat(key)) >= size;
-        })
-        .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0] as any[];
-
-      console.log(
-        `Current Table Price for size ${size}: ${tablePrice[0]} = ${tablePrice[1]}`
-      );
-
-      const pricePerOne =
-        (tablePrice ? tablePrice[1] : 0) +
-        (type === "image" ? 39 / quantity : 0);
-
-      const backingPriceLookup: { [key: string]: number } = {
-        termoadesiva: ((patchWidth * patchHeight * 8) / 7500) * 2,
-        velcro_a: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
-        velcro_b: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
-        velcro_a_b: (patchWidth * patchHeight * 36) / 2500 + pricePerOne * 0.5,
-      };
-      const backingPrice = backingPriceLookup[backingType] || 0;
-
-      state.price = ((pricePerOne + backingPrice) * 1.22 * quantity).toFixed(2);
     },
 
     reset(state: any) {
@@ -92,11 +58,7 @@ export const createProductSlice = createSlice({
   },
 });
 
-export const {
-  calculateProductPrice,
-  reset,
-  updateCreatedProduct,
-  loadCreatedProduct,
-} = createProductSlice.actions;
+export const { reset, updateCreatedProduct, loadCreatedProduct } =
+  createProductSlice.actions;
 
 export default createProductSlice.reducer;

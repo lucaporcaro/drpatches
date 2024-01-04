@@ -23,8 +23,11 @@ export default function ProfilePage() {
     const toastId = toast.loading("Updating Information...", {
       autoClose: 1000 * 25,
     });
-    const payload: { [key: string]: any } = {};
-    for (const key of formData.keys()) payload[key] = formData.get(key);
+
+    const payload: Record<string, string> = Object.fromEntries(
+      formData.entries()
+    ) as any;
+
     const result = await updateUser(payload);
     if (typeof result === "string") {
       toast.update(toastId, {

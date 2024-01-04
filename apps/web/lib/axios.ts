@@ -14,10 +14,17 @@ httpClient.interceptors.request.use(
 );
 
 async function getToken() {
-  if (typeof document !== "undefined")
-    return (document as any).cookie
-      .split(";")
-      .filter((c: any) => c.includes("jwt_token="))[0]
-      .split("=")[1];
-  else return await import("next/headers").then(({ cookies }) => cookies().get("jwt_token")?.value);
+  try {
+    if (typeof document !== "undefined")
+      return (document as any).cookie
+        .split(";")
+        .filter((c: any) => c.includes("jwt_token="))[0]
+        .split("=")[1];
+    else
+      return await import("next/headers").then(
+        ({ cookies }) => cookies().get("jwt_token")?.value || null
+      );
+  } catch {
+    return null;
+  }
 }

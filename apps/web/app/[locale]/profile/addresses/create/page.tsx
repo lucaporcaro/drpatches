@@ -16,8 +16,9 @@ export default function CreateAddressPage() {
     const toastId = toast.loading("Creating the address...", {
       autoClose: 25000,
     });
-    const payload: { [key: string]: any } = {};
-    for (const key of formData.keys()) payload[key] = formData.get(key);
+
+    const payload: Record<string, any> = Object.entries(formData.entries());
+
     const result = await createAddress(payload);
     if (typeof result !== "string") {
       toast.update(toastId, {
