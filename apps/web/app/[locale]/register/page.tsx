@@ -5,7 +5,7 @@ import Button from "@app/components/Button";
 import Input from "@app/components/Input";
 import Link from "@app/components/Link";
 import PhoneInput from "@app/components/PhoneInput";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function RegisterPage() {
