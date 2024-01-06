@@ -6,12 +6,14 @@ import Product from './entities/product.entity';
 import PatchType from './entities/patch-type.entity';
 import BackingPrice from './entities/backing-price.entity';
 import { PriceController, ProductController } from './controllers';
+import PatchTypeService from './services/patch-type.service';
+import PatchTypeController from './controllers/patch-type.controller';
 
 @Module({
   imports: [
     MikroOrmModule.forFeature([User, Product, PatchType, BackingPrice]),
   ],
-  providers: [ProductService, PriceService],
-  controllers: [ProductController, PriceController],
+  providers: [ProductService, PriceService, PatchTypeService],
+  controllers: [ProductController, PriceController, PatchTypeController],
 })
 export class ProductModule {}

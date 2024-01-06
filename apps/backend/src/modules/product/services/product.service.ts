@@ -79,6 +79,7 @@ export default class ProductService {
       if (!dbPatchType) throw new NotFoundException('Patch type not found');
       product.patchType = dbPatchType;
     }
+    console.dir(image);
     if (image) product.image = image.filename;
     await this.entityManager.flush();
     return product;

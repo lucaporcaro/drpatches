@@ -24,42 +24,7 @@ import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
 import { toast } from "react-toastify";
 import { httpClient } from "@app/lib/axios";
-import { useRouter } from "next/navigation";
-
-const typeItems: SelectItem[] = [
-  {
-    id: "01HGFKAJNMAG04APFXFBACA48E",
-    image: TypeImage.src,
-  },
-  {
-    id: "01HGFKB1SX51SD4D8HM98BH895",
-    image: TypeImage.src,
-  },
-  {
-    id: "01HGFKBBNB82NBQ3APGZJZSRKS",
-    image: TypeImage.src,
-  },
-  {
-    id: "01HGFKBTQMRCSFTJR61MEMV0QG",
-    image: TypeImage.src,
-  },
-  {
-    id: "01HGFKC57NEKR39ET0JAG68AEA",
-    image: TypeImage.src,
-  },
-  {
-    id: "01HGFKV6TCBAFVZQ9A6DN63TR7",
-    image: TypeImage.src,
-  },
-  {
-    id: "01HGFKVHDWJTPWH1SWCSQDGQ9W",
-    image: TypeImage.src,
-  },
-  {
-    id: "01HGFKVNW447HGPKBYD1H1MWYN",
-    image: TypeImage.src,
-  },
-];
+import { PatchTypeT } from "@app/actions/patch-type";
 
 const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -69,13 +34,14 @@ const backingItems: SelectItem[] = [
   { id: "velcro_a_b", image: VelcroABImage.src },
 ];
 
-type Props = {
-  initialProduct: CreateProductState;
-};
-
 let updaterTimeout: NodeJS.Timeout;
 
-export default function ProductEditor({ initialProduct }: Props) {
+type Props = {
+  initialProduct: CreateProductState;
+  patchTypes: PatchTypeT[];
+};
+
+export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   // States
   const product = useSelector((state: RootState) => state.createProduct);
   const {
@@ -268,7 +234,7 @@ export default function ProductEditor({ initialProduct }: Props) {
             <div className="w-max">
               <Select
                 value={patchType}
-                items={typeItems}
+                items={patchTypes}
                 label={t("select_type")}
                 onChange={update("patchType")}
               />
@@ -289,7 +255,7 @@ export default function ProductEditor({ initialProduct }: Props) {
                 <img
                   className="w-32 aspect-auto"
                   src={
-                    (typeItems.filter(({ id }) => id === patchType)[0] as any)
+                    (patchTypes.filter(({ id }) => id === patchType)[0] as any)
                       .image
                   }
                 />

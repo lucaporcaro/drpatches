@@ -82,9 +82,6 @@ async function isAdmin(email: string, password: string) {
                         },
                       },
                     },
-                    validation: {
-                      mimeTypes: ['image/png', 'application/pdf', 'audio/mpeg'],
-                    },
                   }),
                 ],
               },

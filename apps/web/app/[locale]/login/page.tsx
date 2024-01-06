@@ -19,7 +19,7 @@ export default function LoginPage() {
     if (result) {
       toast.success("You logged in successfully");
       router.replace("/");
-      setTimeout(router.refresh, 1000);
+      setTimeout(window.location.reload, 1000);
     } else toast.error("Your email or password is incorrect");
   }
   return (
