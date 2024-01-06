@@ -23,7 +23,7 @@ export default function RegisterPage() {
     if (result === true) {
       toast.success("You registered successfully");
       router.replace("/");
-      setTimeout(router.reload, 1000);
+      setTimeout(router.refresh, 1000);
     } else toast.error(result);
   }
   return (
