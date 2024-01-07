@@ -57,7 +57,7 @@ export type ProductDetailProps = {
   value?: string | number;
 };
 
-export function ProductDetail({ label, value }: ProductDetailProps) {
+function ProductDetail({ label, value }: ProductDetailProps) {
   return (
     <div className="flex items-center justify-center gap-2 bg-white p-3 rounded-md text-black">
       <strong>{label}</strong>
