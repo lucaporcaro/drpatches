@@ -2,6 +2,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function GET() {
-  cookies().delete("jwt_token");
+  cookies().delete("SESSION_TOKEN");
   return redirect("/");
 }

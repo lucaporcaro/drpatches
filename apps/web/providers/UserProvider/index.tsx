@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 
 export default function UserProvider({ children }: any) {
   // Cookies
-  const jwt = Cookies.get("jwt_token");
+  const jwt = Cookies.get("SESSION_TOKEN");
 
   // Hooks
   const dispatch = useDispatch();
