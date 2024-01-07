@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { config } from 'dotenv';
+import { from, switchMap } from 'rxjs';
 import Product, {
   ProductStatus,
 } from 'src/modules/product/entities/product.entity';
@@ -33,13 +34,18 @@ export class StripeController {
   }
 
   @Post()
-  async handle(@Body() event: Stripe.Event) {
+  handle(@Body() event: Stripe.Event) {
     if (event.type === 'checkout.session.completed') {
-      const product = await this.productRepo.findOne({
-        stripeId: event.data.object.client_reference_id,
-      });
-      product.status = ProductStatus.PAID;
-      await this.em.flush();
+      return from(
+        this.productRepo.findOne({
+          stripeId: event.data.object.client_reference_id,
+        }),
+      ).pipe(
+        switchMap((product) => {
+          product.status = ProductStatus.PAID;
+          return from(this.em.flush());
+        }),
+      );
     }
   }
 }
