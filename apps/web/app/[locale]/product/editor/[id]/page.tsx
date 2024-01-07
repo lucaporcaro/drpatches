@@ -11,7 +11,6 @@ export default async function ProductEidtorPage({
   // Data Fetching
   const product = await getProduct(params.id);
   const patchTypes = await getPatchTypes();
-  console.dir(patchTypes);
   // Conditions
   if (product.status !== "created") return redirect("/product/create");
   return (

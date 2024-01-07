@@ -11,7 +11,6 @@ import {
 } from "@app/store/slices/createProduct";
 import { useTranslations } from "next-intl";
 import { useDispatch, useSelector } from "react-redux";
-import TypeImage from "@app/assets/images/select.png";
 import DaCucireImage from "@app/assets/images/backing/1.png";
 import TermoadesivaImage from "@app/assets/images/backing/2.png";
 import VelcroAImage from "@app/assets/images/backing/3.png";
@@ -25,6 +24,7 @@ import Button from "@app/components/Button";
 import { toast } from "react-toastify";
 import { httpClient } from "@app/lib/axios";
 import { PatchTypeT } from "@app/actions/patch-type";
+import Link from "next/link";
 
 const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -283,7 +283,9 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
               </span>
             </div>
             <div className="w-[249px] h-max">
-              <Button>{t("add_to_cart")}</Button>
+              <Link href={`/product/checkout/${product.id}`}>
+                <Button>{t("add_to_cart")}</Button>
+              </Link>
             </div>
           </div>
         </div>

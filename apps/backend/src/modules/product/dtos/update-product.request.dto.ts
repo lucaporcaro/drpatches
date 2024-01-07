@@ -74,4 +74,9 @@ export default class UpdateProductRequestDto {
   })
   @IsOptional()
   image?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  stripeId?: string;
 }

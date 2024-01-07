@@ -14,7 +14,7 @@ export async function createProduct(
   }
 }
 
-export async function getProduct(id: string) {
+export async function getProduct(id: string): Promise<CreateProductState> {
   try {
     return (await httpClient.get(`/v1/product/${id}`)).data;
   } catch (e: any) {

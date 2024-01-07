@@ -81,6 +81,9 @@ export default class Product extends BaseModel {
   })
   status!: ProductStatus;
 
+  @Property({ name: 'stripe_id', nullable: true })
+  stripeId?: string;
+
   @ManyToOne(() => User, { index: true })
   user!: User;
 

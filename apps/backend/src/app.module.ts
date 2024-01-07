@@ -10,6 +10,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AdminjsModule } from './common/adminjs/adminjs.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { StripeModule } from './modules/webhooks/stripe/stripe.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     UserModule,
     AddressesModule,
     ProductModule,
+    StripeModule,
   ],
 })
 export class AppModule {}

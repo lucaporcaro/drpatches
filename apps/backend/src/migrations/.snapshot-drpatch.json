@@ -542,6 +542,15 @@
           ],
           "mappedType": "enum"
         },
+        "stripe_id": {
+          "name": "stripe_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
         "user_id": {
           "name": "user_id",
           "type": "varchar(255)",

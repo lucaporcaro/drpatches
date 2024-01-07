@@ -16,7 +16,7 @@ export default async function AddressesProfilePage() {
         {addresses.map((product, i) => (
           <Link
             key={`address_${i}_${product.id}`}
-            href={`/product/editor/${product.id}`}
+            href={product.status ? `/product/editor/${product.id}` : ""}
             replace
           >
             <div className="w-full h-full overflow-y-scroll p-4 rounded-md bg-black text-white transition-colors hover:bg-black/80 cursor-pointer grid place-items-center place-content-center grid-cols-1 lg:grid-cols-2 gap-8">
