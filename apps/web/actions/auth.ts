@@ -2,6 +2,7 @@
 
 import { httpClient } from "@app/lib/axios";
 import { cookies } from "next/headers";
+import { add } from "date-fns";
 
 export async function login(email: string, password: string): Promise<boolean> {
   try {
@@ -10,7 +11,11 @@ export async function login(email: string, password: string): Promise<boolean> {
       password,
     });
     if (status !== 201) throw new Error();
-    cookies().set("SESSION_TOKEN", data.token);
+    cookies().set("SESSION_TOKEN", data.token, {
+      expires: add(new Date(), { days: 7 }),
+      sameSite: "strict",
+      secure: true,
+    });
     return true;
   } catch (e) {
     console.error(e);
