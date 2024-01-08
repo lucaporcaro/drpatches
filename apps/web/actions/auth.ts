@@ -15,6 +15,9 @@ export async function login(email: string, password: string): Promise<boolean> {
       expires: add(new Date(), { days: 7 }),
       sameSite: "strict",
       secure: true,
+      name: "SESSION_TOKEN",
+      priority: "high",
+      value: data.token,
     });
     return true;
   } catch (e) {
