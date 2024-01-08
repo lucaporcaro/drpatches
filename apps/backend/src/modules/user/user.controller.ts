@@ -28,16 +28,16 @@ export class UserController {
 
   @Get()
   @ApiOkResponse({ type: GetUserResponseDto })
-  public async getUser(@Request() { user: { id } }: ERequest) {
-    return await this.service.getUser(id);
+  public getUser(@Request() { user: { id } }: ERequest) {
+    return this.service.getUser(id);
   }
 
   @Patch()
   @ApiOkResponse({ type: GetUserResponseDto })
-  public async updateUserInformation(
+  public updateUserInformation(
     @Body() payload: UpdateUserRequestDto,
     @Request() { user: { id } }: ERequest,
   ) {
-    return await this.service.updateUserInformation(id, payload);
+    return this.service.updateUserInformation(id, payload);
   }
 }

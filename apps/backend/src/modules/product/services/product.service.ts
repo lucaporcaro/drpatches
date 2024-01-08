@@ -5,6 +5,14 @@ import { EntityManager, EntityRepository } from '@mikro-orm/postgresql';
 import PatchType from '../entities/patch-type.entity';
 import User from '../../user/entities/user.entity';
 import UpdateProductRequestDto from '../dtos/update-product.request.dto';
+import {
+  catchError,
+  from,
+  map,
+  mergeMap,
+  throwError,
+  throwIfEmpty,
+} from 'rxjs';
 
 @Injectable()
 export default class ProductService {
@@ -19,68 +27,96 @@ export default class ProductService {
     this.entityManager = productRepo.getEntityManager();
   }
 
-  public async createProduct(user: User, type: ProductType): Promise<Product> {
+  public createProduct(user: User, type: ProductType) {
     const product = this.productRepo.create({
       user,
       type,
     });
-    await this.entityManager.persistAndFlush([product]);
-    return Object.assign(product, { user: undefined });
-  }
-
-  public async getAll(id: string) {
-    const products = await this.productRepo.find(
-      { user: { id } },
-      { populate: ['patchType.id'] },
-    );
-    return products.map((product) =>
-      Object.assign(product, { patchType: product?.patchType?.id || null }),
+    return from(this.entityManager.persistAndFlush([product])).pipe(
+      map(() => product),
+      catchError((e) => throwError(() => e)),
     );
   }
 
-  public async getOne(id: string, userId: string) {
-    try {
-      const product = await this.productRepo.findOneOrFail(
+  public getAll(id: string) {
+    return from(
+      this.productRepo.find({ user: { id } }, { populate: ['patchType.id'] }),
+    ).pipe(
+      map((products) =>
+        products.map((product) =>
+          Object.assign(product, { patchType: product?.patchType?.id || null }),
+        ),
+      ),
+      catchError((e) => throwError(() => e)),
+    );
+  }
+
+  public getOne(id: string, userId: string) {
+    return from(
+      this.productRepo.findOneOrFail(
         { id, user: { id: userId } },
         { populate: ['patchType.id'] },
-      );
-      return Object.assign(product, {
-        patchType: product?.patchType?.id || null,
-      });
-    } catch {
-      throw new NotFoundException('Product not found');
-    }
+      ),
+    ).pipe(
+      map((product) =>
+        Object.assign(product, {
+          patchType: product?.patchType?.id || null,
+        }),
+      ),
+      catchError(() => {
+        throw new NotFoundException('Product not found');
+      }),
+    );
   }
 
-  public async updateProduct(
+  public updateProduct(
     id: string,
     userId: string,
     payload: UpdateProductRequestDto,
     image: Express.Multer.File | undefined = undefined,
   ) {
-    const product = await this.productRepo.findOne(
-      {
-        id,
-        user: { id: userId },
-      },
-      {
-        populate: ['patchType.id'],
-      },
+    return from(
+      this.productRepo.findOne(
+        {
+          id,
+          user: { id: userId },
+        },
+        {
+          populate: ['patchType.id'],
+        },
+      ),
+    ).pipe(
+      mergeMap((product) => {
+        if (!product) throw new NotFoundException('Product not found');
+        const { patchType, ...data } = payload;
+        for (const key of ['patchWidth', 'patchHeight', 'quantity'])
+          if (payload[key]) payload[key] = parseFloat(payload[key]);
+        Object.assign(product, data);
+        if (image) product.image = image.filename;
+        if (patchType !== 'null' && patchType !== product?.patchType?.id)
+          return from(
+            this.patchTypeRepo.findOneOrFail({
+              id: patchType,
+            }),
+          ).pipe(
+            mergeMap((patchType) => {
+              product.patchType = patchType;
+              return from(this.entityManager.flush()).pipe(
+                map(() => product),
+                catchError((e) => throwError(() => e)),
+              );
+            }),
+            catchError(() => {
+              throw new NotFoundException('Patch type not found');
+            }),
+          );
+
+        return from(this.entityManager.flush()).pipe(
+          map(() => product),
+          catchError((e) => throwError(() => e)),
+        );
+      }),
+      catchError((e) => throwError(() => e)),
     );
-    if (!product) throw new NotFoundException('Product not found');
-    const { patchType, ...data } = payload;
-
-    for (const key of ['patchWidth', 'patchHeight', 'quantity'])
-      if (payload[key]) payload[key] = parseFloat(payload[key]);
-
-    Object.assign(product, data);
-    if (patchType !== 'null' && patchType !== product?.patchType?.id) {
-      const dbPatchType = await this.patchTypeRepo.findOne({ id: patchType });
-      if (!dbPatchType) throw new NotFoundException('Patch type not found');
-      product.patchType = dbPatchType;
-    }
-    if (image) product.image = image.filename;
-    await this.entityManager.flush();
-    return product;
   }
 }

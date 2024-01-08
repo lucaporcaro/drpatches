@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
 import RegisterRequestDto from './dtos/register.request.dto';
@@ -9,6 +10,15 @@ import User from '../user/entities/user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import crypto from 'node:crypto';
 import { JwtService } from '@nestjs/jwt';
+import {
+  catchError,
+  filter,
+  from,
+  map,
+  mergeMap,
+  throwError,
+  throwIfEmpty,
+} from 'rxjs';
 
 @Injectable()
 export class AuthenticationService {
@@ -18,46 +28,53 @@ export class AuthenticationService {
     private readonly jwtService: JwtService,
   ) {}
 
-  public async register({ password, ...payload }: RegisterRequestDto) {
-    if (
-      await this.user.count({
-        phone: payload.phone,
-        $or: [
-          {
-            email: payload.email,
-          },
-        ],
-      })
-    )
-      throw new BadRequestException(
-        'User with this phone or email already exists',
-      );
-    password = this.hashPassword(password);
-    const user = this.user.create({ ...payload, password });
-
-    await this.user.getEntityManager().persistAndFlush(user);
-    return {
-      token: await this.jwtService.signAsync({
-        id: user.id,
-        email: user.email,
+  public register({ password, ...payload }: RegisterRequestDto) {
+    return from(
+      this.user.count({
+        $or: [{ email: payload.email }, { phone: payload.phone }],
       }),
-    };
+    ).pipe(
+      filter((count) => count === 0),
+      throwIfEmpty(() => {
+        throw new BadRequestException(
+          'User with this phone or email already exists',
+        );
+      }),
+      mergeMap(() => {
+        password = this.hashPassword(password);
+        const user = this.user.create({ ...payload, password });
+        return from(this.user.getEntityManager().persistAndFlush(user)).pipe(
+          map(() => user),
+          catchError((e) => throwError(() => e)),
+        );
+      }),
+      mergeMap((user) => {
+        return from(
+          this.jwtService.signAsync({
+            id: user.id,
+            email: user.email,
+          }),
+        );
+      }),
+      map((token) => ({ token })),
+      catchError((e) => throwError(() => e)),
+    );
   }
 
-  public async login(email: string, password: string) {
-    const user = await this.user.findOne(
-      { email },
-      { fields: ['password', 'email', 'id'] },
-    );
-    if (!user || user.password !== this.hashPassword(password))
-      throw new UnauthorizedException('User did not found');
-
-    return {
-      token: await this.jwtService.signAsync({
-        id: user.id,
-        email: user.email,
+  public login(email: string, password: string) {
+    return from(
+      this.user.findOne({ email }, { fields: ['password', 'email', 'id'] }),
+    ).pipe(
+      mergeMap((user) => {
+        if (!user || user.password !== this.hashPassword(password))
+          throw new UnauthorizedException('User did not found');
+        return from(
+          this.jwtService.signAsync({ id: user.id, email: user.email }),
+        );
       }),
-    };
+      map((token) => ({ token })),
+      catchError((e) => throwError(() => e)),
+    );
   }
 
   private hashPassword(password: string) {

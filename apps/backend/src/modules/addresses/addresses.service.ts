@@ -5,67 +5,78 @@ import Address from './entities/address.entity';
 import CreateAddressRequestDto from './dtos/create-address.request.dto';
 import User from '../user/entities/user.entity';
 import UpdateAddressRequestDto from './dtos/update-address.request.dto';
+import { catchError, from, map, mergeMap, throwError } from 'rxjs';
 
 @Injectable()
 export class AddressesService {
-  private contextManager: EntityManager;
+  private em: EntityManager;
 
   constructor(
     @InjectRepository(Address)
     private readonly addressRepo: EntityRepository<Address>,
   ) {
-    this.contextManager = addressRepo.getEntityManager();
+    this.em = addressRepo.getEntityManager();
   }
 
-  public async create(payload: CreateAddressRequestDto, user: User) {
+  public create(payload: CreateAddressRequestDto, user: User) {
     const address = this.addressRepo.create({ ...payload, user });
-    await this.contextManager.persistAndFlush([address]);
-    return Object.assign(address, { user: undefined });
+    return from(this.em.persistAndFlush([address])).pipe(
+      map(() => Object.assign(address)),
+      catchError((e) => throwError(() => e)),
+    );
   }
 
-  public async getAll(id: string) {
-    return await this.addressRepo.find({ user: { id } });
+  public getAll(id: string) {
+    return from(this.addressRepo.find({ user: { id } })).pipe(
+      map((all) => all),
+      catchError((e) => throwError(() => e)),
+    );
   }
 
-  public async getOne(userId: string, id: string) {
-    try {
-      return await this.addressRepo.findOneOrFail({
+  public getOne(userId: string, id: string) {
+    return from(
+      this.addressRepo.findOneOrFail({ id, user: { id: userId } }),
+    ).pipe(
+      map((address) => address),
+      catchError(() => {
+        throw new NotFoundException('Address did not found');
+      }),
+    );
+  }
+
+  public update(id: string, payload: UpdateAddressRequestDto, userId: string) {
+    return from(
+      this.addressRepo.findOneOrFail({
         id,
         user: { id: userId },
-      });
-    } catch {
-      throw new NotFoundException('Address did not found');
-    }
+      }),
+    ).pipe(
+      mergeMap((address) => {
+        Object.assign(address, payload);
+        return from(this.em.flush());
+      }),
+      catchError(() => {
+        throw new NotFoundException('Address did not found');
+      }),
+    );
   }
 
-  public async update(
-    id: string,
-    payload: UpdateAddressRequestDto,
-    userId: string,
-  ) {
-    try {
-      const address = await this.addressRepo.findOneOrFail({
-        id,
-        user: { id: userId },
-      });
-      Object.assign(address, payload);
-      await this.contextManager.flush();
-      return address;
-    } catch {
-      throw new NotFoundException('Address did not found');
-    }
-  }
-
-  public async delete(userId: string, id: string) {
-    const address = await this.addressRepo.findOne({
-      id,
-      user: { id: userId },
-    });
-
-    if (!address) throw new NotFoundException('Address did not found');
-
-    this.addressRepo.getEntityManager().removeAndFlush(address);
-
-    return true;
+  public delete(userId: string, id: string) {
+    return from(
+      this.addressRepo.findOneOrFail(
+        {
+          id,
+          user: { id: userId },
+        },
+        { fields: ['id'] },
+      ),
+    ).pipe(
+      mergeMap((address) => {
+        return from(this.em.removeAndFlush(address));
+      }),
+      catchError(() => {
+        throw new NotFoundException('Address did not found');
+      }),
+    );
   }
 }

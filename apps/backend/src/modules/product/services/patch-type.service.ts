@@ -16,7 +16,6 @@ export default class PatchTypeService {
       this.patchTypeRepo.findAll({
         fields: ['id', 'image'],
         orderBy: { createdAt: 'DESC' },
-        cache: 1000 * 60 * 10,
       }),
     );
   }

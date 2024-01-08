@@ -34,8 +34,8 @@ export default class UpdateProductRequestDto {
   textColor?: string;
 
   @ApiProperty({ required: false, default: '#111' })
-  @IsOptional()
   @IsHexColor()
+  @IsOptional()
   backgroundColor?: string;
 
   @ApiProperty({ required: false, default: 10 })
@@ -75,7 +75,7 @@ export default class UpdateProductRequestDto {
   @IsOptional()
   image?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   stripeId?: string;

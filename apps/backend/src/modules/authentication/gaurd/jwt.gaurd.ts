@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { catchError, from, map, mergeMap, throwError } from 'rxjs';
 import User from 'src/modules/user/entities/user.entity';
 
 @Injectable()
@@ -21,21 +22,22 @@ export default class JwtGaurd implements CanActivate {
     private readonly userRepo: EntityRepository<User>,
   ) {}
 
-  public async canActivate(context: ExecutionContext): Promise<boolean> {
+  public canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
     if (!token) throw new UnauthorizedException();
 
-    try {
-      const { id } = await this.jwtService.verifyAsync(token);
-      request.user = await this.userRepo.findOneOrFail({ id });
-    } catch (e) {
-      this.logger.debug(e);
-      throw new UnauthorizedException();
-    }
-
-    return true;
+    return from(this.jwtService.verifyAsync(token)).pipe(
+      mergeMap(({ id }) => from(this.userRepo.findOneOrFail({ id }))),
+      map((user) => {
+        request.user = user;
+        return true;
+      }),
+      catchError(() => {
+        throw new UnauthorizedException();
+      }),
+    );
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

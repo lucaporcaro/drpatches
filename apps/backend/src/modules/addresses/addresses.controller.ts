@@ -31,47 +31,38 @@ export class AddressesController {
 
   @Post()
   @ApiCreatedResponse({ type: GetAddressResponseDto })
-  public async create(
-    @Body() payload: CreateAddressRequestDto,
-    @Request() { user },
-  ) {
-    return await this.service.create(payload, user);
+  public create(@Body() payload: CreateAddressRequestDto, @Request() { user }) {
+    return this.service.create(payload, user);
   }
 
   @Get('all')
   @ApiOkResponse({ type: GetAddressResponseDto, isArray: true })
-  public async getAll(@Request() { user: { id } }: any) {
-    return await this.service.getAll(id);
+  public getAll(@Request() { user: { id } }: any) {
+    return this.service.getAll(id);
   }
 
   @Get(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiOkResponse({ type: GetAddressResponseDto })
-  public async getOne(
-    @Request() { user: { id: userId } },
-    @Param('id') id: string,
-  ) {
-    return await this.service.getOne(userId, id);
+  public getOne(@Request() { user: { id: userId } }, @Param('id') id: string) {
+    return this.service.getOne(userId, id);
   }
 
   @Patch(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiOkResponse({ type: GetAddressResponseDto })
-  public async update(
+  public update(
     @Body() payload: UpdateAddressRequestDto,
     @Param('id') id: string,
     @Request() { user: { id: userId } },
   ) {
-    return await this.service.update(id, payload, userId);
+    return this.service.update(id, payload, userId);
   }
 
   @Delete(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiOkResponse({ type: Boolean })
-  public async delete(
-    @Param('id') id: string,
-    @Request() { user: { id: userId } },
-  ) {
-    return await this.service.delete(userId, id);
+  public delete(@Param('id') id: string, @Request() { user: { id: userId } }) {
+    return this.service.delete(userId, id);
   }
 }

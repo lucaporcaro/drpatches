@@ -18,7 +18,7 @@ export default class User extends BaseModel {
   @Property({ unique: true, nullable: false })
   email: string;
 
-  @Property({ nullable: false })
+  @Property({ nullable: false, hidden: true })
   password: string;
 
   @Enum({ items: () => UserRole, nullable: true, default: UserRole.CUSTOMER })

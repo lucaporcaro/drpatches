@@ -25,6 +25,6 @@ export default class Address extends BaseModel {
   @Property()
   location: string;
 
-  @ManyToOne({ entity: () => User, index: true })
+  @ManyToOne({ entity: () => User, index: true, hidden: true })
   user: User;
 }

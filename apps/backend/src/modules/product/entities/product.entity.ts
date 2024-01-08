@@ -84,7 +84,7 @@ export default class Product extends BaseModel {
   @Property({ name: 'stripe_id', nullable: true })
   stripeId?: string;
 
-  @ManyToOne(() => User, { index: true })
+  @ManyToOne(() => User, { index: true, hidden: true })
   user!: User;
 
   // Events
