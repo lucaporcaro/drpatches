@@ -7,11 +7,18 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(request: NextRequest) {
+  const formData = await request.formData();
+  const jwt: string | null = formData.get("jwt") as string | null;
+
+  if (!jwt) return new NextResponse("Not authorized", { status: 403 });
+
   try {
     const product = await getProduct(
-      request.url.replace("/payment", "").split("/").pop() as any
+      request.url.replace("/payment", "").split("/").pop() as any,
+      jwt
     );
     const origin = (request.url.match(/^https?:\/\/[^/]+/) as any)[0];
+    console.log("Reached");
     const session = await stripe.checkout.sessions.create({
       client_reference_id: ulid(),
       line_items: [
@@ -34,6 +41,7 @@ export async function POST(request: NextRequest) {
     await httpClient.patchForm(`/v1/product/${product.id}`, payload, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${jwt}`,
       },
     });
     return Response.redirect(session.url as string);

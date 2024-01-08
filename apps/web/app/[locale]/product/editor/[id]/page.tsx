@@ -1,18 +1,38 @@
+"use client";
+
 import { getPatchTypes } from "@app/actions/patch-type";
 import { getProduct } from "@app/actions/product";
 import ProductEditor from "@app/components/CreateProduct/ProductEditor";
+import Loading from "@app/components/Loading";
+import useJwt from "@app/hooks/useJwt";
+import { useQuery } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
-export default async function ProductEidtorPage({
+export default function ProductEidtorPage({
   params,
 }: {
   params: { id: string };
 }) {
-  // Data Fetching
-  const product = await getProduct(params.id);
-  const patchTypes = await getPatchTypes();
+  // Hooks
+  const jwt = useJwt();
+
+  // Queries
+  const { data: product } = useQuery({
+    queryKey: ["product", params.id],
+    queryFn: () => getProduct(params.id, jwt as string),
+    enabled: Boolean(jwt),
+  });
+
+  const { data: patchTypes } = useQuery({
+    queryKey: ["patch_types"],
+    queryFn: () => getPatchTypes(),
+    enabled: Boolean(jwt),
+  });
   // Conditions
-  if (product.status !== "created") return redirect("/product/create");
+  if (!product || !patchTypes) return <Loading />;
+
+  if (product && product.status !== "created")
+    return redirect("/product/create");
   return (
     <div className="w-full h-max py-10 flex-auto flex flex-col items-center justify-center">
       <ProductEditor initialProduct={product} patchTypes={patchTypes} />

@@ -8,7 +8,8 @@ import {
 import Button from "@app/components/Button";
 import Input from "@app/components/Input";
 import PhoneInput from "@app/components/PhoneInput";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import useJwt from "@app/hooks/useJwt";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -19,11 +20,13 @@ export default function UpdateAddressPage({
 }) {
   // Hooks
   const router = useRouter();
+  const jwt = useJwt();
 
   // Queries
-  const { data: address } = useSuspenseQuery({
+  const { data: address } = useQuery({
     queryKey: ["address", params.id],
-    queryFn: async () => await getAddress(params.id),
+    queryFn: async () => await getAddress(params.id, jwt as string),
+    enabled: Boolean(jwt),
   });
 
   // Functions
@@ -34,7 +37,7 @@ export default function UpdateAddressPage({
 
     const payload: Record<string, any> = Object.fromEntries(formData.entries());
 
-    const result = await updateAddress(payload, params.id);
+    const result = await updateAddress(payload, params.id, jwt as string);
     if (typeof result !== "string") {
       toast.update(toastId, {
         render: "Address updated",
@@ -57,7 +60,7 @@ export default function UpdateAddressPage({
     const toastId = toast.loading("Deleting the address...", {
       autoClose: 25000,
     });
-    const result = await deleteAddress(params.id);
+    const result = await deleteAddress(params.id, jwt as string);
     if (typeof result !== "string") {
       toast.update(toastId, {
         render: "Address deleted",

@@ -4,12 +4,14 @@ import { createAddress } from "@app/actions/addresses";
 import Button from "@app/components/Button";
 import Input from "@app/components/Input";
 import PhoneInput from "@app/components/PhoneInput";
+import useJwt from "@app/hooks/useJwt";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function CreateAddressPage() {
   // Hooks
   const router = useRouter();
+  const jwt = useJwt();
 
   // Functions
   async function createAddressWithErrors(formData: FormData) {
@@ -19,7 +21,7 @@ export default function CreateAddressPage() {
 
     const payload: Record<string, any> = Object.entries(formData.entries());
 
-    const result = await createAddress(payload);
+    const result = await createAddress(payload, jwt as string);
     if (typeof result !== "string") {
       toast.update(toastId, {
         render: "Address created",

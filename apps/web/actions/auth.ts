@@ -4,7 +4,10 @@ import { httpClient } from "@app/lib/axios";
 import { cookies } from "next/headers";
 import { add } from "date-fns";
 
-export async function login(email: string, password: string): Promise<boolean> {
+export async function login(
+  email: string,
+  password: string
+): Promise<false | string> {
   try {
     const { status, data } = await httpClient.post("v1/authentication/login", {
       email,
@@ -19,7 +22,7 @@ export async function login(email: string, password: string): Promise<boolean> {
       priority: "high",
       value: data.token,
     });
-    return true;
+    return data.token;
   } catch (e) {
     console.error(e);
     return false;
@@ -34,7 +37,7 @@ export async function register(payload: object) {
     );
     if (status !== 201) throw new Error();
     cookies().set("SESSION_TOKEN", data.token);
-    return true;
+    return data.token;
   } catch (e: any) {
     console.error(e);
     return e.response?.data.message[0] || "Request faild";

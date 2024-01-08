@@ -1,6 +1,11 @@
+"use client";
+
 import { getProduct } from "@app/actions/product";
 import Button from "@app/components/Button";
+import Loading from "@app/components/Loading";
+import useJwt from "@app/hooks/useJwt";
 import { capitalizeWords } from "@app/utils/text";
+import { useQuery } from "@tanstack/react-query";
 
 type Props = {
   params: {
@@ -8,8 +13,18 @@ type Props = {
   };
 };
 
-export default async function CheckoutProductPage({ params: { id } }: Props) {
-  const product = await getProduct(id);
+export default function CheckoutProductPage({ params: { id } }: Props) {
+  // Hooks
+  const jwt = useJwt();
+  // Queries
+  const { data: product } = useQuery({
+    queryKey: ["product", id],
+    queryFn: () => getProduct(id, jwt as string),
+    enabled: Boolean(jwt),
+  });
+
+  if (!product) return <Loading />;
+
   return (
     <form
       action={`/product/checkout/${id}/payment`}
@@ -48,6 +63,7 @@ export default async function CheckoutProductPage({ params: { id } }: Props) {
         </div>
       </div>
       <Button className="bg-primary-1 text-black">Pay</Button>
+      <input hidden name="jwt" value={jwt || undefined} />
     </form>
   );
 }

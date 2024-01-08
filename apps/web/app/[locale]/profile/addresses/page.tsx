@@ -1,9 +1,21 @@
-import { getAllAddresses } from "@app/actions/addresses";
+"use client";
+
+import { AddressT, getAllAddresses } from "@app/actions/addresses";
 import Button from "@app/components/Button";
 import Link from "@app/components/Link";
+import { useEffect, useState } from "react";
 
-export default async function AddressesProfilePage() {
-  const addresses = await getAllAddresses();
+export default function AddressesProfilePage() {
+  // States
+  const [addresses, setAddresses] = useState<AddressT[]>([]);
+  // Effects
+  useEffect(() => {
+    if (!window) return;
+    getAllAddresses(localStorage.getItem("SESSION_TOKEN") as string).then(
+      (addresses) => setAddresses(addresses)
+    );
+    return () => setAddresses([]);
+  }, []);
   return (
     <div className="w-full h-max flex flex-col items-start justify-start gap-4 p-8 max-h-full overflow-y-scroll">
       <div className="w-full h-max flex flex-col lg:flex-row items-start justify-start lg:justify-between lg:items-center">

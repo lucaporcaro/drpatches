@@ -5,12 +5,14 @@ import Button from "@app/components/Button";
 import Input from "@app/components/Input";
 import Link from "@app/components/Link";
 import PhoneInput from "@app/components/PhoneInput";
+import useNoLoginRequired from "@app/hooks/useNoLoginRequired";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function RegisterPage() {
   // Hooks
   const router = useRouter();
+  useNoLoginRequired();
 
   // Functions
   async function registerWithErrors(formData: FormData) {
@@ -20,7 +22,8 @@ export default function RegisterPage() {
 
     const result = await register(payload);
 
-    if (result === true) {
+    if (typeof result === "string") {
+      localStorage.setItem("SESSION_TOKEN", result);
       toast.success("You registered successfully");
       router.replace("/");
       setTimeout(window.location.reload, 1000);

@@ -1,6 +1,8 @@
+"use client";
 import Link from "next/link";
 import { FaLocationArrow, FaUser } from "react-icons/fa6";
-import { CiShop } from "react-icons/ci"
+import { CiShop } from "react-icons/ci";
+import { useMustLoggedIn } from "@app/hooks/useMustLoggedIn";
 
 const sidebarItems = [
   {
@@ -20,7 +22,9 @@ const sidebarItems = [
   },
 ];
 
-export default async function ProfilePage({ children }: { children: any }) {
+export default function ProfilePage({ children }: { children: any }) {
+  // Hooks
+  useMustLoggedIn();
   return (
     <div className="w-full h-max min-h-full flex-auto grid grid-cols-1 grid-rows-4 lg:grid-rows-1 lg:grid-cols-6 p-4 gap-2 place-items-center place-content-center">
       <div className="w-full h-max p-4 lg:h-full lg:min-h-[484px] lg:col-span-2 xl:col-span-1 bg-primary-1 border-[1px] rounded-xl flex flex-row gap-10 lg:flex-col lg:py-10">

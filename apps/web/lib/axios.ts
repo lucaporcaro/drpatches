@@ -20,10 +20,6 @@ async function getToken() {
         .split(";")
         .filter((c: any) => c.includes("SESSION_TOKEN="))[0]
         .split("=")[1];
-    else
-      return await import("next/headers").then(
-        ({ cookies }) => cookies().get("SESSION_TOKEN")?.value || null
-      );
   } catch {
     return null;
   }

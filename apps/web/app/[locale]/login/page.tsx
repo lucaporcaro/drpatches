@@ -4,11 +4,14 @@ import { login } from "@app/actions/auth";
 import Button from "@app/components/Button";
 import Input from "@app/components/Input";
 import Link from "@app/components/Link";
+import useNoLoginRequired from "@app/hooks/useNoLoginRequired";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
+  // Hooks
   const router = useRouter();
+  useNoLoginRequired();
 
   // Functions
   async function loginWithErrors(formData: FormData) {
@@ -16,7 +19,8 @@ export default function LoginPage() {
       formData.get("email") as string,
       formData.get("password") as string
     );
-    if (result) {
+    if (typeof result === "string") {
+      localStorage.setItem("SESSION_TOKEN", result);
       toast.success("You logged in successfully");
       router.replace("/");
       setTimeout(window.location.reload, 1000);

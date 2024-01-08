@@ -1,9 +1,23 @@
+"use client";
+
 import { getAllProducts } from "@app/actions/product";
 import Button from "@app/components/Button";
 import Link from "@app/components/Link";
+import useJwt from "@app/hooks/useJwt";
+import { useQuery } from "@tanstack/react-query";
 
 export default async function AddressesProfilePage() {
-  const addresses = await getAllProducts();
+  // Hooks
+  const jwt = useJwt();
+
+  // Queries
+  const { data: addresses } = useQuery({
+    queryKey: ["products", "all"],
+    queryFn: () => getAllProducts(jwt as string),
+    enabled: Boolean(jwt),
+  });
+
+  if (!addresses) return null;
   return (
     <div className="w-full h-max flex flex-col items-start justify-start gap-4 p-8 max-h-full overflow-y-scroll">
       <div className="w-full h-max flex flex-col lg:flex-row items-start justify-start lg:justify-between lg:items-center">

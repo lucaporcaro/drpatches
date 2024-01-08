@@ -1,29 +1,24 @@
 "use client";
 import { getUser } from "@app/actions/user";
+import useJwt from "@app/hooks/useJwt";
 import { persistUser } from "@app/store/slices/user";
 import { useQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export default function UserProvider({ children }: any) {
-  // Cookies
-  const jwt = Cookies.get("SESSION_TOKEN");
-
   // Hooks
   const dispatch = useDispatch();
+  const jwt = useJwt();
 
   // Queries
   const { data } = useQuery({
     queryKey: ["user", "profile", jwt],
-    queryFn: async () => await getUser(),
+    queryFn: () => getUser(jwt as string),
     enabled: Boolean(jwt),
-    refetchInterval: 1000 * 60 * 5,
-    refetchIntervalInBackground: true,
-    refetchOnMount: true,
-    refetchOnReconnect: true,
   });
 
+  // Effects
   useEffect(() => {
     if (data) dispatch(persistUser(data));
   }, [data]);
