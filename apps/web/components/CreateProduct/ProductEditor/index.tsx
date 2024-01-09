@@ -106,7 +106,9 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           httpClient.patch(`/v1/product/${id}`, payload, {
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${jwt}`,
+              Authorization: `Bearer ${
+                jwt ?? localStorage.getItem("SESSION_TOKEN")
+              }`,
             },
           }),
           {
