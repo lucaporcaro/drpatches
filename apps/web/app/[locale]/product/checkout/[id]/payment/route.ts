@@ -1,7 +1,7 @@
 import { getProduct } from "@app/actions/product";
 import { httpClient } from "@app/lib/axios";
 import { ulid } from "ulid";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import Stripe from "stripe";
 import {
   catchError,
@@ -44,8 +44,8 @@ export async function POST(request: NextRequest) {
                 ],
                 shipping_address_collection: { allowed_countries: ["IT"] },
                 mode: "payment",
-                success_url: `${origin}/?success=true`,
-                cancel_url: `${origin}/?canceled=true`,
+                success_url: `${process.env.FRONTEND_URL}/?success=true`,
+                cancel_url: `${process.env.FRONTEND_URL}/?canceled=true`,
               })
             ).pipe(
               switchMap((session) => {
