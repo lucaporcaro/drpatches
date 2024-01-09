@@ -13,21 +13,3 @@ httpClient.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
-async function getToken() {
-  if (typeof document !== "undefined")
-    return lastValueFrom(
-      of(document).pipe(
-        filter((document) => typeof document !== "undefined"),
-        map(({ cookie }) => cookie.split(";")),
-        filter((cookies) => Boolean(cookies.length)),
-        map((cookies) => {
-          const sessionCookie = cookies.filter((c: any) =>
-            c.includes("SESSION_TOKEN=")
-          )[0];
-          return sessionCookie ? (sessionCookie.split("=")[1] as string) : null;
-        })
-      )
-    );
-  return null;
-}
