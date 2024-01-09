@@ -25,6 +25,8 @@ import { toast } from "react-toastify";
 import { httpClient } from "@app/lib/axios";
 import { PatchTypeT } from "@app/actions/patch-type";
 import Link from "next/link";
+import useJwt from "@app/hooks/useJwt";
+import { Subject, catchError, debounceTime, from, map, throwError } from "rxjs";
 
 const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -40,6 +42,9 @@ type Props = {
   initialProduct: CreateProductState;
   patchTypes: PatchTypeT[];
 };
+
+// Subjects
+const productUpdateSubject = new Subject();
 
 export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   // States
@@ -61,72 +66,78 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   const dispatch = useDispatch();
   const [updatedPrice, setUpdatedPrice] = useState(price);
   const t = useTranslations("components.product_editor");
-  const [updated, setUpdated] = useState<boolean>(false);
+  const jwt = useJwt();
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
 
   // Functions
-  const update = (key: string) => (value: any) =>
+  const update = (key: string) => (value: any) => {
     dispatch(updateCreatedProduct({ key, value }));
+  };
   async function updateProductWithErrors(product: any) {
     const id = product.id;
 
-    if (updaterTimeout) clearTimeout(updaterTimeout);
+    Object.assign(product, {
+      id: undefined,
+      createdAt: undefined,
+      updatedAt: undefined,
+      price: undefined,
+      user: undefined,
+      status: undefined,
+    });
 
-    updaterTimeout = setTimeout(async () => {
-      Object.assign(product, {
-        id: undefined,
-        createdAt: undefined,
-        updatedAt: undefined,
-        price: undefined,
-        user: undefined,
-        status: undefined,
-      });
+    const payload = new FormData();
+    for (const key of Object.keys(product))
+      if (typeof product[key] !== "undefined")
+        payload.append(key, product[key]);
 
-      const payload = new FormData();
-      for (const key of Object.keys(product))
-        if (typeof product[key] !== "undefined")
-          payload.append(key, product[key]);
-
-      try {
-        const { data }: any = await toast.promise(
-          httpClient.patchForm(`/v1/product/${id}`, payload, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }),
-          {
-            pending: {
-              render: "Syncing the product...",
-              autoClose: 25000,
-            },
-            error: {
-              render: "Syncing failed",
-              autoClose: 3000,
-            },
-            success: {
-              render: "Synced successfully",
-              autoClose: 3000,
-            },
-          }
-        );
-        setUpdatedPrice(data.price);
-      } catch (e: any) {
-        console.dir(e.response.data);
-        throw new Error();
-      }
-    }, 2000);
+    return from(
+      toast.promise(
+        httpClient.patchForm(`/v1/product/${id}`, payload, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${jwt}`,
+          },
+        }),
+        {
+          pending: {
+            render: "Syncing the product...",
+            autoClose: 25000,
+          },
+          error: {
+            render: "Syncing failed",
+            autoClose: 3000,
+          },
+          success: {
+            render: "Synced successfully",
+            autoClose: 3000,
+          },
+        }
+      )
+    ).pipe(
+      map(({ data: { price } }) => setUpdatedPrice(price)),
+      catchError((e) => throwError(() => e))
+    );
   }
 
   // Effects
   useEffect(() => {
-    if (updated) updateProductWithErrors({ ...product });
-  }, [product]);
-  useEffect(() => {
     dispatch(loadCreatedProduct(initialProduct));
-    setTimeout(() => setUpdated(true), 1000);
   }, [initialProduct]);
+
+  useEffect(() => {
+    productUpdateSubject.next({ ...product });
+  }, [product]);
+
+  useEffect(() => {
+    const subscription = productUpdateSubject
+      .pipe(debounceTime(2000))
+      .subscribe(updateProductWithErrors);
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <>
