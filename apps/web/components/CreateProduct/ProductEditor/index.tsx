@@ -26,7 +26,15 @@ import { httpClient } from "@app/lib/axios";
 import { PatchTypeT } from "@app/actions/patch-type";
 import Link from "next/link";
 import useJwt from "@app/hooks/useJwt";
-import { Subject, catchError, debounceTime, from, map, throwError } from "rxjs";
+import {
+  Subject,
+  catchError,
+  debounceTime,
+  from,
+  lastValueFrom,
+  map,
+  throwError,
+} from "rxjs";
 
 const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -92,32 +100,36 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
       if (typeof product[key] !== "undefined")
         payload.append(key, product[key]);
 
-    return from(
-      toast.promise(
-        httpClient.patchForm(`/v1/product/${id}`, payload, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${jwt}`,
-          },
+    return lastValueFrom(
+      from(
+        toast.promise(
+          httpClient.patchForm(`/v1/product/${id}`, payload, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${jwt}`,
+            },
+          }),
+          {
+            pending: {
+              render: "Syncing the product...",
+              autoClose: 25000,
+            },
+            error: {
+              render: "Syncing failed",
+              autoClose: 3000,
+            },
+            success: {
+              render: "Synced successfully",
+              autoClose: 3000,
+            },
+          }
+        )
+      ).pipe(
+        map(({ data: { price } }) => {
+          setUpdatedPrice(price);
         }),
-        {
-          pending: {
-            render: "Syncing the product...",
-            autoClose: 25000,
-          },
-          error: {
-            render: "Syncing failed",
-            autoClose: 3000,
-          },
-          success: {
-            render: "Synced successfully",
-            autoClose: 3000,
-          },
-        }
+        catchError((e) => throwError(() => e))
       )
-    ).pipe(
-      map(({ data: { price } }) => setUpdatedPrice(price)),
-      catchError((e) => throwError(() => e))
     );
   }
 
@@ -133,7 +145,9 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   useEffect(() => {
     const subscription = productUpdateSubject
       .pipe(debounceTime(2000))
-      .subscribe(updateProductWithErrors);
+      .subscribe(async (product) => {
+        await updateProductWithErrors(product);
+      });
     return () => {
       subscription.unsubscribe();
     };
