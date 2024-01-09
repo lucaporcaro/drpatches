@@ -5,7 +5,7 @@ import { getProduct } from "@app/actions/product";
 import ProductEditor from "@app/components/CreateProduct/ProductEditor";
 import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
 export default function ProductEidtorPage({
@@ -17,17 +17,21 @@ export default function ProductEidtorPage({
   const jwt = useJwt();
 
   // Queries
-  const { data: product } = useQuery({
-    queryKey: ["product", params.id],
-    queryFn: () => getProduct(params.id, jwt as string),
-    enabled: Boolean(jwt),
+  const [{ data: product }, { data: patchTypes }] = useQueries({
+    queries: [
+      {
+        queryKey: ["product", params.id],
+        queryFn: () => getProduct(params.id, jwt as string),
+        enabled: Boolean(jwt),
+      },
+      {
+        queryKey: ["patch_types"],
+        queryFn: () => getPatchTypes(),
+        enabled: Boolean(jwt),
+      },
+    ],
   });
 
-  const { data: patchTypes } = useQuery({
-    queryKey: ["patch_types"],
-    queryFn: () => getPatchTypes(),
-    enabled: Boolean(jwt),
-  });
   // Conditions
   if (!product || !patchTypes) return <Loading />;
 
