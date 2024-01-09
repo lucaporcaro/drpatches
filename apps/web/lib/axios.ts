@@ -7,8 +7,6 @@ export const httpClient = axios.create({
 
 httpClient.interceptors.request.use(
   async (config) => {
-    let token: null | string = await getToken();
-    if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => Promise.reject(error)
