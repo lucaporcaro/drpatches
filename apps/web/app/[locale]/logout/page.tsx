@@ -16,7 +16,9 @@ export default function LogoutPage() {
     const subscription = timer(1500)
       .pipe(tap(() => (window.location.href = "/")))
       .subscribe();
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
   return <Loading />;
 }

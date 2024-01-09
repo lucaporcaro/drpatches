@@ -18,7 +18,7 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
 import { toast } from "react-toastify";
@@ -103,7 +103,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
     return lastValueFrom(
       from(
         toast.promise(
-          httpClient.patchForm(`/v1/product/${id}`, payload, {
+          httpClient.patch(`/v1/product/${id}`, payload, {
             headers: {
               "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${jwt}`,
