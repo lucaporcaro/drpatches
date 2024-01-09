@@ -44,8 +44,8 @@ export async function POST(request: NextRequest) {
                 ],
                 shipping_address_collection: { allowed_countries: ["IT"] },
                 mode: "payment",
-                success_url: `${process.env.FRONTEND_URL}/?success=true`,
-                cancel_url: `${process.env.FRONTEND_URL}/?canceled=true`,
+                success_url: `${process.env.FRONTEND_URL}/payment?success=true`,
+                cancel_url: `${process.env.FRONTEND_URL}/payment?canceled=true`,
               })
             ).pipe(
               switchMap((session) => {

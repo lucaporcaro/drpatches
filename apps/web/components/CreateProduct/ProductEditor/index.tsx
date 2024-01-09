@@ -83,7 +83,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   const update = (key: string) => (value: any) => {
     dispatch(updateCreatedProduct({ key, value }));
   };
-  async function updateProductWithErrors(product: any) {
+  async function updateProductWithErrors(product: any, jwt: string) {
     const id = product.id;
 
     Object.assign(product, {
@@ -106,9 +106,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           httpClient.patch(`/v1/product/${id}`, payload, {
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${
-                jwt ?? localStorage.getItem("SESSION_TOKEN")
-              }`,
+              Authorization: `Bearer ${jwt}`,
             },
           }),
           {
@@ -148,7 +146,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
     const subscription = productUpdateSubject
       .pipe(debounceTime(2000))
       .subscribe(async (product) => {
-        await updateProductWithErrors(product);
+        await updateProductWithErrors(product, jwt as any);
       });
     return () => {
       subscription.unsubscribe();
