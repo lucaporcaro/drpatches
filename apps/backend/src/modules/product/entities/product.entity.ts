@@ -1,6 +1,8 @@
 import {
+  BeforeCreate,
   BeforeUpdate,
   Entity,
+  EntityManager,
   Enum,
   EventArgs,
   ManyToOne,
@@ -90,43 +92,51 @@ export default class Product extends BaseModel {
   // Events
   @BeforeUpdate()
   async beforeUpdate({ entity, em }: EventArgs<Product>) {
-    let { type, backingType, patchHeight, patchWidth, quantity } = entity;
-
-    patchHeight = parseFloat(patchHeight as any);
-    patchWidth = parseFloat(patchWidth as any);
-
-    if (!type || !backingType) {
-      entity.price = 0;
-      return entity;
-    }
-
-    const priceRepo = em.getRepository(BackingPrice);
-
-    const prices = generatePricesTable(
-      {},
-      await priceRepo.findAll({ fields: ['price', 'size', 'type'] }),
-    );
-
-    const size = (patchWidth + patchHeight) / 2;
-
-    const tablePrice = Object.entries(prices[type])
-      .filter(([key]) => {
-        return (typeof key === 'number' ? key : parseFloat(key)) >= size;
-      })
-      .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0] as any[];
-
-    const pricePerOne =
-      (tablePrice ? tablePrice[1] : 0) + (type === 'image' ? 39 / quantity : 0);
-
-    const backingPriceLookup: { [key: string]: number } = {
-      termoadesiva: ((patchWidth * patchHeight * 8) / 7500) * 2,
-      velcro_a: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
-      velcro_b: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
-      velcro_a_b: (patchWidth * patchHeight * 36) / 2500 + pricePerOne * 0.5,
-    };
-    const backingPrice = backingPriceLookup[backingType] || 0;
-
-    entity.price = ((pricePerOne + backingPrice) * 1.22 * quantity).toFixed(2);
+    entity.price = calculatePrice(entity, em);
     return entity;
   }
+
+  @BeforeCreate()
+  async beforeCreate({ entity, em }: EventArgs<Product>) {
+    entity.price = calculatePrice(entity, em);
+    return entity;
+  }
+}
+
+function calculatePrice(entity: Product, em: EntityManager) {
+  let { type, backingType, patchHeight, patchWidth, quantity } = entity;
+
+  patchHeight = parseFloat(patchHeight as any);
+  patchWidth = parseFloat(patchWidth as any);
+
+  if (!type || !backingType) {
+    return 0;
+  }
+
+  const priceRepo = em.getRepository(BackingPrice);
+
+  const prices = generatePricesTable(
+    {},
+    await priceRepo.findAll({ fields: ['price', 'size', 'type'] }),
+  );
+
+  const size = (patchWidth + patchHeight) / 2;
+
+  const tablePrice = Object.entries(prices[type])
+    .filter(([key]) => {
+      return (typeof key === 'number' ? key : parseFloat(key)) >= size;
+    })
+    .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))[0] as any[];
+
+  const pricePerOne =
+    (tablePrice ? tablePrice[1] : 0) + (type === 'image' ? 39 / quantity : 0);
+
+  const backingPriceLookup: { [key: string]: number } = {
+    termoadesiva: ((patchWidth * patchHeight * 8) / 7500) * 2,
+    velcro_a: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
+    velcro_b: (patchWidth * patchHeight * 18) / 2500 + pricePerOne * 0.5,
+    velcro_a_b: (patchWidth * patchHeight * 36) / 2500 + pricePerOne * 0.5,
+  };
+  const backingPrice = backingPriceLookup[backingType] || 0;
+  return ((pricePerOne + backingPrice) * 1.22 * quantity).toFixed(2);
 }
