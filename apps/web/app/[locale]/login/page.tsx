@@ -7,6 +7,19 @@ import Link from "@app/components/Link";
 import useNoLoginRequired from "@app/hooks/useNoLoginRequired";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import {
+  EMPTY,
+  catchError,
+  concatMap,
+  filter,
+  from,
+  lastValueFrom,
+  map,
+  of,
+  switchMap,
+  tap,
+  timer,
+} from "rxjs";
 
 export default function LoginPage() {
   // Hooks
@@ -15,16 +28,30 @@ export default function LoginPage() {
 
   // Functions
   async function loginWithErrors(formData: FormData) {
-    const result = await login(
-      formData.get("email") as string,
-      formData.get("password") as string
+    return await lastValueFrom(
+      from(
+        login(
+          formData.get("email") as string,
+          formData.get("password") as string
+        )
+      ).pipe(
+        concatMap((result) => {
+          if (typeof result === "string") {
+            localStorage.setItem("SESSION_TOKEN", result);
+            toast.success("You logged in successfully");
+            router.replace("/");
+            return timer(1000);
+          } else {
+            throw new Error("Your email or password is incorrect");
+          }
+        }),
+        tap(() => window.location.reload()),
+        catchError((e) => {
+          toast.error(e.message);
+          return of(null);
+        })
+      )
     );
-    if (typeof result === "string") {
-      localStorage.setItem("SESSION_TOKEN", result);
-      toast.success("You logged in successfully");
-      router.replace("/");
-      setTimeout(window.location.reload, 1000);
-    } else toast.error("Your email or password is incorrect");
   }
   return (
     <div className="w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-6 lg:px-12">

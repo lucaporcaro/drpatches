@@ -2,14 +2,15 @@
 
 import { httpClient } from "@app/lib/axios";
 import { CreateProductState } from "@app/store/slices/createProduct";
+import { catchError, from, lastValueFrom, map, throwError } from "rxjs";
 
 export async function createProduct(
   type: "image" | "text",
   jwt: string
 ): Promise<CreateProductState> {
-  try {
-    return (
-      await httpClient.post(
+  return lastValueFrom(
+    from(
+      httpClient.post(
         "/v1/product",
         { type },
         {
@@ -18,44 +19,44 @@ export async function createProduct(
           },
         }
       )
-    ).data;
-  } catch (e: any) {
-    console.dir(e.response.data);
-    throw new Error();
-  }
+    ).pipe(
+      map(({ data }) => data),
+      catchError((e) => throwError(() => e))
+    )
+  );
 }
 
 export async function getProduct(
   id: string,
   jwt: string
 ): Promise<CreateProductState> {
-  try {
-    return (
-      await httpClient.get(`/v1/product/${id}`, {
+  return lastValueFrom(
+    from(
+      httpClient.get(`/v1/product/${id}`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
       })
-    ).data;
-  } catch (e: any) {
-    console.dir(e.response.data);
-    throw new Error();
-  }
+    ).pipe(
+      map(({ data }) => data),
+      catchError((e) => throwError(() => e))
+    )
+  );
 }
 
 export async function getAllProducts(
   jwt: string
 ): Promise<CreateProductState[]> {
-  try {
-    return (
-      await httpClient.get(`/v1/product/all`, {
+  return lastValueFrom(
+    from(
+      httpClient.get(`/v1/product/all`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
       })
-    ).data;
-  } catch (e: any) {
-    console.dir(e.response.data);
-    throw new Error();
-  }
+    ).pipe(
+      map(({ data }) => data),
+      catchError((e) => throwError(() => e))
+    )
+  );
 }

@@ -9,6 +9,16 @@ import { persistUser } from "@app/store/slices/user";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import {
+  catchError,
+  concatMap,
+  from,
+  lastValueFrom,
+  map,
+  of,
+  tap,
+  timer,
+} from "rxjs";
 
 export default function ProfilePage() {
   // States
@@ -28,24 +38,31 @@ export default function ProfilePage() {
       formData.entries()
     ) as any;
 
-    const result = await updateUser(payload);
-    if (typeof result === "string") {
-      toast.update(toastId, {
-        render: result,
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
-      });
-    } else {
-      dispatch(persistUser(result));
-      toast.update(toastId, {
-        render: "Information updated successfully",
-        type: "success",
-        isLoading: false,
-        autoClose: 3000,
-      });
-      router.refresh();
-    }
+    return lastValueFrom(
+      from(updateUser(payload)).pipe(
+        concatMap((result) => {
+          if (typeof result === "string") throw new Error(result);
+          dispatch(persistUser(result));
+          toast.update(toastId, {
+            render: "Information updated successfully",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          return timer(1000);
+        }),
+        tap(router.refresh),
+        catchError((e) => {
+          toast.update(toastId, {
+            render: e.message ?? "Faild to update personal information",
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+          });
+          return of(null);
+        })
+      )
+    );
   }
 
   return (

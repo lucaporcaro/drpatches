@@ -1,5 +1,6 @@
 "use client";
 import { getUser } from "@app/actions/user";
+import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
 import { persistUser } from "@app/store/slices/user";
 import { useQuery } from "@tanstack/react-query";

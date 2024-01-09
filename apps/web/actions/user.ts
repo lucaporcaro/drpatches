@@ -2,27 +2,34 @@
 
 import { httpClient } from "@app/lib/axios";
 import { UserState } from "@app/store/slices/user";
+import { catchError, from, lastValueFrom, map, of, throwError } from "rxjs";
 
 export async function getUser(jwt: string) {
-  return (
-    await httpClient.get("v1/user", {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    })
-  ).data;
+  return lastValueFrom(
+    from(
+      httpClient.get("v1/user", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+    ).pipe(
+      map(({ data }) => data),
+      catchError((e) => throwError(() => e))
+    )
+  );
 }
 
 export async function updateUser(payload: object): Promise<string | UserState> {
-  try {
-    const { status, data } = await httpClient.patch("v1/user", payload);
-    if (status !== 200) throw new Error("Updating the user faild");
-    return data;
-  } catch (e: any) {
-    return (
-      (typeof e?.response?.data?.message === "string"
-        ? e?.response?.data?.message
-        : e?.response?.data?.message[0]) || e.message
-    );
-  }
+  return lastValueFrom(
+    from(httpClient.patch("v1/user", payload)).pipe(
+      map(({ data }) => data),
+      catchError((e) =>
+        of(
+          (typeof e?.response?.data?.message === "string"
+            ? e?.response?.data?.message
+            : e?.response?.data?.message[0]) || e.message
+        )
+      )
+    )
+  );
 }

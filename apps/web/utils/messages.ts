@@ -1,3 +1,10 @@
+import { catchError, from, lastValueFrom, map, throwError } from "rxjs";
+
 export async function getLocalMessages(locale: string) {
-  return (await import(`../messages/${locale}`)).default;
+  return lastValueFrom(
+    from(import(`../messages/${locale}`)).pipe(
+      map((locale) => locale.default),
+      catchError((e) => throwError(() => e))
+    )
+  );
 }

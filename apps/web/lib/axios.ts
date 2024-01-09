@@ -1,4 +1,5 @@
 import axios from "axios";
+import { filter, lastValueFrom, map, of } from "rxjs";
 
 export const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -14,13 +15,17 @@ httpClient.interceptors.request.use(
 );
 
 async function getToken() {
-  try {
-    if (typeof document !== "undefined")
-      return (document as any).cookie
-        .split(";")
-        .filter((c: any) => c.includes("SESSION_TOKEN="))[0]
-        .split("=")[1];
-  } catch {
-    return null;
-  }
+  return lastValueFrom(
+    of(document).pipe(
+      filter((document) => typeof document !== "undefined"),
+      map(({ cookie }) => cookie.split(";")),
+      filter((cookies) => Boolean(cookies.length)),
+      map((cookies) => {
+        const sessionCookie = cookies.filter((c: any) =>
+          c.includes("SESSION_TOKEN=")
+        )[0];
+        return sessionCookie ? sessionCookie.split("=")[1] : null;
+      })
+    )
+  );
 }

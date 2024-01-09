@@ -3,6 +3,7 @@
 import { getAllProducts } from "@app/actions/product";
 import Button from "@app/components/Button";
 import Link from "@app/components/Link";
+import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
 import { useQuery } from "@tanstack/react-query";
 
@@ -11,13 +12,14 @@ export default async function AddressesProfilePage() {
   const jwt = useJwt();
 
   // Queries
-  const { data: addresses } = useQuery({
+  const { data: products } = useQuery({
     queryKey: ["products", "all"],
     queryFn: () => getAllProducts(jwt as string),
     enabled: Boolean(jwt),
   });
 
-  if (!addresses) return null;
+  if (!products) return <Loading />;
+
   return (
     <div className="w-full h-max flex flex-col items-start justify-start gap-4 p-8 max-h-full overflow-y-scroll">
       <div className="w-full h-max flex flex-col lg:flex-row items-start justify-start lg:justify-between lg:items-center">
@@ -27,7 +29,7 @@ export default async function AddressesProfilePage() {
         </Link>
       </div>
       <div className="w-full flex flex-col gap-10">
-        {addresses.map((product, i) => (
+        {products.map((product, i) => (
           <Link
             key={`address_${i}_${product.id}`}
             href={product.status ? `/product/editor/${product.id}` : ""}

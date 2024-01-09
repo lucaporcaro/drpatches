@@ -7,11 +7,21 @@ import {
 } from "@app/actions/addresses";
 import Button from "@app/components/Button";
 import Input from "@app/components/Input";
+import Loading from "@app/components/Loading";
 import PhoneInput from "@app/components/PhoneInput";
 import useJwt from "@app/hooks/useJwt";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import {
+  catchError,
+  concatMap,
+  from,
+  lastValueFrom,
+  of,
+  tap,
+  timer,
+} from "rxjs";
 
 export default function UpdateAddressPage({
   params,
@@ -37,46 +47,67 @@ export default function UpdateAddressPage({
 
     const payload: Record<string, any> = Object.fromEntries(formData.entries());
 
-    const result = await updateAddress(payload, params.id, jwt as string);
-    if (typeof result !== "string") {
-      toast.update(toastId, {
-        render: "Address updated",
-        type: "success",
-        autoClose: 3000,
-        isLoading: false,
-      });
-      setTimeout(() => router.refresh, 1000);
-    } else
-      toast.update(toastId, {
-        render: result,
-        type: "error",
-        autoClose: 3000,
-        isLoading: false,
-      });
+    return lastValueFrom(
+      from(updateAddress(payload, params.id, jwt as string)).pipe(
+        concatMap((result) => {
+          if (typeof result === "string") throw new Error(result);
+          toast.update(toastId, {
+            render: "Address updated",
+            type: "success",
+            autoClose: 3000,
+            isLoading: false,
+          });
+          return timer(1000);
+        }),
+        tap(() => router.refresh()),
+        catchError((e) => {
+          toast.update(toastId, {
+            render: e.message ?? "Faild to update address",
+            type: "error",
+            autoClose: 3000,
+            isLoading: false,
+          });
+          return of(null);
+        })
+      )
+    );
   }
 
   async function deleteAddressWithErrors() {
     if (!confirm("Are you sure?")) return;
+
     const toastId = toast.loading("Deleting the address...", {
       autoClose: 25000,
     });
-    const result = await deleteAddress(params.id, jwt as string);
-    if (typeof result !== "string") {
-      toast.update(toastId, {
-        render: "Address deleted",
-        type: "success",
-        autoClose: 3000,
-        isLoading: false,
-      });
-      setTimeout(() => (window.location.href = "/profile/addresses"), 1000);
-    } else
-      toast.update(toastId, {
-        render: result,
-        type: "error",
-        autoClose: 3000,
-        isLoading: false,
-      });
+
+    return lastValueFrom(
+      from(deleteAddress(params.id, jwt as string)).pipe(
+        concatMap((result) => {
+          if (typeof result === "string") throw new Error(result);
+          toast.update(toastId, {
+            render: "Address deleted",
+            type: "success",
+            autoClose: 3000,
+            isLoading: false,
+          });
+          return timer(1000);
+        }),
+        tap(() => (window.location.href = "/profile/addresses")),
+        catchError((e) => {
+          toast.update(toastId, {
+            render: e.message ?? "Faild to delete the address",
+            type: "error",
+            autoClose: 3000,
+            isLoading: false,
+          });
+          return of(null);
+        })
+      )
+    );
   }
+
+  if (!address) return <Loading />;
+
   return (
     <div className="w-full h-max flex flex-col items-start justify-start gap-4 p-8 max-h-full overflow-y-scroll">
       <div className="w-full h-max flex flex-col lg:flex-row items-start justify-start lg:justify-between lg:items-center">

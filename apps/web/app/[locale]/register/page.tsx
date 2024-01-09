@@ -8,6 +8,15 @@ import PhoneInput from "@app/components/PhoneInput";
 import useNoLoginRequired from "@app/hooks/useNoLoginRequired";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import {
+  catchError,
+  concatMap,
+  from,
+  lastValueFrom,
+  of,
+  tap,
+  timer,
+} from "rxjs";
 
 export default function RegisterPage() {
   // Hooks
@@ -19,15 +28,22 @@ export default function RegisterPage() {
     const payload: Record<string, string> = Object.fromEntries(
       formData.entries()
     ) as any;
-
-    const result = await register(payload);
-
-    if (typeof result === "string") {
-      localStorage.setItem("SESSION_TOKEN", result);
-      toast.success("You registered successfully");
-      router.replace("/");
-      setTimeout(window.location.reload, 1000);
-    } else toast.error(result);
+    return lastValueFrom(
+      from(register(payload)).pipe(
+        concatMap((result) => {
+          if (typeof result !== "string") throw new Error(result.error);
+          localStorage.setItem("SESSION_TOKEN", result);
+          toast.success("You registered successfully");
+          router.replace("/");
+          return timer(1000);
+        }),
+        tap(() => window.location.reload()),
+        catchError((e) => {
+          toast.error(e.message);
+          return of(null);
+        })
+      )
+    );
   }
   return (
     <div className="w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-6 lg:px-12">
@@ -48,6 +64,7 @@ export default function RegisterPage() {
             placeholder="Gender"
             label="Gender"
             name="gender"
+            type="select"
             options={[
               {
                 label: "Male",

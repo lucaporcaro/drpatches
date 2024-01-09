@@ -7,6 +7,15 @@ import PhoneInput from "@app/components/PhoneInput";
 import useJwt from "@app/hooks/useJwt";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import {
+  catchError,
+  concatMap,
+  from,
+  lastValueFrom,
+  of,
+  tap,
+  timer,
+} from "rxjs";
 
 export default function CreateAddressPage() {
   // Hooks
@@ -19,24 +28,31 @@ export default function CreateAddressPage() {
       autoClose: 25000,
     });
 
-    const payload: Record<string, any> = Object.entries(formData.entries());
-
-    const result = await createAddress(payload, jwt as string);
-    if (typeof result !== "string") {
-      toast.update(toastId, {
-        render: "Address created",
-        type: "success",
-        autoClose: 3000,
-        isLoading: false,
-      });
-      setTimeout(() => (window.location.href = "/profile/addresses"), 1000);
-    } else
-      toast.update(toastId, {
-        render: result,
-        type: "error",
-        autoClose: 3000,
-        isLoading: false,
-      });
+    const payload: Record<string, any> = Object.fromEntries(formData.entries());
+    return lastValueFrom(
+      from(createAddress(payload, jwt as string)).pipe(
+        concatMap((result) => {
+          if (typeof result == "string") throw new Error(result);
+          toast.update(toastId, {
+            render: "Address created",
+            type: "success",
+            autoClose: 3000,
+            isLoading: false,
+          });
+          return timer(1000);
+        }),
+        tap(() => (window.location.href = "/profile/addresses")),
+        catchError((e) => {
+          toast.update(toastId, {
+            render: e?.message ?? "Faild to create address",
+            type: "error",
+            autoClose: 3000,
+            isLoading: false,
+          });
+          return of(null);
+        })
+      )
+    );
   }
   return (
     <div className="w-full h-max flex flex-col items-start justify-start gap-4 p-8 max-h-full overflow-y-scroll">

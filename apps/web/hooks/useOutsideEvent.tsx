@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { filter, fromEvent } from "rxjs";
 
 type Props = {
   ref: React.RefObject<HTMLElement>;
@@ -7,16 +8,20 @@ type Props = {
 
 export default function useOutsideEvent({ ref, callback }: Props) {
   useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (ref.current && !ref.current.contains(event.target)) {
+    const subscription = fromEvent(document, "mousedown")
+      .pipe(
+        filter(
+          (event) =>
+            (ref.current &&
+              !ref.current.contains((event as any).target)) as boolean
+        )
+      )
+      .subscribe(() => {
         callback();
-      }
-    }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+      });
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
+      subscription.unsubscribe();
     };
   }, [ref]);
 }

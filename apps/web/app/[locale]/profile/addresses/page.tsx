@@ -1,21 +1,25 @@
 "use client";
 
-import { AddressT, getAllAddresses } from "@app/actions/addresses";
+import { getAllAddresses } from "@app/actions/addresses";
 import Button from "@app/components/Button";
 import Link from "@app/components/Link";
-import { useEffect, useState } from "react";
+import Loading from "@app/components/Loading";
+import useJwt from "@app/hooks/useJwt";
+import { useQuery } from "@tanstack/react-query";
 
 export default function AddressesProfilePage() {
-  // States
-  const [addresses, setAddresses] = useState<AddressT[]>([]);
-  // Effects
-  useEffect(() => {
-    if (!window) return;
-    getAllAddresses(localStorage.getItem("SESSION_TOKEN") as string).then(
-      (addresses) => setAddresses(addresses)
-    );
-    return () => setAddresses([]);
-  }, []);
+  // Hooks
+  const jwt = useJwt();
+
+  // Queries
+  const { data: addresses } = useQuery({
+    queryKey: ["addresses", "all", jwt],
+    queryFn: () => getAllAddresses(jwt as string),
+    enabled: Boolean(jwt),
+  });
+
+  if (!addresses) return <Loading />;
+
   return (
     <div className="w-full h-max flex flex-col items-start justify-start gap-4 p-8 max-h-full overflow-y-scroll">
       <div className="w-full h-max flex flex-col lg:flex-row items-start justify-start lg:justify-between lg:items-center">

@@ -1,6 +1,7 @@
 "use server";
 
 import { httpClient } from "@app/lib/axios";
+import { catchError, from, lastValueFrom, map, throwError } from "rxjs";
 
 export type PatchTypeT = {
   id: string;
@@ -8,10 +9,13 @@ export type PatchTypeT = {
 };
 
 export async function getPatchTypes(): Promise<PatchTypeT[]> {
-  return (await httpClient.get<PatchTypeT[]>("v1/patch-type")).data.map(
-    ({ image, ...patchType }) => ({
-      ...patchType,
-      image: httpClient.defaults.baseURL + image,
-    })
+  return lastValueFrom(
+    from(httpClient.get("v1/patch-type")).pipe(
+      map(({ data: { image, ...data } }) => ({
+        image: httpClient.defaults.baseURL + image,
+        ...data,
+      })),
+      catchError((e) => throwError(() => e))
+    )
   );
 }

@@ -8,7 +8,7 @@ export default function useNoLoginRequired() {
   useEffect(() => {
     if (!window) return;
     if (localStorage.getItem("SESSION_TOKEN")) {
-      router.replace("/login");
+      router.replace("/");
     }
   }, []);
 }
