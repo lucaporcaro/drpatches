@@ -35,6 +35,7 @@ import {
   map,
   throwError,
 } from "rxjs";
+import { useRouter } from "next/navigation";
 
 const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -43,8 +44,6 @@ const backingItems: SelectItem[] = [
   { id: "velcro_b", image: VelcroBImage.src },
   { id: "velcro_a_b", image: VelcroABImage.src },
 ];
-
-let updaterTimeout: NodeJS.Timeout;
 
 type Props = {
   initialProduct: CreateProductState;
@@ -75,6 +74,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   const [updatedPrice, setUpdatedPrice] = useState(price);
   const t = useTranslations("components.product_editor");
   const jwt = useJwt();
+  const router = useRouter();
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
@@ -157,7 +157,10 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
     <>
       <div className="w-full h-max flex items-center justify-start max-w-[1620px] mx-auto p-2">
         <button
-          onClick={() => dispatch(reset())}
+          onClick={() => {
+            dispatch(reset());
+            router.replace("/product/create");
+          }}
           className="w-max h-max px-6 py-3 bg-black rounded-lg"
           title="Reset"
         >

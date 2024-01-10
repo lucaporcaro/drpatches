@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Request,
   UploadedFile,
   UseGuards,
@@ -30,13 +31,13 @@ import CreateProductRequestDto from '../dtos/create-product.request.dto';
 
 @Controller({ path: 'product', version: '1' })
 @ApiTags('Products')
-@ApiBearerAuth()
-@UseGuards(JwtGuard)
 export default class ProductController {
   constructor(private readonly service: ProductService) {}
 
   @Get('all')
   @ApiOkResponse({ type: GetProductResponseDto, isArray: true })
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
   public getAll(@Request() { user: { id } }: any) {
     return this.service.getAll(id);
   }
@@ -44,20 +45,23 @@ export default class ProductController {
   @Get(':id')
   @ApiOkResponse({ type: GetProductResponseDto })
   @ApiParam({ name: 'id', type: String })
-  public getOne(
-    @Param('id') id: string,
-    @Request() { user: { id: userId } }: any,
-  ) {
-    return this.service.getOne(id, userId);
+  public getOne(@Param('id') id: string) {
+    return this.service.getOne(id);
   }
 
   @Post()
   @ApiCreatedResponse({ type: GetProductResponseDto })
-  public create(
-    @Request() { user }: any,
-    @Body() payload: CreateProductRequestDto,
-  ) {
-    return this.service.createProduct(user, payload.type);
+  public create(@Body() payload: CreateProductRequestDto) {
+    return this.service.createProduct(payload.type);
+  }
+
+  @Put('assign/:id')
+  @ApiParam({ name: 'id', required: true })
+  @ApiCreatedResponse({ type: GetProductResponseDto })
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  public assignUser(@Request() { user }: any, @Param('id') id: string) {
+    return this.service.assignUser(id, user);
   }
 
   @Patch(':id')
@@ -68,9 +72,8 @@ export default class ProductController {
   public updateProduct(
     @Body() { image: _, ...payload }: UpdateProductRequestDto,
     @Param('id') id: string,
-    @Request() { user: { id: userId } }: ERequest,
     @UploadedFile() image?: Express.Multer.File,
   ) {
-    return this.service.updateProduct(id, userId, payload, image);
+    return this.service.updateProduct(id, payload, image);
   }
 }

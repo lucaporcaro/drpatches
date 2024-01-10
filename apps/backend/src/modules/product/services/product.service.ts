@@ -7,9 +7,11 @@ import User from '../../user/entities/user.entity';
 import UpdateProductRequestDto from '../dtos/update-product.request.dto';
 import {
   catchError,
+  concatMap,
   from,
   map,
   mergeMap,
+  switchMap,
   throwError,
   throwIfEmpty,
 } from 'rxjs';
@@ -27,14 +29,27 @@ export default class ProductService {
     this.entityManager = productRepo.getEntityManager();
   }
 
-  public createProduct(user: User, type: ProductType) {
+  public createProduct(type: ProductType) {
     const product = this.productRepo.create({
-      user,
       type,
     });
     return from(this.entityManager.persistAndFlush([product])).pipe(
       map(() => product),
       catchError((e) => throwError(() => e)),
+    );
+  }
+
+  public assignUser(id: string, user: User) {
+    return from(this.productRepo.findOneOrFail({ id })).pipe(
+      switchMap((product) => {
+        product.user = user;
+        return from(this.entityManager.flush()).pipe(
+          catchError((e) => throwError(() => e)),
+        );
+      }),
+      catchError(() => {
+        throw new NotFoundException('Product not found');
+      }),
     );
   }
 
@@ -51,12 +66,9 @@ export default class ProductService {
     );
   }
 
-  public getOne(id: string, userId: string) {
+  public getOne(id: string) {
     return from(
-      this.productRepo.findOneOrFail(
-        { id, user: { id: userId } },
-        { populate: ['patchType.id'] },
-      ),
+      this.productRepo.findOneOrFail({ id }, { populate: ['patchType.id'] }),
     ).pipe(
       map((product) =>
         Object.assign(product, {
@@ -71,7 +83,6 @@ export default class ProductService {
 
   public updateProduct(
     id: string,
-    userId: string,
     payload: UpdateProductRequestDto,
     image: Express.Multer.File | undefined = undefined,
   ) {
@@ -79,7 +90,6 @@ export default class ProductService {
       this.productRepo.findOne(
         {
           id,
-          user: { id: userId },
         },
         {
           populate: ['patchType.id'],

@@ -2,15 +2,28 @@
 
 import { createProduct } from "@app/actions/product";
 import useJwt from "@app/hooks/useJwt";
+import { addToPersistedProduct } from "@app/store/slices/persistedProducts";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaImage, FaA } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import {
+  catchError,
+  concatMap,
+  from,
+  lastValueFrom,
+  switchMap,
+  tap,
+  throwError,
+  timer,
+} from "rxjs";
 
 export default function SelectProductType() {
   // States
   const [isCreating, setIsCreating] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   // Hooks
   const t = useTranslations("components.select_product_type");
@@ -19,25 +32,32 @@ export default function SelectProductType() {
 
   // Functions
   async function createAndNavigateProduct(type: "text" | "image") {
-    try {
-      const result = await toast.promise(createProduct(type, jwt as string), {
-        pending: {
-          render: "Creating product...",
-          autoClose: 25000,
-        },
-        error: {
-          render: "Creating product failed",
-          autoClose: 3000,
-        },
-        success: {
-          render: "Product created successfully",
-          autoClose: 3000,
-        },
-      });
-      setTimeout(() => router.push(`/product/editor/${result.id}`), 2000);
-    } catch {
-      console.log("Error catchd");
-    }
+    return lastValueFrom(
+      from(
+        toast.promise(createProduct(type, jwt as string), {
+          pending: {
+            render: "Creating product...",
+            autoClose: 25000,
+          },
+          error: {
+            render: "Creating product failed",
+            autoClose: 3000,
+          },
+          success: {
+            render: "Product created successfully",
+            autoClose: 3000,
+          },
+        })
+      ).pipe(
+        switchMap((result) => {
+          dispatch(addToPersistedProduct(result));
+          return timer(3000).pipe(
+            tap(() => router.push(`/product/editor/${result.id}`))
+          );
+        }),
+        catchError((e) => throwError(() => e))
+      )
+    );
   }
 
   return (

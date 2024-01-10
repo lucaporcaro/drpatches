@@ -22,12 +22,10 @@ export default function ProductEidtorPage({
       {
         queryKey: ["product", params.id],
         queryFn: () => getProduct(params.id, jwt as string),
-        enabled: Boolean(jwt),
       },
       {
         queryKey: ["patch_types"],
         queryFn: () => getPatchTypes(),
-        enabled: Boolean(jwt),
       },
     ],
   });
