@@ -10,6 +10,10 @@ module.exports = withNextIntel({
         hostname: "localhost",
         port: "3001",
       },
+      {
+        protocol: "https",
+        hostname: "drpatches.com",
+      },
     ],
   },
 });
