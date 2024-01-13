@@ -36,6 +36,7 @@ import {
   throwError,
 } from "rxjs";
 import { useRouter } from "next/navigation";
+import Loading from "react-loading";
 
 const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -75,6 +76,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   const t = useTranslations("components.product_editor");
   const jwt = useJwt();
   const router = useRouter();
+  const [isSyncing, setIsSyncing] = useState<boolean>(false);
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
@@ -99,36 +101,22 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
     for (const key of Object.keys(product))
       if (typeof product[key] !== "undefined")
         payload.append(key, product[key]);
-
     return lastValueFrom(
       from(
-        toast.promise(
-          httpClient.patch(`/v1/product/${id}`, payload, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${jwt}`,
-            },
-          }),
-          {
-            pending: {
-              render: "Syncing the product...",
-              autoClose: 25000,
-            },
-            error: {
-              render: "Syncing failed",
-              autoClose: 3000,
-            },
-            success: {
-              render: "Synced successfully",
-              autoClose: 3000,
-            },
-          }
-        )
+        httpClient.patch(`/v1/product/${id}`, payload, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${jwt}`,
+          },
+        })
       ).pipe(
         map(({ data: { price } }) => {
           setUpdatedPrice(price);
         }),
-        catchError((e) => throwError(() => e))
+        catchError((e) => {
+          toast.error("Faild to sync", { autoClose: 2000 });
+          return throwError(() => e);
+        })
       )
     );
   }
@@ -146,7 +134,9 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
     const subscription = productUpdateSubject
       .pipe(debounceTime(2000))
       .subscribe(async (product) => {
+        setIsSyncing(true);
         await updateProductWithErrors(product, jwt as any);
+        setIsSyncing(false);
       });
     return () => {
       subscription.unsubscribe();
@@ -306,9 +296,18 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           </span>
           <div className="w-full h-max flex flex-col items-center justify-center gap-6 lg:flex-row lg:max-w-[500px]">
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
-              <span className="font-semibold text-2xl">
-                {updatedPrice || price}€
-              </span>
+              {isSyncing ? (
+                <Loading
+                  type="spin"
+                  color="rgb(243, 204, 16)"
+                  width={28}
+                  height={28}
+                />
+              ) : (
+                <span className="font-semibold text-2xl">
+                  {updatedPrice || price}€
+                </span>
+              )}
             </div>
             <div className="w-[249px] h-max">
               <Link href={`/product/checkout/${product.id}`}>
