@@ -13,7 +13,7 @@ export default function UserProvider({ children }: any) {
   const jwt = useJwt();
 
   // Queries
-  const { data } = useQuery({
+  const { data, isFetched } = useQuery({
     queryKey: ["user", "profile", jwt],
     queryFn: () => getUser(jwt as string),
     enabled: Boolean(jwt),
@@ -22,7 +22,12 @@ export default function UserProvider({ children }: any) {
   // Effects
   useEffect(() => {
     if (data) dispatch(persistUser(data));
-  }, [data]);
+    if (jwt && isFetched && !data) {
+      alert("True");
+      localStorage.clear();
+      window.location.reload();
+    }
+  }, [data, jwt, isFetched]);
 
   return children;
 }
