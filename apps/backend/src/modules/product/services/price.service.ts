@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import BackingPrice from '../entities/backing-price.entity';
 import { EntityRepository } from '@mikro-orm/postgresql';
 import { from } from 'rxjs';
-import { map, reduce, tap } from 'rxjs/operators';
+import { reduce } from 'rxjs/operators';
 
 @Injectable()
 export default class PriceService {
