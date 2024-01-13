@@ -38,7 +38,7 @@ import {
 import { useRouter } from "next/navigation";
 import Loading from "react-loading";
 
-const backingItems: SelectItem[] = [
+export const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
   { id: "termoadesiva", image: TermoadesivaImage.src },
   { id: "velcro_a", image: VelcroAImage.src },
