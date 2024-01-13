@@ -113,7 +113,6 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
             <div className="w-full h-max flex flex-col items-start justify-center gap-10">
               <ShoppingItem
                 label="Text"
-                isColor
                 value={product.text ?? "No text provided"}
               />
               <ShoppingItem
