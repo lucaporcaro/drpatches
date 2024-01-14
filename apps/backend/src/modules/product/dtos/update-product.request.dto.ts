@@ -79,4 +79,9 @@ export default class UpdateProductRequestDto {
   @IsString()
   @IsOptional()
   stripeId?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  note?: string;
 }

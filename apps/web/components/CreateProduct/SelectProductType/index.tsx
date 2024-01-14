@@ -33,22 +33,7 @@ export default function SelectProductType() {
   // Functions
   async function createAndNavigateProduct(type: "text" | "image") {
     return lastValueFrom(
-      from(
-        toast.promise(createProduct(type, jwt as string), {
-          pending: {
-            render: "Creating product...",
-            autoClose: 25000,
-          },
-          error: {
-            render: "Creating product failed",
-            autoClose: 3000,
-          },
-          success: {
-            render: "Product created successfully",
-            autoClose: 3000,
-          },
-        })
-      ).pipe(
+      from(createProduct(type, jwt as string)).pipe(
         switchMap((result) => {
           dispatch(addToPersistedProduct(result));
           return timer(3000).pipe(

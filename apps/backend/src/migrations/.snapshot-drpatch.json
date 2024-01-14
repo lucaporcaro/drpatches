@@ -419,6 +419,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "default": "''",
           "mappedType": "string"
         },
         "border_color": {
@@ -549,6 +550,16 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
+          "mappedType": "string"
+        },
+        "note": {
+          "name": "note",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "default": "''",
           "mappedType": "string"
         },
         "user_id": {

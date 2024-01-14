@@ -16,6 +16,7 @@ export interface CreateProductState {
   image?: File;
   price: number | string;
   status?: string;
+  note?: string;
 }
 
 const initialState: CreateProductState = {
@@ -32,6 +33,7 @@ const initialState: CreateProductState = {
   patchType: undefined,
   backingType: undefined,
   image: undefined,
+  note: "",
 };
 
 export const createProductSlice = createSlice({

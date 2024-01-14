@@ -40,7 +40,7 @@ export default class Product extends BaseModel {
   @Enum({ items: () => ProductType, nullable: true })
   type!: ProductType;
 
-  @Property({ nullable: true })
+  @Property({ nullable: true, default: '' })
   text?: string;
 
   @Property({ name: 'border_color', default: '#111' })
@@ -86,6 +86,9 @@ export default class Product extends BaseModel {
 
   @Property({ name: 'stripe_id', nullable: true })
   stripeId?: string;
+
+  @Property({ nullable: true, default: '' })
+  note?: string;
 
   @ManyToOne(() => User, { index: true, nullable: true })
   user?: User;

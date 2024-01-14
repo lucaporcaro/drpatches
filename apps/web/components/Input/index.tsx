@@ -39,7 +39,22 @@ export default function Input({
       ].join(" ")}
     >
       <span className="font-semibold text-black text-xl">{label}</span>
-      {type === "select" ? (
+      {type === "textarea" ? (
+        <textarea
+          value={value}
+          disabled={disabled}
+          name={name}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          className="w-full h-32 p-3 text-black outline-none bg-white flex items-center justify-start px-3 rounded-xl"
+          required={required}
+          onChange={
+            onChange
+              ? ({ currentTarget: { value } }) => onChange(value)
+              : undefined
+          }
+        />
+      ) : type === "select" ? (
         <select
           placeholder={placeholder}
           className="w-full h-8 text-black font-semibold px-4 rounded-md text-sm"

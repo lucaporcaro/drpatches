@@ -70,6 +70,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
     backgroundColor,
     image,
     price,
+    note,
   } = product;
   const dispatch = useDispatch();
   const [updatedPrice, setUpdatedPrice] = useState(price);
@@ -132,7 +133,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
 
   useEffect(() => {
     const subscription = productUpdateSubject
-      .pipe(debounceTime(2000))
+      .pipe(debounceTime(1000))
       .subscribe(async (product) => {
         setIsSyncing(true);
         await updateProductWithErrors(product, jwt as any);
@@ -221,6 +222,15 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
               </div>
             </>
           )}
+          <div className="w-full h-max md:col-span-2">
+            <Input
+              label="Note"
+              placeholder="Write your note here..."
+              type="textarea"
+              onChange={update("note")}
+              value={note}
+            />
+          </div>
         </div>
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
           <span className="font-bold text-3xl">{t("titels.patching")}</span>
