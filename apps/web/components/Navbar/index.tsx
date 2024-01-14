@@ -76,6 +76,8 @@ const Navbar = () => {
         <div className="w-max h-max items-center justify-center gap-6 text-white font-medium text-base hidden md:flex">
           <Link href="/product/create">{t("links.examples")}</Link>
           <Link href="/about">{t("links.aboutus")}</Link>
+          <Link href="/faq">FAQ</Link>
+          <Link href="/reviews">Reviews</Link>
           <FaBasketShopping className="text-white w-8 aspect-auto" />
         </div>
         <div
@@ -125,6 +127,8 @@ const Navbar = () => {
               <Link href="/product/create">{t("links.examples")}</Link>
               <Link href="/about">{t("links.aboutus")}</Link>
               <Link href="/contact">{t("links.contact")}</Link>
+              <Link href="/faq">FAQ</Link>
+              <Link href="/reviews">Reviews</Link>
             </div>
             <div className="text-white font-bold text-xs flex items-center justify-center gap-2 mt-auto">
               <span>{t("language")}:</span>
