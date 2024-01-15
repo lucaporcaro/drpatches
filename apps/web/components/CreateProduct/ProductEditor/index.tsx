@@ -159,9 +159,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
         </button>
         <h2 className="font-bold text-2xl md:text-4xl text-black">
           Create Patch{" "}
-          {product && product.type
-            ? (product as any)?.type[0].toUpperCase() + product.type.slice(1)
-            : ""}
+          {type ? type.slice(0, 1).toUpperCase() + type.slice(1) : ""}
         </h2>
         <div className="hidden lg:block w-[68px] h-[44px]" />
       </div>
@@ -266,7 +264,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           />
 
           <div className="w-max flex flex-col items-end justify-start gap-6">
-            {product.type !== "image" ? (
+            {type !== "image" ? (
               <div className="w-max ">
                 <Select
                   value={patchType}
