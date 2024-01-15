@@ -160,7 +160,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
         <h2 className="font-bold text-2xl md:text-4xl text-black">
           Create Patch{" "}
           {product && product.type
-            ? product.type[0].toUpperCase() + product.type.slice(1)
+            ? (product as any)?.type[0].toUpperCase() + product.type.slice(1)
             : ""}
         </h2>
         <div className="hidden lg:block w-[68px] h-[44px]" />
