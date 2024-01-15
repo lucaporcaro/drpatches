@@ -14,6 +14,10 @@ module.exports = withNextIntel({
         protocol: "https",
         hostname: "drpatches.com",
       },
+      {
+        protocol: "https",
+        hostname: "api.drpatches.com",
+      },
     ],
   },
 });
