@@ -9,17 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaImage, FaA } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import {
-  catchError,
-  concatMap,
-  from,
-  lastValueFrom,
-  switchMap,
-  tap,
-  throwError,
-  timer,
-} from "rxjs";
+import { catchError, from, lastValueFrom, map, throwError } from "rxjs";
 
 export default function SelectProductType() {
   // States
@@ -36,11 +26,9 @@ export default function SelectProductType() {
     setIsCreating(true);
     return await lastValueFrom(
       from(createProduct(type, jwt as string)).pipe(
-        concatMap((result) => {
+        map((result) => {
           dispatch(addToPersistedProduct(result));
-          return timer(1000).pipe(
-            tap(() => router.push(`/product/editor/${result.id}`))
-          );
+          router.push(`/product/editor/${result.id}`);
         }),
         catchError((e) => throwError(() => e))
       )
