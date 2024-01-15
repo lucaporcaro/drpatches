@@ -3,11 +3,6 @@ import BaseModel from 'src/common/entities/base-model.entity';
 import Address from 'src/modules/addresses/entities/address.entity';
 import Product from 'src/modules/product/entities/product.entity';
 
-export enum UserGender {
-  MALE = 'm',
-  FEMALE = 'f',
-}
-
 export enum UserRole {
   ADMIN = 'admin',
   CUSTOMER = 'customer',
@@ -32,9 +27,6 @@ export default class User extends BaseModel {
 
   @Property({ unique: true, nullable: false })
   phone: string;
-
-  @Enum({ items: () => UserGender, nullable: false })
-  gender!: UserGender;
 
   @OneToMany(() => Address, (address) => address.user)
   addresses = new Collection<Location>(this);

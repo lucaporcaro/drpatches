@@ -78,7 +78,9 @@ const Navbar = () => {
           <Link href="/about">{t("links.aboutus")}</Link>
           <Link href="/faq">FAQ</Link>
           <Link href="/reviews">Reviews</Link>
-          <FaBasketShopping className="text-white w-8 aspect-auto" />
+          <Link href="/profile/products" passHref>
+            <FaBasketShopping className="text-white w-8 aspect-auto" />
+          </Link>
         </div>
         <div
           className="w-10 h-max flex md:hidden flex-col gap-2 cursor-pointer"

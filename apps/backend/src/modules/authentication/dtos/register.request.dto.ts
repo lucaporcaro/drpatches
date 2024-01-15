@@ -7,7 +7,6 @@ import {
   IsString,
   IsStrongPassword,
 } from 'class-validator';
-import { UserGender } from 'src/modules/user/entities/user.entity';
 
 export default class RegisterRequestDto {
   @ApiProperty({ example: 'mohammadraufzahed@protonmail.com' })
@@ -34,9 +33,4 @@ export default class RegisterRequestDto {
   @IsNotEmpty()
   @IsPhoneNumber()
   phone: string;
-
-  @ApiProperty({ examples: ['m', 'f'], example: 'm' })
-  @IsEnum(UserGender)
-  @IsNotEmpty()
-  gender!: UserGender;
 }

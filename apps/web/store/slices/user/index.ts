@@ -5,7 +5,6 @@ export interface UserState {
   phone: string;
   firstName: string;
   lastName: string;
-  gender: "m" | "f";
   role: "admin" | "customer";
 }
 

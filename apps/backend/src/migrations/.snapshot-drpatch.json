@@ -292,19 +292,6 @@
           "primary": false,
           "nullable": false,
           "mappedType": "string"
-        },
-        "gender": {
-          "name": "gender",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "enumItems": [
-            "m",
-            "f"
-          ],
-          "mappedType": "enum"
         }
       },
       "name": "users",

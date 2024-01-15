@@ -60,23 +60,6 @@ export default function RegisterPage() {
           <Input label="Email" name="email" type="email" required />
           <Input label="Password" name="password" type="password" required />
           <PhoneInput required name="phone" label="Phone" />
-          <Input
-            placeholder="Gender"
-            label="Gender"
-            name="gender"
-            type="select"
-            options={[
-              {
-                label: "Male",
-                value: "m",
-              },
-              {
-                label: "Female",
-                value: "f",
-              },
-            ]}
-            required
-          />
           <Button>Register</Button>
           <div className="w-max mx-auto font-semibold underline text-black">
             <Link href="/login">Already have one?</Link>

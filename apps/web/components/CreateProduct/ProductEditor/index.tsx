@@ -146,7 +146,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
 
   return (
     <>
-      <div className="w-full h-max flex items-center justify-start max-w-[1620px] mx-auto p-2">
+      <div className="w-11/12 h-max flex items-center justify-between max-w-[1620px] mx-auto p-2 mb-2">
         <button
           onClick={() => {
             dispatch(reset());
@@ -157,6 +157,11 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
         >
           <FaArrowLeft size={20} className="text-white" />
         </button>
+        <h2 className="font-bold text-2xl md:text-4xl text-black">
+          Create Patch{" "}
+          {(product as any).type[0]?.toUpperCase() + product.type?.slice(1)}
+        </h2>
+        <div className="hidden lg:block w-[68px] h-[44px]" />
       </div>
       <div className="w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-4 gap-10">
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2">
@@ -259,14 +264,16 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           />
 
           <div className="w-max flex flex-col items-end justify-start gap-6">
-            <div className="w-max">
-              <Select
-                value={patchType}
-                items={patchTypes}
-                label={t("select_type")}
-                onChange={update("patchType")}
-              />
-            </div>
+            {product.type !== "image" ? (
+              <div className="w-max ">
+                <Select
+                  value={patchType}
+                  items={patchTypes}
+                  label={t("select_type")}
+                  onChange={update("patchType")}
+                />
+              </div>
+            ) : null}
             <Select
               value={backingType}
               items={backingItems}
@@ -278,7 +285,10 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
         {type === "text" ? (
           <div className="bg-primary-1 text-black relative flex flex-col items-center justify-center gap-6 py-10 px-6 rounded-xl lg:col-span-1 overflow-hidden">
             <span className="font-bold text-3xl">{t("preview")}</span>
-            <div className="w-max h-max relative" style={{ backgroundColor }}>
+            <div
+              className="w-max h-max relative border-2"
+              style={{ backgroundColor, borderColor }}
+            >
               {patchType ? (
                 <img
                   className="w-32 aspect-auto"

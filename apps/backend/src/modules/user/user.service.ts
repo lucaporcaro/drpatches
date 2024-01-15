@@ -24,7 +24,6 @@ export class UserService {
     'firstName',
     'lastName',
     'phone',
-    'gender',
   ];
 
   constructor(

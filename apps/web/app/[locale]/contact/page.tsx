@@ -27,16 +27,18 @@ const contactItems: {
 export default function ContactPage() {
   return (
     <div className="w-full h-max flex flex-col gap-8 items-center justify-center">
-      <div className="w-full h-max flex place-items-center place-content-center gap-2 py-8 min-h-[59vh]">
+      <div className="w-full h-max max-w-[1620px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center place-items-center gap-10 py-8 min-h-[59vh]">
         {contactItems.map(({ title, content, Icon }, i) => (
           <div
-            className="w-[320px] h-[320px] flex flex-col items-center justify-center bg-primary-1 px-4 py-6 gap-5 rounded-sm"
+            className="w-full min-h-full h-max flex flex-col items-center justify-center bg-primary-1 px-4 py-6 gap-5 rounded-sm"
             key={`contact_${i}_${title}`}
           >
             <Icon size={52} />
             <div className="w-full h-max flex flex-col items-center justify-center gap-4">
               <span className="font-black text-3xl">{title}</span>
-              <span className="font-normal text-xl">{content}</span>
+              <span className="font-normal text-base text-center">
+                {content}
+              </span>
             </div>
           </div>
         ))}

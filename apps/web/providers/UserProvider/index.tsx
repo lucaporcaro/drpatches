@@ -23,7 +23,6 @@ export default function UserProvider({ children }: any) {
   useEffect(() => {
     if (data) dispatch(persistUser(data));
     if (jwt && isFetched && !data) {
-      alert("True");
       localStorage.clear();
       window.location.reload();
     }

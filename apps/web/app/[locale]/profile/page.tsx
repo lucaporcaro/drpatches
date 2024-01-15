@@ -85,21 +85,7 @@ export default function ProfilePage() {
           defaultValue={user.email}
         />
         <PhoneInput name="phone" label="Phone" value={user.phone} />
-        <Input
-          label="Gender"
-          options={[
-            {
-              label: "Male",
-              value: "m",
-            },
-            {
-              label: "Female",
-              value: "f",
-            },
-          ]}
-          type="select"
-          containerClassName="md:col-span-2"
-        />
+
         <Button className="md:col-span-2">Save</Button>
       </form>
     </div>

@@ -6,7 +6,6 @@ import {
   IsPhoneNumber,
   IsString,
 } from 'class-validator';
-import { UserGender } from '../entities/user.entity';
 
 export default class UpdateUserRequestDto {
   @ApiProperty()
@@ -28,9 +27,4 @@ export default class UpdateUserRequestDto {
   @IsString()
   @IsOptional()
   lastName: string;
-
-  @ApiProperty({ enum: UserGender })
-  @IsEnum(UserGender)
-  @IsOptional()
-  gender!: UserGender;
 }

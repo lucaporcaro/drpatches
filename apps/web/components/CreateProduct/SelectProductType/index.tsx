@@ -1,6 +1,7 @@
 "use client";
 
 import { createProduct } from "@app/actions/product";
+import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
 import { addToPersistedProduct } from "@app/store/slices/persistedProducts";
 import { useTranslations } from "next-intl";
@@ -32,18 +33,21 @@ export default function SelectProductType() {
 
   // Functions
   async function createAndNavigateProduct(type: "text" | "image") {
-    return lastValueFrom(
+    setIsCreating(true);
+    return await lastValueFrom(
       from(createProduct(type, jwt as string)).pipe(
-        switchMap((result) => {
+        concatMap((result) => {
           dispatch(addToPersistedProduct(result));
-          return timer(3000).pipe(
+          return timer(1000).pipe(
             tap(() => router.push(`/product/editor/${result.id}`))
           );
         }),
         catchError((e) => throwError(() => e))
       )
-    );
+    ).then(() => setIsCreating(true));
   }
+
+  if (isCreating) return <Loading />;
 
   return (
     <>
