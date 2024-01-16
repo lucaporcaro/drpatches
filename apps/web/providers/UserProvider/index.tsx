@@ -23,7 +23,7 @@ export default function UserProvider({ children }: any) {
   useEffect(() => {
     if (data) dispatch(persistUser(data));
     if (jwt && isFetched && !data) {
-      localStorage.clear();
+      localStorage.removeItem("SESSION_TOKEN");
       window.location.reload();
     }
   }, [data, jwt, isFetched]);

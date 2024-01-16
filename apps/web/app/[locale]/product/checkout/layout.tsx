@@ -9,6 +9,6 @@ export default function ProductLayout({
   children: React.ReactNode;
 }) {
   // Hooks
-  useMustLoggedIn();
+  useMustLoggedIn(true);
   return children;
 }

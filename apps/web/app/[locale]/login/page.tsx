@@ -8,15 +8,11 @@ import useNoLoginRequired from "@app/hooks/useNoLoginRequired";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import {
-  EMPTY,
   catchError,
   concatMap,
-  filter,
   from,
   lastValueFrom,
-  map,
   of,
-  switchMap,
   tap,
   timer,
 } from "rxjs";
@@ -39,7 +35,9 @@ export default function LoginPage() {
           if (typeof result === "string") {
             localStorage.setItem("SESSION_TOKEN", result);
             toast.success("You logged in successfully");
-            router.replace("/");
+            const login = localStorage.getItem("REDIRECT_AFTER_LOGIN");
+            if (login) localStorage.removeItem("REDIRECT_AFTER_LOGIN");
+            router.replace(login ?? "/");
             return timer(1000);
           } else {
             throw new Error("Your email or password is incorrect");
