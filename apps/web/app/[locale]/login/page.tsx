@@ -35,9 +35,12 @@ export default function LoginPage() {
           if (typeof result === "string") {
             localStorage.setItem("SESSION_TOKEN", result);
             toast.success("You logged in successfully");
-            const login = localStorage.getItem("REDIRECT_AFTER_LOGIN");
-            if (login) localStorage.removeItem("REDIRECT_AFTER_LOGIN");
-            router.replace(login ?? "/");
+            const REDIRECT_AFTER_LOGIN = localStorage.getItem(
+              "REDIRECT_AFTER_LOGIN"
+            );
+            if (REDIRECT_AFTER_LOGIN)
+              localStorage.removeItem("REDIRECT_AFTER_LOGIN");
+            router.replace(REDIRECT_AFTER_LOGIN ?? "/");
             return timer(1000);
           } else {
             throw new Error("Your email or password is incorrect");
