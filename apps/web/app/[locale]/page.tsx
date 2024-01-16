@@ -45,7 +45,7 @@ export default function Page(): JSX.Element {
             className="w-full max-w-[545px] aspect-auto rounded-3xl xl:max-w-[720px]"
           />
         </div>
-        <div className="w-full max-w-[706px] px-8 py-4 text-black flex flex-col items-center justify-center gap-8 text-center">
+        <div className="w-full max-w-[706px] px-8 py-4 text-black flex flex-col items-start justify-center gap-8 text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold">
             {t("hero.title")}
           </h2>
@@ -59,7 +59,7 @@ export default function Page(): JSX.Element {
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold">
           {t("why_us.title")}
         </h2>
-        <p className="w-11/12 max-w-[1134px] text-center text-base md:text-lg lg:text-2xl font-medium">
+        <p className="w-11/12 max-w-[1134px] text-justify text-base md:text-lg lg:text-2xl font-medium">
           {t("why_us.description")}
         </p>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:my-6 gap-y-10 place-items-start place-content-between">

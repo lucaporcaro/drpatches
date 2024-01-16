@@ -29,7 +29,8 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <title>Dr.Patch</title>
+        <title>Dr.Patches</title>
+        {/* <link rel="icon" type="image/x-icon" href="/images/favicon.ico" /> */}
       </head>
       <body
         className={[
