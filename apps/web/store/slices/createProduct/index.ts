@@ -1,4 +1,3 @@
-import prices from "@app/assets/data/prices";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface CreateProductState {

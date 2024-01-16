@@ -31,7 +31,7 @@ export default function ProfilePage({ children }: { children: any }) {
       <div className="w-full h-max p-4 lg:h-full lg:min-h-[484px] lg:col-span-2 xl:col-span-1 bg-primary-1 border-[1px] rounded-xl flex flex-row gap-10 lg:flex-col lg:py-10">
         {sidebarItems.map(({ Icon, label, link }) => (
           <Link href={link} key={`dashboard_sidebar_${link}`} prefetch>
-            <div className="text-white flex flex-col items-center justify-center gap-4 lg:flex-row bg-black p-4 rounded-md">
+            <div className="text-white flex flex-col items-center justify-start gap-4 lg:flex-row bg-black p-4 rounded-md">
               <Icon className="w-6 h-6" />
               <span className="font-semibold text-sm">{label}</span>
             </div>

@@ -286,8 +286,12 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           <div className="bg-primary-1 text-black relative flex flex-col items-center justify-center gap-6 py-10 px-6 rounded-xl lg:col-span-1 overflow-hidden">
             <span className="font-bold text-3xl">{t("preview")}</span>
             <div
-              className="w-max h-max relative border-2"
-              style={{ backgroundColor, borderColor }}
+              className="w-max h-max relative"
+              style={{
+                backgroundColor,
+                borderColor,
+                borderWidth: patchType ? 2 : 0,
+              }}
             >
               {patchType ? (
                 <img
