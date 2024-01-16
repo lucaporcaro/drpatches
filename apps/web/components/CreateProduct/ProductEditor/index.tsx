@@ -18,7 +18,7 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
 import { toast } from "react-toastify";
@@ -78,6 +78,12 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   const jwt = useJwt();
   const router = useRouter();
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
+
+  // Memos
+  const pricePerOne = useMemo(
+    () => ((price as number) / quantity).toFixed(2),
+    [price, quantity]
+  );
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
@@ -263,7 +269,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
             max={50000}
           />
 
-          <div className="w-max flex flex-col items-end justify-start gap-6">
+          <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-auto">
             {type !== "image" ? (
               <div className="w-max ">
                 <Select
@@ -315,10 +321,17 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           data-alone={type === "image"}
           className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl data-[alone=true]:lg:col-span-4 lg:col-span-3 overflow-hidden"
         >
-          <span className="font-bold text-3xl">
-            {type === "image" ? t("image_patch") : t("text_patch")}
-          </span>
-          <div className="w-full h-max flex flex-col items-center justify-center gap-6 lg:flex-row lg:max-w-[500px]">
+          <div className="w-max">
+            <span className="font-bold text-3xl">
+              {type === "image" ? t("image_patch") : t("text_patch")}
+            </span>
+          </div>
+          <div className="w-max h-max flex flex-col items-center justify-center gap-6 lg:flex-row">
+            <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
+              <span className="font-semibold text-2xl">
+                Per One: {pricePerOne}€
+              </span>
+            </div>
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
               {isSyncing ? (
                 <Loading
@@ -329,11 +342,12 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
                 />
               ) : (
                 <span className="font-semibold text-2xl">
-                  {updatedPrice || price}€
+                  Total: {updatedPrice || price}€
                 </span>
               )}
             </div>
-            <div className="w-[249px] h-max">
+
+            <div className="w-max h-max">
               <Link href={`/product/checkout/${product.id}`}>
                 <Button>{t("add_to_cart")}</Button>
               </Link>
