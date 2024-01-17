@@ -4,4 +4,5 @@ export default {
   privacy: require("./privacy").default,
   condizioni_generali: require("./condizioni_generali").default,
   spedizioni: require("./spedizioni").default,
+  faq: require("./faq").default
 };

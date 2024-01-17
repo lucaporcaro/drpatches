@@ -5,6 +5,7 @@ export default {
     aboutus: "Acerca de Nosotros",
     contact: "Contactos",
     login: "Login/Iniciar Sesión",
+    faq: "Preguntas"
   },
   language: "Idioma",
 };

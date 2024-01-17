@@ -3,7 +3,19 @@ export default {
       item_1: {
         title: "SPEDIZIONI E CONSEGNA",
         description:
-          "Important information on delivery times: Please note that the following are estimated times and subject to change depending on the specific circumstances of your order. The times indicated are expressed in working days. In the event of a request for changes to the customization file, the sample production times can be eliminated or extended. The same applies to changes made to the sample. Times with urgent processing request: If you have urgent or deadline needs, we recommend that you consult our customer service before starting any sample or patch production project, in order to obtain an accurate estimate of production times based on your specific needs. For urgent orders, we invite you to contact our customer service to agree on production and delivery times and methods. The price may be subject to change. We have chosen fast and reliable couriers, leaders in global express distribution and logistics, to guarantee the best service to our customers. Delivery details: Delivery within a maximum of 24-48 hours throughout Italy, after the production phase. Delivery within a maximum of 72-96 hours in European economic centers, after the production phase. We provide Online Tracking service to track your shipment at any time. Our customer service is available from 9.30am to 6.30pm. We guarantee nationwide coverage for an efficient delivery service."
+        `Informazioni importanti sui tempi di consegna: si precisa che i seguenti sono tempi stimati e soggetti a variazioni a seconda delle circostanze specifiche del tuo ordine. I tempi indicati sono espressi in giorni lavorativi. Nel caso di richiesta di modifiche al file di personalizzazione, i tempi di produzione del campione possono essere azzerati o estesi. Lo stesso si applica alle modifiche apportate al campione.
+
+          Tempi con richiesta di lavorazione urgente: Se hai esigenze di urgenza o scadenze, ti consigliamo di consultare il nostro servizio clienti prima di avviare qualsiasi progetto di produzione di campioni o patch, al fine di ottenere una stima accurata dei tempi di produzione in base alle tue specifiche necessità. Per gli ordini urgenti, ti invitiamo a contattare il nostro servizio clienti per concordare tempi e modalità di produzione e consegna. Il prezzo potrebbe essere soggetto a variazione.
+          
+          Abbiamo scelto corrieri veloci e affidabili, leader nella distribuzione espressa globale e logistica, per garantire il miglior servizio ai nostri clienti.
+          
+          Dettagli sulla consegna:
+          
+          Consegna entro un massimo di 24-48 ore in tutta Italia, dopo la fase di produzione.
+          Consegna entro un massimo di 72-96 ore nei centri economici europei, dopo la fase di produzione.
+          Forniamo un servizio di Tracking Online per monitorare la spedizione in qualsiasi momento.
+          Il nostro servizio clienti è disponibile dalle 9.30 alle 18.30.
+          Garantiamo una capillarità sul territorio per un servizio di consegna efficiente.`
       },
     }
   };

@@ -1,6 +1,6 @@
 import "./global.scss";
 
-import { Montserrat } from "next/font/google";
+import { Montserrat, Noto_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextIntelClientProvider from "@app/providers/NextIntelClientProvider";
 import { getLocalMessages } from "@app/utils/messages";
@@ -11,8 +11,9 @@ import Providers from "../../providers/providers";
 
 export const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-montserrat"
 });
+
 
 export default async function RootLayout({
   children,
@@ -30,7 +31,8 @@ export default async function RootLayout({
     <html lang={locale}>
       <head>
         <title>Dr.Patches</title>
-        {/* <link rel="icon" type="image/x-icon" href="/images/favicon.ico" /> */}
+        {/* <link rel="icon" href="/favicon_logo.ico" /> */}
+        {/* <link rel="icon" type="image/x-icon" href="../assets/images/favicon.jpeg" />  */}
       </head>
       <body
         className={[

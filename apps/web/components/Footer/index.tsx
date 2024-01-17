@@ -19,9 +19,15 @@ export default function Footer() {
         </div>
       </div>
       <div className="w-full h-max flex items-center justify-center">
-        <Link href="/privacy" className="px-2" style={{color: '#FFCC10', cursor: 'pointer'}}>{t("privacy")}</Link>
-        <Link href="/condizioni_generali" className="px-2" style={{color: '#FFCC10', cursor: 'pointer'}}>{t("condizioni_generali")}</Link>
-        <Link href="/spedizioni" className="px-2" style={{color: '#FFCC10', cursor: 'pointer'}}>{t("spedizioni")}</Link>
+        <Link href="/privacy" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+        <span className="hoverEffect">{t("privacy")}</span>
+          </Link>
+        <Link href="/condizioni_generali" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+        <span className="hoverEffect"> {t("condizioni_generali")}</span>
+          </Link>
+        <Link href="/spedizioni" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+          <span className="hoverEffect">{t("spedizioni")}</span>
+          </Link>
       </div>
       <div className="w-full h-max flex items-center justify-center">
         <span className="font-medium">

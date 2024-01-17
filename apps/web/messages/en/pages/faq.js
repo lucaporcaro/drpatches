@@ -1,54 +1,54 @@
 export default {
     items: {
       item_1: {
-        title: "COSA COMPRENDE IL SERVIZIO DI PATCH PERSONALIZZATE?",
+        title: "WHAT DOES THE CUSTOMIZED PATCH SERVICE INCLUDE?",
         description:
-          "Le patch personalizzate di EasyPatch sono create in base al tuo design o alle tue specifiche. Offriamo una vasta gamma di opzioni, comprese singole, di grandi dimensioni e all'ingrosso. Le patch sono disponibili online senza requisiti minimi e in diverse dimensioni, dalle più piccole alle giganti. Puoi progettare le tue patch online o inviarci il tuo design tramite chat o modulo di preventivo, e ti forniremo un mockup/campione per la tua approvazione."
+          "EasyPatch custom patches are created based on your design or specifications. We offer a variety of options, including single, large, and wholesale. Patches are available online with no minimum requirements and in different sizes, from small to giant. You can design your patches online or send us your design via chat or quote form, and we will provide you with a mockup/sample for your approval."
       },
       item_2: {
-        title: "QUAL È IL TEMPO STIMATO PER LA REALIZZAZIONE DELLE PATCH PERSONALIZZATE?",
+        title: "WHAT IS THE ESTIMATED TIME FOR THE CREATION OF CUSTOM PATCHES?",
         description:
-          "Ci impegniamo a garantire tempi di consegna rapidi senza compromettere la qualità. Dopo l'approvazione del campione, il nostro tempo di produzione standard è di due settimane. Offriamo anche opzioni urgenti con un costo aggiuntivo per chi ha bisogno di patch più velocemente."
+          "We are committed to ensuring fast delivery times without compromising on quality. After sample approval, our standard production time is two weeks. We also offer rush options at an additional cost for those who need patches faster."
       },
       item_3: {
-        title: "QUALI PASSI DEVO SEGUIRE PER LA CREAZIONE DI PATCH PERSONALIZZATE?",
+        title: "WHAT STEPS DO I NEED TO FOLLOW TO CREATE CUSTOM PATCHES?",
         description:
-          "Il processo è semplice: inviaci il tuo design tramite chat o compila il nostro modulo di preventivo con dimensioni e quantità desiderate. Ti forniremo un preventivo e apporteremo modifiche fino a quando non sarai soddisfatto. Dopo l'approvazione del campione, inizieremo la produzione, e le tue patch saranno pronte entro 2 settimane."
+          "The process is simple: send us your design via chat or fill out our quote form with your desired dimensions and quantities. We'll give you a quote and make changes until you're satisfied. After sample approval, we will start production, and your patches will be ready within 2 weeks."
       },
       item_4: {
-        title: "QUALE È LA DURATA PREVISTA PER LE PATCH RICAMATE?",
+        title: "WHAT IS THE EXPECTED LIFETIME FOR EMBROIDERED PATCHES?",
         description:
-          "Le nostre patch ricamate sono realizzate con materiali di alta qualità per garantirne la durata nel tempo. Con la giusta cura, possono durare anni, anche se la durata dipende da fattori come lavaggio, usura e asciugatura."
+          "Our embroidered patches are made with high quality materials to ensure their durability over time. With the right care, they can last for years, although the lifespan depends on factors such as washing, wear and drying."
       },
       item_5: {
-        title: "QUALI SONO LE DIMENSIONI DISPONIBILI PER LE PATCH PERSONALIZZATE?",
+        title: "WHAT SIZES ARE AVAILABLE FOR CUSTOM PATCHES?",
         description:
-          "Offriamo patch di diverse dimensioni, comprese quelle grandi come 65 cm x 44 cm, in ciniglia fino a 70 cm x 50 cm e in PVC come 30 cm x 20 cm."
+          "We offer patches in different sizes, including as large as 65cm x 44cm, chenille up to 70cm x 50cm and PVC as 30cm x 20cm."
       },
       item_6: {
-        title: "QUALE FORMATO DI FILE È ACCETTATO PER L'INVIO DEI CONTENUTI?",
+        title: "WHAT FILE FORMAT IS ACCEPTED FOR SUBMITTING CONTENT?",
         description:
-          "Accettiamo formati come JPG, AI e PDF. Qualsiasi formato va bene purché i dettagli siano leggibili."
+          "We accept formats such as JPG, AI and PDF. Any format is fine as long as the details are legible."
       },
       item_7: {
-        title: "ENTRO QUANTO VERRÒ CONTATTATO DOPO AVER EFFETTUATO LA RICHIESTA?",
+        title: "HOW LONG WILL I BE CONTACTED AFTER MAKING THE REQUEST?",
         description:
-          "Sarai contattato entro 24 ore lavorative dal nostro team di grafici, operativi dal lunedì al venerdì dalle ore 9.30 alle 18.30.",
+          "You will be contacted within 24 working hours by our team of graphic designers, operating from Monday to Friday from 9.30am to 6.30pm."
       },
       item_8: {
-        title: "AVRÒ UN GRAFICO DEDICATO PER TUTTE LE FASI DEL PROGETTO?",
+        title: "WILL I HAVE A DEDICATED GRAPHIC FOR ALL PHASES OF THE PROJECT?",
         description:
-          "Certamente! Sarai seguito sempre dallo stesso designer assegnato al tuo acquisto."
+          "Certainly! You will always be followed by the same designer assigned to your purchase."
       },
       item_9: {
-        title: "QUALI SONO I METODI DI PAGAMENTO DISPONIBILI?",
+        title: "WHAT ARE THE PAYMENT METHODS AVAILABLE?",
         description:
-          "Il pagamento è semplice e accettiamo metodi comuni come Carta di Credito, Bonifico e Paypal."
+          "Payment is simple and we accept common methods such as Credit Card, Bank Transfer and Paypal."
       },
       item_10: {
-        title: "QUANTI GIORNI SONO NECESSARI PER LA PRODUZIONE DELLE PATCH?",
+        title: "HOW MANY DAYS ARE NECESSARY FOR PATCH PRODUCTION?",
         description:
-          "Dopo l'approvazione del campione, il nostro tempo di produzione standard è di due settimane, ma offriamo opzioni urgenti a un costo aggiuntivo per soddisfare le tue esigenze di consegna più veloce. Visita questa pagina per maggiori informazioni (LINK)"
+          "After sample approval, our standard production time is two weeks, but we offer rush options at an additional cost to meet your needs for faster delivery. Visit this page for more information (LINK)"
       },
     },
   };
