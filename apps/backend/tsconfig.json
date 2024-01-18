@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "target": "ES2021",
+    "jsx": "react",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -20,9 +21,7 @@
     "noFallthroughCasesInSwitch": false,
     "noEmitOnError": false,
     "paths": {
-      "src/*": [
-        "src/*"
-      ]
+      "src/*": ["src/*"]
     }
   }
 }

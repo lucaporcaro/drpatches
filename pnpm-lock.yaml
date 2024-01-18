@@ -82,7 +82,7 @@ importers:
         version: 7.1.17(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)
       adminjs:
         specifier: ^7.5.2
-        version: 7.5.2
+        version: 7.5.2(@types/react@18.2.48)
       cache-manager:
         specifier: ^5.3.2
         version: 5.3.2
@@ -150,6 +150,9 @@ importers:
       '@types/node':
         specifier: ^20.3.1
         version: 20.5.2
+      '@types/react':
+        specifier: ^18.2.48
+        version: 18.2.48
       '@types/supertest':
         specifier: ^2.0.12
         version: 2.0.16
@@ -389,7 +392,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@adminjs/design-system@4.0.3(@babel/core@7.23.3)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
+  /@adminjs/design-system@4.0.3(@babel/core@7.23.3)(@types/react@18.2.48)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-isxz2ObGj4QTiS6yLuUz7oS0n+QEdCkEjtI5LThZo7Pq0je4Wtkwt/NJbsQgFU5da8X4zXTQauRgTC3odHjdgA==}
     peerDependencies:
       react: ^18.1.0
@@ -426,7 +429,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-feather: 2.0.10(react@18.2.0)
       react-phone-input-2: 2.15.1(react-dom@18.2.0)(react@18.2.0)
-      react-select: 5.8.0(react-dom@18.2.0)(react@18.2.0)
+      react-select: 5.8.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
       react-text-mask: 5.5.0(react@18.2.0)
       styled-components: 5.3.9(@babel/core@7.23.3)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       styled-system: 5.1.5
@@ -447,7 +450,7 @@ packages:
       express-session: '>=1.17.3'
       tslib: ^2.5.0
     dependencies:
-      adminjs: 7.5.2
+      adminjs: 7.5.2(@types/react@18.2.48)
       express: 4.18.2
       express-formidable: 1.2.0
       express-session: 1.17.3
@@ -459,7 +462,7 @@ packages:
     peerDependencies:
       adminjs: ^7.0.0
     dependencies:
-      adminjs: 7.5.2
+      adminjs: 7.5.2(@types/react@18.2.48)
       csvtojson: 2.0.10
       file-saver: 2.0.5
       json2csv: 6.0.0-alpha.2
@@ -474,7 +477,7 @@ packages:
       adminjs: ^7.0.0
     dependencies:
       '@mikro-orm/core': 5.9.6(@mikro-orm/migrations@5.9.6)(@mikro-orm/postgresql@5.9.6)(@mikro-orm/seeder@5.9.6)
-      adminjs: 7.5.2
+      adminjs: 7.5.2(@types/react@18.2.48)
     dev: false
 
   /@adminjs/nestjs@6.1.0(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)(adminjs@7.5.2)(rxjs@7.8.1):
@@ -488,7 +491,7 @@ packages:
       '@nestjs/common': 10.3.0(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       '@nestjs/core': 10.3.0(@nestjs/common@10.3.0)(@nestjs/platform-express@10.3.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
       '@types/express-session': 1.17.10
-      adminjs: 7.5.2
+      adminjs: 7.5.2(@types/react@18.2.48)
       reflect-metadata: 0.1.14
       rxjs: 7.8.1
     dev: false
@@ -498,7 +501,7 @@ packages:
     peerDependencies:
       adminjs: ^7.0.0
     dependencies:
-      adminjs: 7.5.2
+      adminjs: 7.5.2(@types/react@18.2.48)
     optionalDependencies:
       '@aws-sdk/client-s3': 3.484.0
       '@aws-sdk/s3-request-presigner': 3.484.0
@@ -2663,7 +2666,7 @@ packages:
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
     dev: false
 
-  /@emotion/react@11.11.3(react@18.2.0):
+  /@emotion/react@11.11.3(@types/react@18.2.48)(react@18.2.0):
     resolution: {integrity: sha512-Cnn0kuq4DoONOMcnoVsTOR8E+AdnKFf//6kUWc4LCdnxj31pZWn7rIULd6Y7/Js1PiPHzn7SKCM9vB/jBni8eA==}
     peerDependencies:
       '@types/react': '*'
@@ -2679,6 +2682,7 @@ packages:
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
       '@emotion/utils': 1.2.1
       '@emotion/weak-memoize': 0.3.1
+      '@types/react': 18.2.48
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
     dev: false
@@ -2905,7 +2909,7 @@ packages:
     dev: false
     optional: true
 
-  /@hello-pangea/dnd@16.5.0(react-dom@18.2.0)(react@18.2.0):
+  /@hello-pangea/dnd@16.5.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-n+am6O32jo/CFXciCysz83lPM3I3F58FJw4uS44TceieymcyxQSfzK5OhzPAKrVBZktmuOI6Zim9WABTMtXv4A==}
     peerDependencies:
       react: ^16.8.5 || ^17.0.0 || ^18.0.0
@@ -2917,7 +2921,7 @@ packages:
       raf-schd: 4.0.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-redux: 8.1.3(@types/react-dom@18.2.3)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+      react-redux: 8.1.3(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       redux: 4.2.1
       use-memo-one: 1.1.3(react@18.2.0)
     transitivePeerDependencies:
@@ -5645,8 +5649,15 @@ packages:
   /@types/react-transition-group@4.4.10:
     resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
     dependencies:
-      '@types/react': 18.2.5
+      '@types/react': 18.2.48
     dev: false
+
+  /@types/react@18.2.48:
+    resolution: {integrity: sha512-qboRCl6Ie70DQQG9hhNREz81jqC1cs9EVNcjQ1AU+jH6NFfSAhVVbrrY/+nSF+Bsk4AOwm9Qa61InvMCyV+H3w==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.3
+      csstype: 3.1.2
 
   /@types/react@18.2.5:
     resolution: {integrity: sha512-RuoMedzJ5AOh23Dvws13LU9jpZHIc/k90AgmK7CecAYeWmSr3553L4u5rk4sWAPBuQosfT7HmTfG4Rg5o4nGEA==}
@@ -6141,12 +6152,12 @@ packages:
     resolution: {integrity: sha512-F0SAmZ8iUtS//m8DmCTA0jlh6TDKkHQyK6xc6V4KDTyZKA9dnvX9/3sRTVQrWm79glUAZbnmmNcdYwUIHWVybw==}
     engines: {node: '>=0.4.0'}
 
-  /adminjs@7.5.2:
+  /adminjs@7.5.2(@types/react@18.2.48):
     resolution: {integrity: sha512-Gx80srhJSkxLp16BrLl+A3EdsOFmT7ewxw0DNWHchLs3MxV5JNgx69u5NtmFPKspAoKo86ouITpO5JzPyKBFPA==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     dependencies:
-      '@adminjs/design-system': 4.0.3(@babel/core@7.23.3)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
+      '@adminjs/design-system': 4.0.3(@babel/core@7.23.3)(@types/react@18.2.48)(prop-types@15.8.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       '@babel/core': 7.23.3
       '@babel/parser': 7.23.3
       '@babel/plugin-syntax-import-assertions': 7.23.3(@babel/core@7.23.3)
@@ -6155,7 +6166,7 @@ packages:
       '@babel/preset-react': 7.23.3(@babel/core@7.23.3)
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.3)
       '@babel/register': 7.23.7(@babel/core@7.23.3)
-      '@hello-pangea/dnd': 16.5.0(react-dom@18.2.0)(react@18.2.0)
+      '@hello-pangea/dnd': 16.5.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
       '@redux-devtools/extension': 3.3.0(redux@4.2.1)
       '@rollup/plugin-babel': 6.0.4(@babel/core@7.23.3)(rollup@3.29.4)
       '@rollup/plugin-commonjs': 24.1.0(rollup@3.29.4)
@@ -6179,7 +6190,7 @@ packages:
       react-feather: 2.0.10(react@18.2.0)
       react-i18next: 12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
       react-is: 18.2.0
-      react-redux: 8.1.3(@types/react-dom@18.2.3)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+      react-redux: 8.1.3(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
       react-router: 6.21.1(react@18.2.0)
       react-router-dom: 6.21.1(react-dom@18.2.0)(react@18.2.0)
       redux: 4.2.1
@@ -12507,6 +12518,39 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
+  /react-redux@8.1.3(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1):
+    resolution: {integrity: sha512-n0ZrutD7DaX/j9VscF+uTALI3oUPa/pO4Z3soOBIjuRn/FzVu6aehhysxZCLi6y7duMf52WNZGMl7CtuK5EnRw==}
+    peerDependencies:
+      '@types/react': ^16.8 || ^17.0 || ^18.0
+      '@types/react-dom': ^16.8 || ^17.0 || ^18.0
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+      react-native: '>=0.59'
+      redux: ^4 || ^5.0.0-beta.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+      redux:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.2
+      '@types/hoist-non-react-statics': 3.3.5
+      '@types/react': 18.2.48
+      '@types/use-sync-external-store': 0.0.3
+      hoist-non-react-statics: 3.3.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-is: 18.2.0
+      redux: 4.2.1
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
   /react-router-dom@6.21.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-QCNrtjtDPwHDO+AO21MJd7yIcr41UetYt5jzaB9Y1UYaPTCnVuJq6S748g1dE11OQlCFIQg+RtAA1SEZIyiBeA==}
     engines: {node: '>=14.0.0'}
@@ -12530,7 +12574,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-select@5.8.0(react-dom@18.2.0)(react@18.2.0):
+  /react-select@5.8.0(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-TfjLDo58XrhP6VG5M/Mi56Us0Yt8X7xD6cDybC7yoRMUNm7BGO7qk8J0TLQOua/prb8vUOtsfnXZwfm30HGsAA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -12538,7 +12582,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.2
       '@emotion/cache': 11.11.0
-      '@emotion/react': 11.11.3(react@18.2.0)
+      '@emotion/react': 11.11.3(@types/react@18.2.48)(react@18.2.0)
       '@floating-ui/dom': 1.5.3
       '@types/react-transition-group': 4.4.10
       memoize-one: 6.0.0
@@ -12546,7 +12590,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-      use-isomorphic-layout-effect: 1.1.2(react@18.2.0)
+      use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.48)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -14440,7 +14484,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /use-isomorphic-layout-effect@1.1.2(react@18.2.0):
+  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.48)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -14449,6 +14493,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
+      '@types/react': 18.2.48
       react: 18.2.0
     dev: false
 

@@ -5,6 +5,9 @@ import Product from 'src/modules/product/entities/product.entity';
 import PatchType from 'src/modules/product/entities/patch-type.entity';
 import { join } from 'path';
 import BackingPrice from 'src/modules/product/entities/backing-price.entity';
+import { config } from 'dotenv';
+
+config();
 
 const DEFAULT_ADMIN = {
   email: 'admin@user.com',
@@ -19,9 +22,13 @@ async function registerAdminJs() {
     Database: AdminJsMikroOrm.Database,
   });
   const componentLoader = new AdminJs.ComponentLoader();
+  const components = {
+    ImageView: componentLoader.add('ImageView', './components/Image.tsx'),
+  };
   const FileUpload = await import('@adminjs/upload');
   const ImportExport = await import('@adminjs/import-export');
   return {
+    components,
     orm: await MikroORM.init(),
     FileUpload,
     AdminJs,
@@ -39,7 +46,7 @@ async function isAdmin(email: string, password: string) {
 @Module({
   imports: [
     import('@adminjs/nestjs').then(async ({ AdminModule }) => {
-      const { orm, FileUpload, componentLoader, ImportExport } =
+      const { orm, FileUpload, componentLoader, components, ImportExport } =
         await registerAdminJs();
       return AdminModule.createAdminAsync({
         useFactory: () => ({
@@ -56,14 +63,12 @@ async function isAdmin(email: string, password: string) {
               },
               {
                 resource: { model: Product, orm },
-                features: [ImportExport.default({ componentLoader })],
-              },
-              {
-                resource: { model: PatchType, orm },
                 options: {
                   properties: {
-                    description: {
-                      isTitle: true,
+                    image: {
+                      components: {
+                        show: components.ImageView,
+                      },
                     },
                   },
                 },
@@ -78,7 +83,39 @@ async function isAdmin(email: string, password: string) {
                       local: {
                         bucket: join(__dirname, '../../media'),
                         opts: {
-                          baseUrl: 'http://localhost:3001/',
+                          baseUrl: process.env.BASE_URL,
+                        },
+                      },
+                    },
+                  }),
+                ],
+              },
+              {
+                resource: { model: PatchType, orm },
+                options: {
+                  properties: {
+                    description: {
+                      isTitle: true,
+                    },
+                    image: {
+                      components: {
+                        show: components.ImageView,
+                      },
+                    },
+                  },
+                },
+                features: [
+                  ImportExport.default({ componentLoader }),
+                  FileUpload.default({
+                    componentLoader,
+                    properties: {
+                      key: 'image',
+                    },
+                    provider: {
+                      local: {
+                        bucket: join(__dirname, '../../media'),
+                        opts: {
+                          baseUrl: process.env.BASE_URL,
                         },
                       },
                     },

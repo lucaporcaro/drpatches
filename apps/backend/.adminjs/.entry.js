@@ -1,4 +1,6 @@
 AdminJS.UserComponents = {}
+import ImageView from '../src/common/adminjs/components/Image'
+AdminJS.UserComponents.ImageView = ImageView
 import ImportComponent from '../../../node_modules/.pnpm/@adminjs+import-export@3.0.0_adminjs@7.5.2/node_modules/@adminjs/import-export/lib/components/ImportComponent'
 AdminJS.UserComponents.ImportComponent = ImportComponent
 import ExportComponent from '../../../node_modules/.pnpm/@adminjs+import-export@3.0.0_adminjs@7.5.2/node_modules/@adminjs/import-export/lib/components/ExportComponent'
