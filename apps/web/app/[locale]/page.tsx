@@ -62,13 +62,26 @@ export default function Page(): JSX.Element {
         <p className="w-11/12 max-w-[1134px] text-justify text-base md:text-lg lg:text-2xl font-normal">
           {t("why_us.description")}
         </p>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:my-6 gap-y-10 place-items-start place-content-between">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:my-6 gap-y-10 place-items-center place-content-between">
           {items.map(({ key, Icon }, i) => {
             return (
               <div
-                className="w-max h-max flex flex-col items-center justify-center gap-8 max-w-xs"
+                className="w-max h-max flex flex-col items-center justify-center gap-8 max-w-xs card"
                 key={`${i}_${key}`}
               >
+                {/* <div className="card-inner">
+                  <div className="card-front">
+                    <Icon size={44}/>
+                    <div className="w-full text-center min-w-full flex flex-col items-center justify-center gap-3.5">
+                      <span className="text-2xl font-bold">
+                        {t(`why_us.items.${key}`)}
+                      </span>
+                    </div>
+                  </div> */}
+                  {/* <div className="card-back">
+                    <p>Back Content</p>
+                  </div> */}
+                {/* </div> */}
                 <Icon className="aspect-auto text-black" size={44} />
                 <div className="w-full text-center min-w-full flex flex-col items-center justify-center gap-3.5">
                   <span className="text-2xl font-bold">

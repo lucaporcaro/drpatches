@@ -329,7 +329,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           <div className="w-max h-max flex flex-col items-center justify-center gap-6 lg:flex-row">
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
               <span className="font-semibold text-2xl">
-                Per One: {pricePerOne}€
+                Per Item: {pricePerOne}€
               </span>
             </div>
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">

@@ -1,11 +1,12 @@
 import "./global.scss";
 
-import { Montserrat, Noto_Sans } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextIntelClientProvider from "@app/providers/NextIntelClientProvider";
 import { getLocalMessages } from "@app/utils/messages";
 import Navbar from "@app/components/Navbar";
 import Footer from "@app/components/Footer";
+import Cookies from "@app/components/Cookies";
 import { locales } from "@app/middlewares/language.middleware";
 import Providers from "../../providers/providers";
 
@@ -49,6 +50,7 @@ export default async function RootLayout({
             <Navbar />
             {children}
             <Footer />
+            <Cookies />
           </Providers>
         </NextIntelClientProvider>
       </body>
