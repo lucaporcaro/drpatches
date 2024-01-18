@@ -33,7 +33,7 @@ export default async function RootLayout({
       <head>
         <title>Dr.Patches</title>
         {/* <link rel="icon" href="/favicon_logo.ico" /> */}
-        {/* <link rel="icon" type="image/x-icon" href="../assets/images/favicon.jpeg" />  */}
+         <link rel="icon" type="image/x-icon" href="../favicon_1.ico" />
       </head>
       <body
         className={[
