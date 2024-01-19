@@ -6,6 +6,9 @@ import PatchType from 'src/modules/product/entities/patch-type.entity';
 import { join } from 'path';
 import BackingPrice from 'src/modules/product/entities/backing-price.entity';
 import { config } from 'dotenv';
+import Font from 'src/modules/font/entities/font.entity';
+import { existsSync } from 'node:fs';
+import { mkdir } from 'fs/promises';
 
 config();
 
@@ -15,6 +18,9 @@ const DEFAULT_ADMIN = {
 };
 
 async function registerAdminJs() {
+  const paths = [join(__dirname, '../../media')];
+  for (const path of paths) if (!existsSync(path)) await mkdir(path);
+
   const AdminJs = await import('adminjs');
   const AdminJsMikroOrm = await import('@adminjs/mikroorm');
   AdminJs.default.registerAdapter({
@@ -62,7 +68,7 @@ async function isAdmin(email: string, password: string) {
                 resource: { model: User, orm },
               },
               {
-                resource: { model: Product, orm },
+                resource: { model: Font, orm },
                 options: {
                   properties: {
                     image: {
@@ -73,11 +79,12 @@ async function isAdmin(email: string, password: string) {
                   },
                 },
                 features: [
-                  ImportExport.default({ componentLoader }),
                   FileUpload.default({
+                    multiple: false,
                     componentLoader,
                     properties: {
-                      key: 'image',
+                      key: 'file',
+                      file: 'font',
                     },
                     provider: {
                       local: {
@@ -89,6 +96,19 @@ async function isAdmin(email: string, password: string) {
                     },
                   }),
                 ],
+              },
+              {
+                resource: { model: Product, orm },
+                options: {
+                  properties: {
+                    image: {
+                      components: {
+                        show: components.ImageView,
+                      },
+                    },
+                  },
+                },
+                features: [ImportExport.default({ componentLoader })],
               },
               {
                 resource: { model: PatchType, orm },
@@ -108,8 +128,10 @@ async function isAdmin(email: string, password: string) {
                   ImportExport.default({ componentLoader }),
                   FileUpload.default({
                     componentLoader,
+                    multiple: false,
                     properties: {
                       key: 'image',
+                      file: 'file',
                     },
                     provider: {
                       local: {

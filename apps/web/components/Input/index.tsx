@@ -56,7 +56,6 @@ export default function Input({
         />
       ) : type === "select" ? (
         <select
-          placeholder={placeholder}
           className="w-full h-8 text-black font-semibold px-4 rounded-md text-sm"
           name={name}
           disabled={disabled}

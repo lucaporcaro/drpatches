@@ -4,7 +4,7 @@ import Product from './product.entity';
 
 @Entity({ tableName: 'patch_types' })
 export default class PatchType extends BaseModel {
-  @Property()
+  @Property({ nullable: true })
   image: string;
 
   @Property({ nullable: true })

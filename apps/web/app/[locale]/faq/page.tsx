@@ -37,10 +37,8 @@ export default function FAQPage() {
   const t = useTranslations("pages.faq");
   return (
     <div className="w-full h-max max-w-[1620px] mx-auto py-4 flex flex-col gap-4">
-      {items.map(({ key }, i) => (
-        <section
-          className="w-full h-max p-4 flex flex-col items-start justify-start gap-4 text-left font-montserrat"
-        >
+      {items.map(({ key }) => (
+        <section className="w-full h-max p-4 flex flex-col items-start justify-start gap-4 text-left font-montserrat">
           <div className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-bold text-left">
             {t(`items.${key}.title`)}
           </div>

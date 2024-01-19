@@ -1,8 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { SwatchesPicker } from "react-color";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import useOutsideEvent from "@app/hooks/useOutsideEvent";
+import { SwatchesPicker } from "react-color";
+
+const SwatchesPickerC = SwatchesPicker as any;
 
 type Props = {
   label: string;
@@ -57,8 +59,8 @@ export default function ColorSelector({
             exit="hidden"
             transition={{ duration: 0.1 }}
           >
-            <SwatchesPicker
-              onChangeComplete={({ hex }) => {
+            <SwatchesPickerC
+              onChangeComplete={({ hex }: any) => {
                 onChange(hex);
                 setOpen(false);
               }}

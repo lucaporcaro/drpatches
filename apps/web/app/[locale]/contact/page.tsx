@@ -1,5 +1,5 @@
 import { type IconType } from "react-icons";
-import { FaMarker, FaEnvelope, FaFax } from "react-icons/fa6";
+import { FaMarker, FaEnvelope } from "react-icons/fa6";
 import { BsTelephoneFill } from "react-icons/bs";
 
 const contactItems: {

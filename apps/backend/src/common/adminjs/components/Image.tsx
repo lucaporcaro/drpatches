@@ -1,6 +1,7 @@
 import React from 'react';
 
-export default function ImageView(props: any) {
+export default function ImageView({ key = 'image', record: { params } }: any) {
+  console.log(params);
   const baseUrl = window.location.host;
   return (
     <div>
@@ -19,7 +20,7 @@ export default function ImageView(props: any) {
       <img
         width={260}
         style={{ aspectRatio: 'auto' }}
-        src={`${window.location.protocol}//${baseUrl}/${props.record.params.image}`}
+        src={`${window.location.protocol}//${baseUrl}/${params[key]}`}
       />
     </div>
   );

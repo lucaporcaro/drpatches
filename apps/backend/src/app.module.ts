@@ -11,6 +11,7 @@ import { join } from 'path';
 import { AdminjsModule } from './common/adminjs/adminjs.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { StripeModule } from './modules/webhooks/stripe/stripe.module';
+import { FontModule } from './modules/font/font.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { StripeModule } from './modules/webhooks/stripe/stripe.module';
     AddressesModule,
     ProductModule,
     StripeModule,
+    FontModule,
   ],
 })
 export class AppModule {}
