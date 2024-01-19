@@ -46,12 +46,12 @@ export default function Page(): JSX.Element {
           />
         </div>
         <div className="w-full max-w-[706px] px-8 py-4 text-black flex flex-col items-center justify-center gap-8 text-center">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold">
+          <h2 className="text-3xl md:text-5xl lg:text-7xl font-extrabold">
             {t("hero.title")}
           </h2>
-          <p className="text-lg md:text-xl font-medium">{t("hero.subtitle")}</p>
+          <p className="text-lg md:text-xl font-medium" style={{color: '#464853'}}>{t("hero.subtitle")}</p>
           <Link href="/product/create">
-            <Button>{t("hero.order_now")}</Button>
+            <Button className="hoverButtonEffect">{t("why_us.customize_now")}</Button>
           </Link>
         </div>
       </section>
@@ -59,16 +59,29 @@ export default function Page(): JSX.Element {
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold">
           {t("why_us.title")}
         </h2>
-        <p className="w-11/12 max-w-[1134px] text-center text-base md:text-lg lg:text-2xl font-medium">
+        <p className="w-11/12 max-w-[1134px] text-justify text-base md:text-lg lg:text-2xl font-normal">
           {t("why_us.description")}
         </p>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:my-6 gap-y-10 place-items-start place-content-between">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 lg:my-6 gap-y-10 place-items-center place-content-between">
           {items.map(({ key, Icon }, i) => {
             return (
               <div
-                className="w-max h-max flex flex-col items-center justify-center gap-8 max-w-xs"
+                className="w-max h-max flex flex-col items-center justify-center gap-8 max-w-xs card"
                 key={`${i}_${key}`}
               >
+                {/* <div className="card-inner">
+                  <div className="card-front">
+                    <Icon size={44}/>
+                    <div className="w-full text-center min-w-full flex flex-col items-center justify-center gap-3.5">
+                      <span className="text-2xl font-bold">
+                        {t(`why_us.items.${key}`)}
+                      </span>
+                    </div>
+                  </div> */}
+                  {/* <div className="card-back">
+                    <p>Back Content</p>
+                  </div> */}
+                {/* </div> */}
                 <Icon className="aspect-auto text-black" size={44} />
                 <div className="w-full text-center min-w-full flex flex-col items-center justify-center gap-3.5">
                   <span className="text-2xl font-bold">
@@ -80,7 +93,7 @@ export default function Page(): JSX.Element {
           })}
         </div>
         <Link href="/product/create">
-          <Button>{t("why_us.customize_now")}</Button>
+          <Button className="hoverButtonEffect">{t("why_us.customize_now")}</Button>
         </Link>
       </section>
     </main>

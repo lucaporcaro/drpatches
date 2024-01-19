@@ -1,5 +1,8 @@
 export default {
-  title: "Dr.Patch",
+  title: "Dr.Patches",
   description: "Nossos Meios de Pagamento Aceitos",
-  copyright: "Dr.Patch | ALL RIGHTS RESERVED",
+  copyright: "Dr.Patches | ALL RIGHTS RESERVED",
+  privacy: 'PRIVACIDADE',
+  condizioni_generali: 'CONDIÇÕES GERAIS',
+  spedizioni: 'ENVIO E ENTREGA'
 };

@@ -15,6 +15,7 @@ import LanguageSelector from "../LanguageSelector";
 import useOutsideEvent from "@app/hooks/useOutsideEvent";
 import { useSelector } from "react-redux";
 import { RootState } from "@app/store";
+import ButtonCustom from "../ButtonCustom";
 
 const Navbar = () => {
   // States
@@ -37,27 +38,37 @@ const Navbar = () => {
   });
 
   return (
-    <nav className="w-full h-max bg-black py-4 px-8 flex flex-col gap-6">
+    <nav className="w-full h-max bg-black py-4 px-8 flex flex-col gap-6 font-bold">
       <div className="w-full h-max items-center justify-between hidden md:flex">
         <div className="w-max h-max flex flex-row items-center justify-center gap-10">
-          <FaInstagram className="w-max h-max text-white" size={18} />
+          {/* <FaInstagram className="w-max h-max text-white" size={18} />
           <FaFacebookF className="w-max h-max text-white" size={18} />
-          <FaWhatsapp className="w-max h-max text-white" size={18} />
+          <FaWhatsapp className="w-max h-max text-white" size={18} /> */}
         </div>
-        <div className="w-max h-max flex items-center justify-center gap-6 text-white font-medium text-base">
-          <Link href="/contact">{t("links.contact")}</Link>
+        <div className="w-max h-max flex items-center justify-center gap-6 text-white font-bold text-base">
+        <Link href="/about" className="link">
+              <span className="hoverEffect"> {t("links.aboutus")}</span>
+        </Link>
+        <Link href="/faq" className="link">
+              <span className="hoverEffect">{t("links.faq")}</span>
+        </Link>
+          <Link href="/contact" className="link">
+              <span className="hoverEffect"> {t("links.contact")}</span>
+          </Link>
           {isLoggedIn ? (
             <>
               <Link
                 href="/profile"
                 className="border-white border-b-[1px] pb-1"
               >{`${user.firstName} ${user.lastName}`}</Link>{" "}
-              <Link href="/logout" className="w-max max-w-[160px] text-center">
-                Logout
+              <Link href="/logout" className="link w-max max-w-[160px] text-center">
+                <span className="hoverEffect">Logout</span>
               </Link>
             </>
           ) : (
-            <Link href="/login">{t("links.login")}</Link>
+            <Link href="/login" className="link">
+              <span className="hoverEffect"> {t("links.login")}</span>
+            </Link>
           )}
           <LanguageSelector />
         </div>
@@ -68,18 +79,19 @@ const Navbar = () => {
             width={175}
             height={46}
             alt="Logo"
-            className="w-full aspect-auto max-w-[175px]"
+            className="w-full aspect-auto max-w-[175px] bg-black"
             loading="eager"
             src={Logo}
           />
         </Link>
-        <div className="w-max h-max items-center justify-center gap-6 text-white font-medium text-base hidden md:flex">
-          <Link href="/product/create">{t("links.examples")}</Link>
-          <Link href="/about">{t("links.aboutus")}</Link>
-          <Link href="/faq">FAQ</Link>
-          <Link href="/reviews">Reviews</Link>
-          <Link href="/profile/products" passHref>
-            <FaBasketShopping className="text-white w-8 aspect-auto" />
+        <div className="w-max h-max items-center justify-center gap-6 text-white font-bold text-base hidden md:flex">
+          <Link href="/product/create" className="link">
+              {/* <span className="hoverEffect"> {t("links.examples")}</span> */}
+              <ButtonCustom className="hoverButtonEffect">{t("links.examples")}</ButtonCustom>
+          </Link>
+          
+          <Link href="/profile/products" passHref  className="link">
+            <FaBasketShopping className="text-white w-8 aspect-auto hoverEffect" />
           </Link>
         </div>
         <div
@@ -107,7 +119,7 @@ const Navbar = () => {
             <span className="font-bold text-xl text-white py-4">
               Dr.Patches
             </span>
-            <div className="w-max h-max flex flex-col items-center justify-center gap-6 text-white font-medium text-base">
+            <div className="w-max h-max flex flex-col items-center justify-center gap-6 text-white font-bold text-base">
               {isLoggedIn ? (
                 <>
                   <Link
@@ -126,21 +138,28 @@ const Navbar = () => {
               ) : (
                 <Link href="/login">{t("links.login")}</Link>
               )}
-              <Link href="/product/create">{t("links.examples")}</Link>
-              <Link href="/about">{t("links.aboutus")}</Link>
-              <Link href="/contact">{t("links.contact")}</Link>
-              <Link href="/faq">FAQ</Link>
-              <Link href="/reviews">Reviews</Link>
+              <Link href="/product/create" className="link">
+                <span className="hoverEffect"> {t("links.examples")}</span>
+              </Link>
+              <Link href="/about" className="link">
+                <span className="hoverEffect"> {t("links.aboutus")}</span>
+                </Link>
+              <Link href="/contact" className="link">
+                <span className="hoverEffect">{t("links.contact")}</span>
+              </Link>
+              <Link href="/faq" className="link">
+              <span className="hoverEffect">{t("links.faq")}</span>
+              </Link>
             </div>
             <div className="text-white font-bold text-xs flex items-center justify-center gap-2 mt-auto">
               <span>{t("language")}:</span>
               <span className="border-b-[.5px] border-b-white pb-1">EN</span>
             </div>
-            <div className="w-max h-max flex flex-row items-center justify-center gap-5">
+            {/* <div className="w-max h-max flex flex-row items-center justify-center gap-5">
               <FaInstagram className="w-4 aspect-auto text-white" />
               <FaFacebookF className="w-3 aspect-auto text-white" />
               <FaWhatsapp className="w-4 aspect-auto text-white" />
-            </div>
+            </div> */}
           </div>
         ) : null}
       </div>
