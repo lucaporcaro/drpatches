@@ -266,16 +266,14 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           />
 
           <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-auto">
-            {type !== "image" ? (
-              <div className="w-max ">
-                <Select
-                  value={patchType}
-                  items={patchTypes}
-                  label={t("select_type")}
-                  onChange={update("patchType")}
-                />
-              </div>
-            ) : null}
+            <div className="w-max ">
+              <Select
+                value={patchType}
+                items={patchTypes}
+                label={t("select_type")}
+                onChange={update("patchType")}
+              />
+            </div>
             <Select
               value={backingType}
               items={backingItems}
