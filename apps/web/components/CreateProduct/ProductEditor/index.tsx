@@ -78,12 +78,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
   const jwt = useJwt();
   const router = useRouter();
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
-
-  // Memos
-  const pricePerOne = useMemo(
-    () => ((price as number) / quantity).toFixed(2),
-    [price, quantity]
-  );
+  const [pricePerOne, setPricePerOne] = useState<string>("0");
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
@@ -117,8 +112,9 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
           },
         })
       ).pipe(
-        map(({ data: { price } }) => {
+        map(({ data: { price, quantity } }) => {
           setUpdatedPrice(price);
+          setPricePerOne((price / quantity).toFixed(2));
         }),
         catchError((e) => {
           toast.error("Faild to sync", { autoClose: 2000 });
