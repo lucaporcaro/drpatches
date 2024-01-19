@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
-  IsEnum,
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
   IsStrongPassword,
 } from 'class-validator';
+import IsVatOrFiscalCode from 'src/common/validators/IsVatOrFiscalCode';
 
 export default class RegisterRequestDto {
   @ApiProperty({ example: 'mohammadraufzahed@protonmail.com' })
@@ -33,4 +33,9 @@ export default class RegisterRequestDto {
   @IsNotEmpty()
   @IsPhoneNumber()
   phone: string;
+
+  @ApiProperty({})
+  @IsVatOrFiscalCode({ message: 'Fiscal Code is not valid' })
+  @IsNotEmpty()
+  fiscal: string;
 }

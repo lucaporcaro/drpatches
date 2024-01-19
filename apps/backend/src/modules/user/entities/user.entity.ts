@@ -28,6 +28,9 @@ export default class User extends BaseModel {
   @Property({ unique: true, nullable: false })
   phone: string;
 
+  @Property({ unique: true, nullable: true })
+  fiscal: string;
+
   @OneToMany(() => Address, (address) => address.user)
   addresses = new Collection<Location>(this);
 

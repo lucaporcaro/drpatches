@@ -292,6 +292,15 @@
           "primary": false,
           "nullable": false,
           "mappedType": "string"
+        },
+        "fiscal": {
+          "name": "fiscal",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
         }
       },
       "name": "users",
@@ -339,6 +348,15 @@
           ],
           "composite": false,
           "keyName": "users_phone_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
+          "columnNames": [
+            "fiscal"
+          ],
+          "composite": false,
+          "keyName": "users_fiscal_unique",
           "primary": false,
           "unique": true
         },

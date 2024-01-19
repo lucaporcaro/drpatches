@@ -65,6 +65,7 @@ export default function RegisterPage() {
           <Input label="Email" name="email" type="email" required />
           <Input label="Password" name="password" type="password" required />
           <PhoneInput required name="phone" label="Phone" />
+          <Input label="Fiscal Code" name="fiscal" type="text" required />
           <Button>Register</Button>
           <div className="w-max mx-auto font-semibold underline text-black">
             <Link href="/login">Already have one?</Link>

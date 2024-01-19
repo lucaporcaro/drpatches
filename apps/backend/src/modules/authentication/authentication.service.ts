@@ -31,13 +31,17 @@ export class AuthenticationService {
   public register({ password, ...payload }: RegisterRequestDto) {
     return from(
       this.user.count({
-        $or: [{ email: payload.email }, { phone: payload.phone }],
+        $or: [
+          { email: payload.email },
+          { phone: payload.phone },
+          { fiscal: payload.fiscal },
+        ],
       }),
     ).pipe(
       filter((count) => count === 0),
       throwIfEmpty(() => {
         throw new BadRequestException(
-          'User with this phone or email already exists',
+          'User with this phone, email or fiscal code already exists',
         );
       }),
       mergeMap(() => {
