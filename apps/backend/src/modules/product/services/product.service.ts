@@ -8,13 +8,15 @@ import UpdateProductRequestDto from '../dtos/update-product.request.dto';
 import {
   catchError,
   concatMap,
+  defer,
   from,
   map,
-  mergeMap,
+  of,
   switchMap,
   throwError,
   throwIfEmpty,
 } from 'rxjs';
+import Font from 'src/modules/font/entities/font.entity';
 
 @Injectable()
 export default class ProductService {
@@ -25,6 +27,8 @@ export default class ProductService {
     private readonly productRepo: EntityRepository<Product>,
     @InjectRepository(PatchType)
     private readonly patchTypeRepo: EntityRepository<PatchType>,
+    @InjectRepository(Font)
+    private readonly fontRepo: EntityRepository<Font>,
   ) {
     this.entityManager = productRepo.getEntityManager();
   }
@@ -86,47 +90,121 @@ export default class ProductService {
     payload: UpdateProductRequestDto,
     image: Express.Multer.File | undefined = undefined,
   ) {
-    return from(
+    const product$ = from(
       this.productRepo.findOne(
         {
           id,
         },
         {
-          populate: ['patchType.id'],
+          populate: ['patchType.id', 'font.id'],
         },
       ),
     ).pipe(
-      mergeMap((product) => {
-        if (!product) throw new NotFoundException('Product not found');
-        const { patchType, ...data } = payload;
-        for (const key of ['patchWidth', 'patchHeight', 'quantity'])
-          if (payload[key]) payload[key] = parseFloat(payload[key]);
-        Object.assign(product, data);
-        if (image) product.image = image.filename;
-        if (patchType !== 'null' && patchType !== product?.patchType?.id)
-          return from(
-            this.patchTypeRepo.findOneOrFail({
-              id: patchType,
-            }),
-          ).pipe(
-            mergeMap((patchType) => {
-              product.patchType = patchType;
-              return from(this.entityManager.flush()).pipe(
-                map(() => product),
-                catchError((e) => throwError(() => e)),
-              );
-            }),
-            catchError(() => {
-              throw new NotFoundException('Patch type not found');
-            }),
-          );
-
-        return from(this.entityManager.flush()).pipe(
-          map(() => product),
-          catchError((e) => throwError(() => e)),
-        );
-      }),
+      throwIfEmpty(() => new NotFoundException('Product not found')),
       catchError((e) => throwError(() => e)),
     );
+
+    const updateProperties$ = defer(() =>
+      product$.pipe(
+        concatMap((product) => {
+          const { patchType, font, ...data } = payload;
+
+          for (const key in data)
+            if (data[key] === 'null') data[key] = undefined;
+
+          for (const key of ['patchWidth', 'patchHeight', 'quantity'])
+            if (payload[key]) payload[key] = parseFloat(payload[key]);
+          Object.assign(product, data);
+          if (image) product.image = image.filename;
+
+          return of(product);
+        }),
+        concatMap((product) => {
+          const { patchType } = payload;
+          if (patchType !== 'null' && patchType !== product?.patchType?.id)
+            return from(
+              this.patchTypeRepo.findOneOrFail({
+                id: patchType,
+              }),
+            ).pipe(
+              map((patchType) => {
+                product.patchType = patchType;
+                return product;
+              }),
+              catchError(() => {
+                throw new NotFoundException('Patch type not found');
+              }),
+            );
+          return of(product);
+        }),
+        concatMap((product) => {
+          const { font } = payload;
+          if (font != 'null' && font !== product?.font?.id)
+            return from(this.fontRepo.findOneOrFail({ id: font })).pipe(
+              concatMap((font) => {
+                product.font = font;
+                return of(product);
+              }),
+              catchError(() =>
+                throwError(() => new NotFoundException('Font not found')),
+              ),
+            );
+          return of(product);
+        }),
+        catchError((e) => throwError(() => e)),
+      ),
+    );
+
+    return defer(() =>
+      updateProperties$.pipe(
+        concatMap((product) =>
+          from(this.entityManager.flush()).pipe(map(() => product)),
+        ),
+        catchError((e) => throwError(() => e)),
+      ),
+    );
+
+    // return from(
+    //   this.productRepo.findOne(
+    //     {
+    //       id,
+    //     },
+    //     {
+    //       populate: ['patchType.id'],
+    //     },
+    //   ),
+    // ).pipe(
+    //   mergeMap((product) => {
+    //     if (!product) throw new NotFoundException('Product not found');
+    //     const { patchType, ...data } = payload;
+    //     for (const key of ['patchWidth', 'patchHeight', 'quantity'])
+    //       if (payload[key]) payload[key] = parseFloat(payload[key]);
+    //     Object.assign(product, data);
+    //     if (image) product.image = image.filename;
+    //     if (patchType !== 'null' && patchType !== product?.patchType?.id)
+    //       return from(
+    //         this.patchTypeRepo.findOneOrFail({
+    //           id: patchType,
+    //         }),
+    //       ).pipe(
+    //         mergeMap((patchType) => {
+    //           product.patchType = patchType;
+    //           return from(this.entityManager.flush()).pipe(
+    //             map(() => product),
+    //             catchError((e) => throwError(() => e)),
+    //           );
+    //         }),
+    //         catchError(() => {
+    //           throw new NotFoundException('Patch type not found');
+    //         }),
+    //       );
+
+    //     return from(this.entityManager.flush()).pipe(
+    //       map(() => product),
+    //       catchError((e) => throwError(() => e)),
+    //     );
+    //   }),
+    //   catchError((e) => throwError(() => e)),
+    // );
   }
 }

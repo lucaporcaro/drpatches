@@ -84,4 +84,9 @@ export default class UpdateProductRequestDto {
   @IsString()
   @IsOptional()
   note?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsString()
+  font?: string;
 }

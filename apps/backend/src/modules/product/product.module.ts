@@ -8,10 +8,11 @@ import BackingPrice from './entities/backing-price.entity';
 import { PriceController, ProductController } from './controllers';
 import PatchTypeService from './services/patch-type.service';
 import PatchTypeController from './controllers/patch-type.controller';
+import Font from '../font/entities/font.entity';
 
 @Module({
   imports: [
-    MikroOrmModule.forFeature([User, Product, PatchType, BackingPrice]),
+    MikroOrmModule.forFeature([User, Product, PatchType, BackingPrice, Font]),
   ],
   providers: [ProductService, PriceService, PatchTypeService],
   controllers: [ProductController, PriceController, PatchTypeController],

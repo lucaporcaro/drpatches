@@ -677,6 +677,15 @@
           "primary": false,
           "nullable": true,
           "mappedType": "string"
+        },
+        "font_id": {
+          "name": "font_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
         }
       },
       "name": "products",
@@ -771,6 +780,19 @@
             "id"
           ],
           "referencedTableName": "public.users",
+          "deleteRule": "set null",
+          "updateRule": "cascade"
+        },
+        "products_font_id_foreign": {
+          "constraintName": "products_font_id_foreign",
+          "columnNames": [
+            "font_id"
+          ],
+          "localTableName": "public.products",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.fonts",
           "deleteRule": "set null",
           "updateRule": "cascade"
         }

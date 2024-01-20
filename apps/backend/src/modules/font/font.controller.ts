@@ -1,4 +1,14 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { FontService } from './font.service.js';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('font')
-export class FontController {}
+@ApiTags('Fonts')
+export class FontController {
+  constructor(private readonly fontService: FontService) {}
+
+  @Get()
+  all() {
+    return this.fontService.all();
+  }
+}

@@ -1,8 +1,17 @@
-import { BeforeUpdate, Entity, EventArgs, Property } from '@mikro-orm/core';
+import {
+  AfterUpdate,
+  Collection,
+  Entity,
+  EventArgs,
+  OneToMany,
+  Property,
+} from '@mikro-orm/core';
 import { createCanvas, registerFont } from 'canvas';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { concatMap, defer, from, lastValueFrom } from 'rxjs';
 import BaseModel from 'src/common/entities/base-model.entity';
+import Product from 'src/modules/product/entities/product.entity';
 import { ulid } from 'ulid';
 
 @Entity({ tableName: 'fonts' })
@@ -16,11 +25,24 @@ export default class Font extends BaseModel {
   @Property({ nullable: true })
   image: string;
 
-  @BeforeUpdate()
-  public async beforeUpdate({ entity }: EventArgs<Font>) {
-    const preview = await this.generatePreviewImage(entity.name, entity.file);
-    const filename = await this.savePreview(preview);
-    entity.image = filename;
+  @OneToMany(() => Product, (product) => product.font)
+  products = new Collection<Product>(this);
+
+  @AfterUpdate()
+  public async afterUpdate({ entity, em }: EventArgs<Font>) {
+    const preview$ = from(this.generatePreviewImage(entity.name, entity.file));
+    const filename$ = defer(() =>
+      preview$.pipe(concatMap((preview) => from(this.savePreview(preview)))),
+    );
+    await lastValueFrom(
+      defer(() =>
+        filename$.pipe(
+          concatMap((filename) =>
+            from(em.nativeUpdate(Font, { id: entity.id }, { image: filename })),
+          ),
+        ),
+      ),
+    );
   }
 
   private async generatePreviewImage(name: string, path: string) {
@@ -28,7 +50,7 @@ export default class Font extends BaseModel {
       family: 'Custom',
     });
 
-    const canvas = createCanvas(200, 200);
+    const canvas = createCanvas(200, 60);
     const ctx = canvas.getContext('2d');
 
     Object.assign(ctx, {

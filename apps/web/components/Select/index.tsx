@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export type SelectItem = {
   id: string;
   image: string;
+  name?: string;
 };
 
 type Props = {
@@ -11,11 +12,27 @@ type Props = {
   label: string;
   items: SelectItem[];
   onChange(v: string): void;
+  image?: {
+    width?: number;
+  };
 };
 
-export default function Select({ value, label, items, onChange }: Props) {
+export default function Select({
+  value,
+  label,
+  items,
+  image,
+  onChange,
+}: Props) {
+  // State
   const [open, setOpen] = useState<boolean>(false);
   const toggle = () => setOpen((open) => !open);
+
+  // Memo
+  const selectedItem = useMemo(() => {
+    if (!value) return null;
+    return items.filter(({ id }) => id === value)[0] as SelectItem;
+  }, [value]);
   return (
     <div className="w-full h-max">
       <div className="w-max flex flex-row items-center justify-start gap-4">
@@ -25,10 +42,11 @@ export default function Select({ value, label, items, onChange }: Props) {
           onClick={toggle}
         >
           {value ? (
-            <img
-              src={(items.filter(({ id }) => id === value)[0] as any).image}
-              className="w-10 aspect-auto"
-            />
+            typeof selectedItem?.name === "string" ? (
+              <span>{selectedItem.name}</span>
+            ) : (
+              <img src={selectedItem?.image} className="w-10 aspect-auto" />
+            )
           ) : (
             <span className="font-semibold text-sm">Choose</span>
           )}
@@ -46,7 +64,11 @@ export default function Select({ value, label, items, onChange }: Props) {
                 className="w-max h-max bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer"
                 onClick={() => onChange(item.id)}
               >
-                <img className="w-16 aspect-auto" src={item.image} />
+                <img
+                  className="aspect-auto"
+                  style={{ width: image?.width ?? 64 }}
+                  src={item.image}
+                />
               </div>
             ))}
           </div>

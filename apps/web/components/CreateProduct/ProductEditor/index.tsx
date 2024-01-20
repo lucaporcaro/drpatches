@@ -18,7 +18,7 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
 import { toast } from "react-toastify";
@@ -37,6 +37,7 @@ import {
 } from "rxjs";
 import { useRouter } from "next/navigation";
 import Loading from "react-loading";
+import { Font } from "@app/actions/font";
 
 export const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -49,12 +50,17 @@ export const backingItems: SelectItem[] = [
 type Props = {
   initialProduct: CreateProductState;
   patchTypes: PatchTypeT[];
+  fonts: Font[];
 };
 
 // Subjects
 const productUpdateSubject = new Subject();
 
-export default function ProductEditor({ initialProduct, patchTypes }: Props) {
+export default function ProductEditor({
+  initialProduct,
+  patchTypes,
+  fonts,
+}: Props) {
   // States
   const product = useSelector((state: RootState) => state.createProduct);
   const {
@@ -71,6 +77,7 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
     image,
     price,
     note,
+    font,
   } = product;
   const dispatch = useDispatch();
   const [updatedPrice, setUpdatedPrice] = useState(price);
@@ -267,14 +274,25 @@ export default function ProductEditor({ initialProduct, patchTypes }: Props) {
 
           <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-auto">
             {type !== "image" ? (
-              <div className="w-max ">
-                <Select
-                  value={patchType}
-                  items={patchTypes}
-                  label={t("select_type")}
-                  onChange={update("patchType")}
-                />
-              </div>
+              <>
+                <div className="w-max ">
+                  <Select
+                    value={patchType}
+                    items={patchTypes}
+                    label={t("select_type")}
+                    onChange={update("patchType")}
+                  />
+                </div>
+                <div className="w-max">
+                  <Select
+                    value={font}
+                    items={fonts}
+                    label={"Font"}
+                    onChange={update("font")}
+                    image={{ width: 200 }}
+                  />
+                </div>
+              </>
             ) : null}
             <Select
               value={backingType}

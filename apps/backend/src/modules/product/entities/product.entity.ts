@@ -14,6 +14,7 @@ import User from 'src/modules/user/entities/user.entity';
 import BackingPrice from './backing-price.entity';
 import { generatePricesTable } from '../services/price.service';
 import { catchError, from, lastValueFrom, map, of } from 'rxjs';
+import Font from 'src/modules/font/entities/font.entity';
 
 export enum ProductType {
   IMAGE = 'image',
@@ -92,6 +93,9 @@ export default class Product extends BaseModel {
 
   @ManyToOne(() => User, { index: true, nullable: true })
   user?: User;
+
+  @ManyToOne(() => Font, { nullable: true })
+  font!: Font;
 
   // Events
   @BeforeUpdate()

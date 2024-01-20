@@ -11,6 +11,7 @@ export interface CreateProductState {
   patchHeight: number;
   quantity: number;
   patchType?: string;
+  font?: string;
   backingType?: string;
   image?: File;
   price: number | string;
@@ -33,6 +34,7 @@ const initialState: CreateProductState = {
   backingType: undefined,
   image: undefined,
   note: "",
+  font: undefined,
 };
 
 export const createProductSlice = createSlice({
