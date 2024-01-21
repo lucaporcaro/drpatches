@@ -10,6 +10,8 @@ export class FontService {
     @InjectRepository(Font) private readonly fontRepo: EntityRepository<Font>,
   ) {}
   public all = () => {
-    return from(this.fontRepo.findAll({ fields: ['id', 'image', 'name'] }));
+    return from(
+      this.fontRepo.findAll({ fields: ['id', 'image', 'name', 'file'] }),
+    );
   };
 }

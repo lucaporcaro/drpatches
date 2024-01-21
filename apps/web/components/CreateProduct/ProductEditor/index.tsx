@@ -18,7 +18,7 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FaImage, FaArrowLeft } from "react-icons/fa6";
 import Button from "@app/components/Button";
 import { toast } from "react-toastify";
@@ -30,6 +30,7 @@ import {
   Subject,
   catchError,
   debounceTime,
+  filter,
   from,
   lastValueFrom,
   map,
@@ -38,6 +39,7 @@ import {
 import { useRouter } from "next/navigation";
 import Loading from "react-loading";
 import { Font } from "@app/actions/font";
+import useFontLoader from "@app/hooks/useFontLoader";
 
 export const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -79,13 +81,29 @@ export default function ProductEditor({
     note,
     font,
   } = product;
-  const dispatch = useDispatch();
   const [updatedPrice, setUpdatedPrice] = useState(price);
-  const t = useTranslations("components.product_editor");
-  const jwt = useJwt();
-  const router = useRouter();
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
   const [pricePerOne, setPricePerOne] = useState<string>("0");
+
+  // Memos
+  const fontUrl = useMemo(() => {
+    const fontUrlPath$ = from(fonts).pipe(
+      filter(({ id }) => font === id),
+      map((font) => font.file)
+    );
+    let url;
+
+    fontUrlPath$.subscribe((font) => (url = font));
+
+    return url;
+  }, [font]);
+
+  // Hooks
+  const jwt = useJwt();
+  const router = useRouter();
+  const t = useTranslations("components.product_editor");
+  const dispatch = useDispatch();
+  const fontLoaded = useFontLoader(fontUrl);
 
   // Refs
   const imageRef = useRef<HTMLInputElement>(null);
@@ -323,7 +341,13 @@ export default function ProductEditor({
                 />
               ) : null}
               <div className="w-max h-max  absolute inset-0 m-auto">
-                <span className="" style={{ color: textColor }}>
+                <span
+                  className=""
+                  style={{
+                    color: textColor,
+                    fontFamily: fontLoaded ? "CustomFont" : undefined,
+                  }}
+                >
                   {text}
                 </span>
               </div>
