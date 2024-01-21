@@ -40,6 +40,7 @@ import { useRouter } from "next/navigation";
 import Loading from "react-loading";
 import { Font } from "@app/actions/font";
 import useFontLoader from "@app/hooks/useFontLoader";
+import RSelect from "react-select";
 
 export const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
@@ -96,6 +97,22 @@ export default function ProductEditor({
     fontUrlPath$.subscribe((font) => (url = font));
 
     return url;
+  }, [font]);
+  const selectedFont = useMemo(() => {
+    const selectedFont$ = from(fonts).pipe(
+      filter(({ id }) => id === font),
+      map((font) => font)
+    );
+    let fontSelected;
+    selectedFont$.subscribe(
+      (font) =>
+        (fontSelected = {
+          label: font.name,
+          value: font.id,
+          preview: font.image,
+        })
+    );
+    return fontSelected;
   }, [font]);
 
   // Hooks
@@ -231,6 +248,35 @@ export default function ProductEditor({
             <>
               <span className="font-bold text-3xl">{t("titels.text")}</span>
               <Input value={text} onChange={update("text")} />
+              <div className="w-full flex flex-row items-center justify-start gap-4">
+                <span className="font-semibold text-xl">Font</span>
+                <RSelect
+                  className="w-full"
+                  value={selectedFont}
+                  options={
+                    fonts.map((font) => ({
+                      label: font.name,
+                      value: font.id,
+                      preview: font.image,
+                    })) as any
+                  }
+                  onChange={update("font")}
+                  components={{
+                    Option({ data, innerProps, innerRef }) {
+                      return (
+                        <img
+                          height={100}
+                          width={200}
+                          {...innerProps}
+                          ref={innerRef}
+                          src={(data as any).preview}
+                        />
+                      );
+                    },
+                  }}
+                  isClearable
+                />
+              </div>
               <span className="font-bold text-3xl">{t("titels.colors")}</span>
 
               <div className="w-full h-max grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
@@ -299,15 +345,6 @@ export default function ProductEditor({
                     items={patchTypes}
                     label={t("select_type")}
                     onChange={update("patchType")}
-                  />
-                </div>
-                <div className="w-max">
-                  <Select
-                    value={font}
-                    items={fonts}
-                    label={"Font"}
-                    onChange={update("font")}
-                    image={{ width: 200 }}
                   />
                 </div>
               </>
