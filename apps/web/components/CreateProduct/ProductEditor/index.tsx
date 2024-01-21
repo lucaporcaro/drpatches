@@ -274,7 +274,6 @@ export default function ProductEditor({
                       );
                     },
                   }}
-                  isClearable
                 />
               </div>
               <span className="font-bold text-3xl">{t("titels.colors")}</span>
