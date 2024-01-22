@@ -3,7 +3,7 @@ import { MikroORM } from '@mikro-orm/core';
 import User from 'src/modules/user/entities/user.entity';
 import Product from 'src/modules/product/entities/product.entity';
 import PatchType from 'src/modules/product/entities/patch-type.entity';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import BackingPrice from 'src/modules/product/entities/backing-price.entity';
 import { config } from 'dotenv';
 import Font from 'src/modules/font/entities/font.entity';
@@ -18,7 +18,11 @@ const DEFAULT_ADMIN = {
 };
 
 async function registerAdminJs() {
-  const paths = [join(__dirname, '../../media')];
+  const paths = [
+    process.env.NODE_ENV === 'production'
+      ? resolve('/media')
+      : join(__dirname, '../../media'),
+  ];
   for (const path of paths) if (!existsSync(path)) await mkdir(path);
 
   const AdminJs = await import('adminjs');
@@ -88,7 +92,10 @@ async function isAdmin(email: string, password: string) {
                     },
                     provider: {
                       local: {
-                        bucket: join(__dirname, '../../media'),
+                        bucket:
+                          process.env.NODE_ENV === 'production'
+                            ? resolve('/media')
+                            : join(__dirname, '../../media'),
                         opts: {
                           baseUrl: process.env.BASE_URL,
                         },
@@ -135,7 +142,10 @@ async function isAdmin(email: string, password: string) {
                     },
                     provider: {
                       local: {
-                        bucket: join(__dirname, '../../media'),
+                        bucket:
+                          process.env.NODE_ENV === 'production'
+                            ? resolve('/media')
+                            : join(__dirname, '../../media'),
                         opts: {
                           baseUrl: process.env.BASE_URL,
                         },
