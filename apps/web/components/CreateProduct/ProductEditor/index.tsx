@@ -340,18 +340,16 @@ export default function ProductEditor({
           />
 
           <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-auto">
-            {type !== "image" ? (
-              <>
-                <div className="w-max ">
-                  <Select
-                    value={patchType}
-                    items={patchTypes}
-                    label={t("select_type")}
-                    onChange={update("patchType")}
-                  />
-                </div>
-              </>
-            ) : null}
+            <>
+              <div className="w-max ">
+                <Select
+                  value={patchType}
+                  items={patchTypes}
+                  label={t("select_type")}
+                  onChange={update("patchType")}
+                />
+              </div>
+            </>
             <Select
               value={backingType}
               items={backingItems}
@@ -360,7 +358,7 @@ export default function ProductEditor({
             />
           </div>
         </div>
-        {type === "text" ? (
+        {/* {type === "text" ? (
           <div className="bg-primary-1 text-black relative flex flex-col items-center justify-center gap-6 py-10 px-6 rounded-xl lg:col-span-1 overflow-hidden">
             <span className="font-bold text-3xl">{t("preview")}</span>
             <div
@@ -393,7 +391,7 @@ export default function ProductEditor({
               </div>
             </div>
           </div>
-        ) : null}
+        ) : null} */}
 
         <div
           data-alone={type === "image"}
