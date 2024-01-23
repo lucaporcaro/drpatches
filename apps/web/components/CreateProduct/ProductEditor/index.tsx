@@ -126,9 +126,13 @@ export default function ProductEditor({
   const imageRef = useRef<HTMLInputElement>(null);
 
   // Functions
-  const update = (key: string) => (value: any) => {
-    dispatch(updateCreatedProduct({ key, value }));
-  };
+  const update =
+    (key: string, isSelect = false) =>
+    (value: any) => {
+      dispatch(
+        updateCreatedProduct({ key, value: isSelect ? value.value : value })
+      );
+    };
   async function updateProductWithErrors(product: any, jwt: string) {
     const id = product.id;
 
@@ -260,11 +264,7 @@ export default function ProductEditor({
                       preview: font.image,
                     })) as any
                   }
-                  onChange={(v) =>
-                    dispatch(
-                      updateCreatedProduct({ key: "font", value: v.value })
-                    )
-                  }
+                  onChange={update("font")}
                   components={{
                     Option({ data, innerProps, innerRef }) {
                       return (
