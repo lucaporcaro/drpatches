@@ -3,17 +3,16 @@ import { MikroORM } from '@mikro-orm/core';
 import User from 'src/modules/user/entities/user.entity';
 import Product from 'src/modules/product/entities/product.entity';
 import PatchType from 'src/modules/product/entities/patch-type.entity';
-import { dirname, join, resolve } from 'path';
+import { join, resolve } from 'path';
 import BackingPrice from 'src/modules/product/entities/backing-price.entity';
 import { config } from 'dotenv';
 import Font from 'src/modules/font/entities/font.entity';
 import { existsSync } from 'node:fs';
 import { mkdir } from 'fs/promises';
-import { move } from 'fs-extra';
 
 config();
 
-const MEDIA_BUCKET =
+export const MEDIA_BUCKET =
   process.env.NODE_ENV === 'production'
     ? resolve('/media')
     : join(__dirname, '../../media');
@@ -24,11 +23,7 @@ const DEFAULT_ADMIN = {
 };
 
 async function registerAdminJs() {
-  const paths = [
-    process.env.NODE_ENV === 'production'
-      ? resolve('/media')
-      : join(__dirname, '../../media'),
-  ];
+  const paths = [MEDIA_BUCKET];
   for (const path of paths) if (!existsSync(path)) await mkdir(path);
 
   const AdminJs = await import('adminjs');

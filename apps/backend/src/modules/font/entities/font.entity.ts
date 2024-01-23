@@ -8,7 +8,7 @@ import {
 } from '@mikro-orm/core';
 import { createCanvas, registerFont } from 'canvas';
 import { writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { concatMap, defer, from, lastValueFrom } from 'rxjs';
 import BaseModel from 'src/common/entities/base-model.entity';
 import Product from 'src/modules/product/entities/product.entity';
@@ -45,8 +45,13 @@ export default class Font extends BaseModel {
     );
   }
 
+  private MEDIA_BUCKET =
+    process.env.NODE_ENV === 'production'
+      ? resolve('/media')
+      : join(__dirname, '/../../../media');
+
   private async generatePreviewImage(name: string, path: string) {
-    registerFont(join(__dirname, `/../../../media/${path}`), {
+    registerFont(join(`${this.MEDIA_BUCKET}/${path}`), {
       family: 'Custom',
     });
 
@@ -69,7 +74,7 @@ export default class Font extends BaseModel {
 
   private async savePreview(file: Buffer) {
     const filename = ulid() + '-font-preview.png';
-    await writeFile(join(__dirname, `/../../../media/${filename}`), file);
+    await writeFile(join(`${this.MEDIA_BUCKET}/${filename}`), file);
     return filename;
   }
 }
