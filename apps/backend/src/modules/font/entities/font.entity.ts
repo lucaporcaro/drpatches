@@ -28,13 +28,19 @@ export default class Font extends BaseModel {
   @OneToMany(() => Product, (product) => product.font)
   products = new Collection<Product>(this);
 
+  private MEDIA_BUCKET =
+    process.env.NODE_ENV === 'production'
+      ? resolve('/media')
+      : join(__dirname, '/../../../media');
+
   @AfterUpdate()
   public async afterUpdate({ entity, em }: EventArgs<Font>) {
-    if (!entity.file) return;
+    if (!entity.file || entity.file === 'undefined') return;
     const preview$ = from(this.generatePreviewImage(entity.name, entity.file));
     const filename$ = defer(() =>
       preview$.pipe(concatMap((preview) => from(this.savePreview(preview)))),
     );
+
     await lastValueFrom(
       defer(() =>
         filename$.pipe(
@@ -45,11 +51,6 @@ export default class Font extends BaseModel {
       ),
     );
   }
-
-  private MEDIA_BUCKET =
-    process.env.NODE_ENV === 'production'
-      ? resolve('/media')
-      : join(__dirname, '/../../../media');
 
   private async generatePreviewImage(name: string, path: string) {
     registerFont(join(`${this.MEDIA_BUCKET}/${path}`), {
