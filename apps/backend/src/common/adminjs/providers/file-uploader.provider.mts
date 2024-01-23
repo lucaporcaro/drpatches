@@ -1,10 +1,14 @@
-import { BaseProvider } from '@adminjs/upload';
+import { BaseProvider, ProviderOpts } from '@adminjs/upload';
 import fs, { existsSync } from 'fs';
 import { move } from 'fs-extra';
-import path, { join, resolve } from 'path';
+import path from 'path';
 
 export default class UploadProvider extends BaseProvider {
-  constructor(private readonly UPLOADS_DIR) {
+  opts?: ProviderOpts = {
+    baseUrl: process.env.BASE_URL,
+  };
+
+  constructor(UPLOADS_DIR: string) {
     super(UPLOADS_DIR);
     if (!existsSync(UPLOADS_DIR)) {
       throw new Error(

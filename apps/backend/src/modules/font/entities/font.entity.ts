@@ -30,6 +30,7 @@ export default class Font extends BaseModel {
 
   @AfterUpdate()
   public async afterUpdate({ entity, em }: EventArgs<Font>) {
+    if (!entity.file) return;
     const preview$ = from(this.generatePreviewImage(entity.name, entity.file));
     const filename$ = defer(() =>
       preview$.pipe(concatMap((preview) => from(this.savePreview(preview)))),
