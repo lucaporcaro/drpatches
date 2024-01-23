@@ -3,14 +3,20 @@ import { MikroORM } from '@mikro-orm/core';
 import User from 'src/modules/user/entities/user.entity';
 import Product from 'src/modules/product/entities/product.entity';
 import PatchType from 'src/modules/product/entities/patch-type.entity';
-import { join, resolve } from 'path';
+import { dirname, join, resolve } from 'path';
 import BackingPrice from 'src/modules/product/entities/backing-price.entity';
 import { config } from 'dotenv';
 import Font from 'src/modules/font/entities/font.entity';
 import { existsSync } from 'node:fs';
 import { mkdir } from 'fs/promises';
+import { move } from 'fs-extra';
 
 config();
+
+const MEDIA_BUCKET =
+  process.env.NODE_ENV === 'production'
+    ? resolve('/media')
+    : join(__dirname, '../../media');
 
 const DEFAULT_ADMIN = {
   email: 'admin@user.com',
@@ -37,6 +43,9 @@ async function registerAdminJs() {
   };
   const FileUpload = await import('@adminjs/upload');
   const ImportExport = await import('@adminjs/import-export');
+  const FileUploaderProvider = await import(
+    './providers/file-uploader.provider.mjs'
+  );
   return {
     components,
     orm: await MikroORM.init(),
@@ -44,6 +53,7 @@ async function registerAdminJs() {
     AdminJs,
     ImportExport,
     componentLoader,
+    FileUploaderProvider,
   };
 }
 
@@ -56,8 +66,14 @@ async function isAdmin(email: string, password: string) {
 @Module({
   imports: [
     import('@adminjs/nestjs').then(async ({ AdminModule }) => {
-      const { orm, FileUpload, componentLoader, components, ImportExport } =
-        await registerAdminJs();
+      const {
+        orm,
+        FileUpload,
+        componentLoader,
+        components,
+        ImportExport,
+        FileUploaderProvider,
+      } = await registerAdminJs();
       return AdminModule.createAdminAsync({
         useFactory: () => ({
           adminJsOptions: {
@@ -90,17 +106,7 @@ async function isAdmin(email: string, password: string) {
                       key: 'file',
                       file: 'font',
                     },
-                    provider: {
-                      local: {
-                        bucket:
-                          process.env.NODE_ENV === 'production'
-                            ? resolve('/media')
-                            : join(__dirname, '../../media'),
-                        opts: {
-                          baseUrl: process.env.BASE_URL,
-                        },
-                      },
-                    },
+                    provider: new FileUploaderProvider.default(MEDIA_BUCKET),
                   }),
                 ],
               },
@@ -140,17 +146,7 @@ async function isAdmin(email: string, password: string) {
                       key: 'image',
                       file: 'file',
                     },
-                    provider: {
-                      local: {
-                        bucket:
-                          process.env.NODE_ENV === 'production'
-                            ? resolve('/media')
-                            : join(__dirname, '../../media'),
-                        opts: {
-                          baseUrl: process.env.BASE_URL,
-                        },
-                      },
-                    },
+                    provider: new FileUploaderProvider.default(MEDIA_BUCKET),
                   }),
                 ],
               },
