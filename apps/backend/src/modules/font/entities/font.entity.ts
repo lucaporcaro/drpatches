@@ -28,14 +28,8 @@ export default class Font extends BaseModel {
   @OneToMany(() => Product, (product) => product.font)
   products = new Collection<Product>(this);
 
-  private MEDIA_BUCKET =
-    process.env.NODE_ENV === 'production'
-      ? resolve('/media')
-      : join(__dirname, '/../../../media');
-
   @AfterUpdate()
   public async afterUpdate({ entity, em }: EventArgs<Font>) {
-    console.log(this.MEDIA_BUCKET);
     if (!entity.file || entity.file === 'undefined') return;
     const preview$ = from(this.generatePreviewImage(entity.name, entity.file));
     const filename$ = defer(() =>
@@ -54,9 +48,17 @@ export default class Font extends BaseModel {
   }
 
   private async generatePreviewImage(name: string, path: string) {
-    registerFont(join(this.MEDIA_BUCKET, path), {
-      family: 'Custom',
-    });
+    registerFont(
+      join(
+        process.env.NODE_ENV === 'production'
+          ? resolve('/media')
+          : join(__dirname, '/../../../media'),
+        path,
+      ),
+      {
+        family: 'Custom',
+      },
+    );
 
     const canvas = createCanvas(200, 60);
     const ctx = canvas.getContext('2d');
@@ -77,7 +79,15 @@ export default class Font extends BaseModel {
 
   private async savePreview(file: Buffer) {
     const filename = ulid() + '-font-preview.png';
-    await writeFile(join(`${this.MEDIA_BUCKET}/${filename}`), file);
+    await writeFile(
+      join(
+        process.env.NODE_ENV === 'production'
+          ? resolve('/media')
+          : join(__dirname, '/../../../media'),
+        filename,
+      ),
+      file,
+    );
     return filename;
   }
 }
