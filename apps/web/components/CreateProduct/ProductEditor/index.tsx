@@ -264,7 +264,7 @@ export default function ProductEditor({
                       preview: font.image,
                     })) as any
                   }
-                  onChange={update("font")}
+                  onChange={update("font", true)}
                   components={{
                     Option({ data, innerProps, innerRef }) {
                       return (
