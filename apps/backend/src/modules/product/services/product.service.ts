@@ -145,9 +145,11 @@ export default class ProductService {
                 product.font = font;
                 return of(product);
               }),
-              catchError(() =>
-                throwError(() => new NotFoundException('Font not found')),
-              ),
+              catchError(() => {
+                return throwError(
+                  () => new NotFoundException('Font not found'),
+                );
+              }),
             );
           return of(product);
         }),

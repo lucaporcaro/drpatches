@@ -260,7 +260,11 @@ export default function ProductEditor({
                       preview: font.image,
                     })) as any
                   }
-                  onChange={update("font")}
+                  onChange={(v) =>
+                    dispatch(
+                      updateCreatedProduct({ key: "font", value: v.value })
+                    )
+                  }
                   components={{
                     Option({ data, innerProps, innerRef }) {
                       return (
