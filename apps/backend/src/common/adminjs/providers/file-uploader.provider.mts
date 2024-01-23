@@ -10,6 +10,7 @@ export default class UploadProvider extends BaseProvider {
 
   constructor(UPLOADS_DIR: string) {
     super(UPLOADS_DIR);
+    this.bucket = UPLOADS_DIR;
     if (!existsSync(UPLOADS_DIR)) {
       throw new Error(
         `directory: "${UPLOADS_DIR}" does not exists. Create it before running LocalAdapter`,
