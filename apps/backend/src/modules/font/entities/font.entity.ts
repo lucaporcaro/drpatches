@@ -35,6 +35,7 @@ export default class Font extends BaseModel {
 
   @AfterUpdate()
   public async afterUpdate({ entity, em }: EventArgs<Font>) {
+    console.log(this.MEDIA_BUCKET);
     if (!entity.file || entity.file === 'undefined') return;
     const preview$ = from(this.generatePreviewImage(entity.name, entity.file));
     const filename$ = defer(() =>
@@ -53,7 +54,7 @@ export default class Font extends BaseModel {
   }
 
   private async generatePreviewImage(name: string, path: string) {
-    registerFont(join(`${this.MEDIA_BUCKET}/${path}`), {
+    registerFont(join(this.MEDIA_BUCKET, path), {
       family: 'Custom',
     });
 
