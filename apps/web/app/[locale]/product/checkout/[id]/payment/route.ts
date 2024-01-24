@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
                             product_data: {name: `Custom Patch ${product.id}`},
                             currency: "eur",
                             unit_amount:
-                                parseFloat((product.price as number).toFixed(2)) * 100,
+                                parseFloat((product.price as number * 100).toFixed(2)),
                         },
                         quantity: 1,
                     },
