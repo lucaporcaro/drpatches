@@ -211,7 +211,7 @@ export default function ProductEditor({
         </h2>
         <div className="hidden lg:block w-[68px] h-[44px]" />
       </div>
-      <div className="w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <div className="w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-6 gap-10">
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2">
           {type === "image" ? (
             <>
@@ -339,7 +339,7 @@ export default function ProductEditor({
             max={50000}
           />
 
-          <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-auto">
+          <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-2">
             <>
               <div className="w-max ">
                 <Select
@@ -358,6 +358,40 @@ export default function ProductEditor({
             />
           </div>
         </div>
+        {type === "text" ? (
+        <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
+            <span className="font-bold text-3xl">{t("preview")}</span>
+            <div
+              className="w-max h-max relative"
+              style={{
+                backgroundColor,
+                borderColor,
+                borderWidth: patchType ? 2 : 0,
+              }}
+            >
+              {patchType ? (
+                <img
+                  className="w-32 aspect-auto"
+                  src={
+                    (patchTypes.filter(({ id }) => id === patchType)[0] as any)
+                      .image
+                  }
+                />
+              ) : null}
+              <div className="w-max h-max  absolute inset-0 m-auto">
+                <span
+                  className=""
+                  style={{
+                    color: textColor,
+                    fontFamily: fontLoaded ? "CustomFont" : undefined,
+                  }}
+                >
+                  {text}
+                </span>
+              </div>
+            </div>
+          </div>
+        ) : null }
         {/* {type === "text" ? (
           <div className="bg-primary-1 text-black relative flex flex-col items-center justify-center gap-6 py-10 px-6 rounded-xl lg:col-span-1 overflow-hidden">
             <span className="font-bold text-3xl">{t("preview")}</span>
