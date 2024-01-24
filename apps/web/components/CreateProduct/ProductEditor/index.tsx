@@ -218,7 +218,7 @@ export default function ProductEditor({
               <span className="font-bold text-3xl">Image</span>
               <div
                 onClick={() => imageRef.current?.click()}
-                className="w-full relative h-[300px] border-black border-2 rounded-xl flex flex-col items-center justify-center gap-6 transition-all duration-200 hover:bg-black hover:text-white cursor-pointer overflow-hidden"
+                className="w-full relative h-[40rem] border-black border-2 rounded-xl flex flex-col items-center justify-center gap-6 transition-all duration-200 hover:bg-black hover:text-white cursor-pointer overflow-hidden"
               >
                 {image ? (
                   <img
