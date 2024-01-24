@@ -1,54 +1,54 @@
 export default {
   items: {
     item_1: {
-      title: "Was umfasst der massgeschneiderte patch-service?",
+      title: "Was beinhaltet der Service für individuelle Patches?",
       description:
-        "Benutzerdefinierte DrPatches-patches werden basierend auf ihrem design oder ihren spezifikationen erstellt. Wir bieten eine vielzahl von optionen an, darunter einzel-, groß- und großhandelsoptionen. Patches sind ohne mindestanforderungen und in verschiedenen größen, von klein bis riesig, online erhältlich. Sie können ihre aufnäher online entwerfen oder uns ihren entwurf per chat oder angebotsformular zusenden. Wir stellen ihnen dann ein modell/muster zur genehmigung zur verfügung."
+        "Die individuellen Patches von DrPatches werden entsprechend Ihrem Design oder Ihren Spezifikationen erstellt. Wir bieten eine breite Palette von Optionen an, einschließlich einzelner, großer und Großhandels-Patches. Die Patches sind online ohne Mindestanforderungen und in verschiedenen Größen von klein bis riesig erhältlich. Sie können Ihre Patches online entwerfen oder uns Ihr Design per E-Mail senden, und wir werden Ihnen ein Mockup/Muster zur Genehmigung zusenden."
     },
     item_2: {
-      title: "Wie lange dauert voraussichtlich die erstellung individueller patches?",
+      title: "Wie lange dauert die Herstellung individueller Patches in etwa?",
       description:
-        "Wir sind bestrebt, schnelle lieferzeiten ohne kompromisse bei der qualität zu gewährleisten. Nach der musterfreigabe beträgt unsere standardproduktionszeit zwei wochen. Für diejenigen, die patches schneller benötigen, bieten wir gegen aufpreis auch eiloptionen an."
+        "Wir bemühen uns, schnelle Lieferzeiten zu gewährleisten, ohne die Qualität zu beeinträchtigen. Nach Genehmigung des Musters beträgt unsere standardmäßige Produktionszeit 3-4 Werktage."
     },
     item_3: {
-      title: "Welche schritte muss ich folgen, um benutzerdefinierte patches zu erstellen?",
+      title: "Welche Schritte muss ich für die Erstellung individueller Patches befolgen?",
       description:
-        "Der vorgang ist einfach: senden sie uns ihr design per chat oder füllen sie unser angebotsformular mit ihren gewünschten maßen und mengen aus. Wir unterbreiten ihnen ein angebot und nehmen änderungen vor, bis sie zufrieden sind. Nach der musterfreigabe beginnen wir mit der produktion und ihre patches sind innerhalb von 2 wochen fertig."
+        "Der Prozess ist einfach: Kaufen Sie über das Online-Anpassungsformular ein, indem Sie Grafiken oder Text, Größe und Menge eingeben. Das Online-Anpassungsformular kalkuliert in Echtzeit die Produktionskosten und gibt auch den Preis für jedes einzelne Patch an. Bevor wir mit der Produktion beginnen, senden wir Ihnen eine E-Mail mit dem digitalen Prototypen. Nach Genehmigung des digitalen Musters beginnen wir mit der Produktion, und Ihre Patches werden innerhalb von 4 Werktagen fertig sein."
     },
     item_4: {
-      title: "Wie hoch ist die voraussichtliche lebensdauer gestickter aufnäher?",
+      title: "Wie lange ist die voraussichtliche Lebensdauer der gestickten Patches?",
       description:
-        "Unsere gestickten aufnäher werden aus hochwertigen materialien hergestellt, um eine lange haltbarkeit zu gewährleisten. Bei richtiger pflege können sie jahrelang halten, wobei die lebensdauer von faktoren wie waschen, tragen und trocknen abhängt."
+        "Unsere gestickten Patches werden aus hochwertigen Materialien hergestellt, um eine lange Lebensdauer zu gewährleisten. Sie werden mit Polyesterfäden der besten Marken (Madeira / Isacord) hergestellt; diese können bei ordnungsgemäßer Pflege eine unbegrenzte Lebensdauer garantieren."
     },
     item_5: {
-      title: "Welche grössen sind für individuelle patches verfügbar?",
+      title: "Welche Größen stehen für individuelle Patches zur Verfügung?",
       description:
-        "Wir bieten aufnäher in verschiedenen größen an, darunter bis zu 65 cm x 44 cm, chenille bis zu 70 cm x 50 cm und pvc bis zu 30 cm x 20 cm."
+        "Wir bieten Patches in verschiedenen Größen an. Über das Online-Anpassungsformular können Patches bis zu einer Größe von 20 cm x 20 cm angepasst und gekauft werden. Aber auf Anfrage unter info@drpatches.com können wir sogar Größen von 50 cm x 70 cm erreichen."
     },
     item_6: {
-      title: "Welches dateiformat wird für die übermittlung von inhalten akzeptiert?",
+      title: "Welches Dateiformat wird für den Versand von Inhalten akzeptiert?",
       description:
-        "Wir akzeptieren formate wie jpg, ai und pdf. Jedes format ist in ordnung, solange die details lesbar sind."
+        "Wir akzeptieren Formate wie jpg, ai und pdf. Jedes Format ist in Ordnung, solange die Details lesbar sind."
     },
     item_7: {
-      title: "Wie lange werde ich nach der anfrage kontaktiert?",
+      title: "Wie lange dauert es, bis ich nach der Anfrage kontaktiert werde?",
       description:
-        "Unser team aus grafikdesignern wird sie innerhalb von 24 stunden von montag bis freitag von 9.30 bis 18.30 uhr kontaktieren."
+        "Sie werden innerhalb von 24 Arbeitsstunden von unserem Grafikteam kontaktiert, das von Montag bis Freitag von 9:30 bis 18:30 Uhr arbeitet."
     },
     item_8: {
-      title: "Habe ich eine eigene grafik für alle phasen des projekts?",
+      title: "Habe ich einen dedizierten Designer für alle Phasen des Projekts?",
       description:
-        "Sicherlich! Sie werden immer von demselben designer begleitet, der ihrem einkauf zugeordnet ist."
+        "Auf jeden Fall! Sie werden immer von demselben Designer begleitet, der Ihrem Kauf zugewiesen ist."
     },
     item_9: {
-      title: "Welche zahlungsmethoden stehen zur verfügung?",
+      title: "Welche Zahlungsmethoden sind verfügbar?",
       description:
-        "Die zahlung ist einfach und wir akzeptieren gängige methoden wie kreditkarte, banküberweisung und paypal."
+        "Die Zahlung ist einfach, und wir akzeptieren gängige Methoden wie Kreditkarte und PayPal."
     },
     item_10: {
-      title: "Wie viele tage sind für die patch-herstellung erforderlich?",
+      title: "Wie viele Tage dauert die Produktion der Patches?",
       description:
-        "Nach der musterfreigabe beträgt unsere standardproduktionszeit zwei wochen, wir bieten jedoch gegen aufpreis eiloptionen an, um ihren anforderungen an eine schnellere lieferung gerecht zu werden. Besuchen sie diese seite für weitere informationen (link)"
+        "Nach Genehmigung des Musters beträgt unsere standardmäßige Produktionszeit 4 Werktage."
     },
   },
 };
