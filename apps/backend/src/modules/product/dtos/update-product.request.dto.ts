@@ -33,7 +33,7 @@ export default class UpdateProductRequestDto {
   @IsHexColor()
   textColor?: string;
 
-  @ApiProperty({ required: false, default: '#111' })
+  @ApiProperty({ required: false, default: '#fff' })
   @IsHexColor()
   @IsOptional()
   backgroundColor?: string;
