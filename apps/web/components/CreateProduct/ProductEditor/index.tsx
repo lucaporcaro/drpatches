@@ -191,7 +191,7 @@ export default function ProductEditor({
       subscription.unsubscribe();
     };
   }, []);
-
+  const dynamicGridCols = type === "text" ? 'grid-cols-6' : 'grid-cols-4';
   return (
     <>
       <div className="w-11/12 h-max flex items-center justify-between max-w-[1620px] mx-auto p-2 mb-2">
@@ -211,7 +211,7 @@ export default function ProductEditor({
         </h2>
         <div className="hidden lg:block w-[68px] h-[44px]" />
       </div>
-      <div className="w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-6 gap-10">
+      <div className={`w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 ${dynamicGridCols} gap-10`}>
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2">
           {type === "image" ? (
             <>
@@ -379,11 +379,10 @@ export default function ProductEditor({
               ) : null}
               <div className="w-max h-max  absolute inset-0 m-auto">
                 <span
-                  className=""
+                  className="text-4xl"
                   style={{
                     color: textColor,
                     fontFamily: fontLoaded ? "CustomFont" : undefined,
-                    fontSize: 'text-4xl'
                   }}
                 >
                   {text}
