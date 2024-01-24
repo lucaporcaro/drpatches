@@ -40,9 +40,11 @@ export async function POST(request: NextRequest) {
                                 parseFloat((product.price as number * 100).toFixed(2)),
                         },
                         quantity: 1,
+
                     },
                 ],
-                shipping_address_collection: {allowed_countries: ["IT"]},
+                shipping_address_collection: {allowed_countries: ['IT', 'GB', "IQ"]},
+                shipping_options: [{shipping_rate: 'shr_1Oc5aDFJwOikE4dcmUmPmDkp'}, {shipping_rate: 'shr_1Oc4z5FJwOikE4dciXDG0n4L'}],
                 mode: "payment",
                 success_url: `${process.env.FRONTEND_URL}/payment?success=true`,
                 cancel_url: `${process.env.FRONTEND_URL}/payment?canceled=true`,
