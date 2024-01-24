@@ -41,9 +41,9 @@ const Navbar = () => {
     <nav className="w-full h-max bg-black py-4 px-8 flex flex-col gap-6 font-bold">
       <div className="w-full h-max items-center justify-between hidden md:flex">
         <div className="w-max h-max flex flex-row items-center justify-center gap-10">
-          {/* <FaInstagram className="w-max h-max text-white" size={18} />
+          <FaInstagram className="w-max h-max text-white" size={18} />
           <FaFacebookF className="w-max h-max text-white" size={18} />
-          <FaWhatsapp className="w-max h-max text-white" size={18} /> */}
+          <FaWhatsapp className="w-max h-max text-white" size={18} />
         </div>
         <div className="w-max h-max flex items-center justify-center gap-6 text-white font-bold text-base">
         <Link href="/about" className="link">
