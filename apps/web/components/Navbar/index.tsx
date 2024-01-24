@@ -52,9 +52,9 @@ const Navbar = () => {
         <Link href="/faq" className="link">
               <span className="hoverEffect">{t("links.faq")}</span>
         </Link>
-          <Link href="/contact" className="link">
+          {/* <Link href="/contact" className="link">
               <span className="hoverEffect"> {t("links.contact")}</span>
-          </Link>
+          </Link> */}
           {isLoggedIn ? (
             <>
               <Link
@@ -144,9 +144,9 @@ const Navbar = () => {
               <Link href="/about" className="link">
                 <span className="hoverEffect"> {t("links.aboutus")}</span>
                 </Link>
-              <Link href="/contact" className="link">
+              {/* <Link href="/contact" className="link">
                 <span className="hoverEffect">{t("links.contact")}</span>
-              </Link>
+              </Link> */}
               <Link href="/faq" className="link">
               <span className="hoverEffect">{t("links.faq")}</span>
               </Link>

@@ -4,5 +4,6 @@ export default {
   copyright: "Dr.Patches | ALL RIGHTS RESERVED",
   privacy: 'КОНФИДЕНЦИАЛЬНОСТЬ',
   condizioni_generali: 'ОБЩИЕ УСЛОВИЯ ПРОДАЖИ',
-  spedizioni: 'ДОСТАВКА И ДОСТАВКА'
+  spedizioni: 'ДОСТАВКА И ДОСТАВКА',
+  contact: "Контакт",
 };

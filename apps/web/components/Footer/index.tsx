@@ -27,7 +27,10 @@ export default function Footer() {
           </Link>
         <Link href="/spedizioni" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
           <span className="hoverEffect">{t("spedizioni")}</span>
-          </Link>
+        </Link>
+        <Link href="/contact" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+          <span className="hoverEffect">{t("contact")}</span>
+        </Link>
       </div>
       <div className="w-full h-max flex items-center justify-center">
         <span className="font-medium">
