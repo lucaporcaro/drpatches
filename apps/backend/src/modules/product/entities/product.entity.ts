@@ -50,7 +50,7 @@ export default class Product extends BaseModel {
   @Property({ name: 'text_color', default: '#111' })
   textColor?: string;
 
-  @Property({ name: 'background_color', default: '#111' })
+  @Property({ name: 'background_color', default: '#fff' })
   backgroundColor?: string;
 
   @Property({ name: 'patch_width', default: 10, type: 'double' })

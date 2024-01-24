@@ -191,7 +191,7 @@ export default function ProductEditor({
       subscription.unsubscribe();
     };
   }, []);
-
+  const dynamicGridCols = type === "text" ? 'grid-cols-6' : 'grid-cols-4';
   return (
     <>
       <div className="w-11/12 h-max flex items-center justify-between max-w-[1620px] mx-auto p-2 mb-2">
@@ -211,14 +211,14 @@ export default function ProductEditor({
         </h2>
         <div className="hidden lg:block w-[68px] h-[44px]" />
       </div>
-      <div className="w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <div className={`w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 ${dynamicGridCols} gap-10`}>
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2">
           {type === "image" ? (
             <>
               <span className="font-bold text-3xl">Image</span>
               <div
                 onClick={() => imageRef.current?.click()}
-                className="w-full relative h-[300px] border-black border-2 rounded-xl flex flex-col items-center justify-center gap-6 transition-all duration-200 hover:bg-black hover:text-white cursor-pointer overflow-hidden"
+                className="w-full relative h-[40rem] border-black border-2 rounded-xl flex flex-col items-center justify-center gap-6 transition-all duration-200 hover:bg-black hover:text-white cursor-pointer overflow-hidden"
               >
                 {image ? (
                   <img
@@ -280,6 +280,16 @@ export default function ProductEditor({
                   }}
                 />
               </div>
+              <>
+                <div className="w-max ">
+                  <Select
+                    value={patchType}
+                    items={patchTypes}
+                    label={t("select_type")}
+                    onChange={update("patchType")}
+                  />
+                </div>
+              </>
               <span className="font-bold text-3xl">{t("titels.colors")}</span>
 
               <div className="w-full h-max grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
@@ -303,15 +313,6 @@ export default function ProductEditor({
               </div>
             </>
           )}
-          <div className="w-full h-max md:col-span-2">
-            <Input
-              label="Note"
-              placeholder="Write your note here..."
-              type="textarea"
-              onChange={update("note")}
-              value={note}
-            />
-          </div>
         </div>
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
           <span className="font-bold text-3xl">{t("titels.patching")}</span>
@@ -338,18 +339,7 @@ export default function ProductEditor({
             min={1}
             max={50000}
           />
-
-          <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-auto">
-            <>
-              <div className="w-max ">
-                <Select
-                  value={patchType}
-                  items={patchTypes}
-                  label={t("select_type")}
-                  onChange={update("patchType")}
-                />
-              </div>
-            </>
+          <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-2">
             <Select
               value={backingType}
               items={backingItems}
@@ -357,7 +347,50 @@ export default function ProductEditor({
               onChange={update("backingType")}
             />
           </div>
+          <div className="w-full h-max md:col-span-2">
+            <Input
+              label="Note"
+              placeholder="Write your note here..."
+              type="textarea"
+              onChange={update("note")}
+              value={note}
+            />
+          </div>
         </div>
+        {type === "text" ? (
+        <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
+            <span className="font-bold text-3xl">{t("preview")}</span>
+            <div
+              className="w-max h-max relative ml-2"
+              style={{
+                backgroundColor,
+                borderColor,
+                borderWidth: patchType ? 2 : 0,
+              }}
+            >
+              {patchType ? (
+                <img
+                  className="w-96 aspect-auto"
+                  src={
+                    (patchTypes.filter(({ id }) => id === patchType)[0] as any)
+                      .image
+                  }
+                />
+              ) : null}
+              <div className="w-max h-max  absolute inset-0 m-auto">
+                <span
+                  className="text-4xl"
+                  style={{
+                    color: textColor,
+                    fontFamily: fontLoaded ? "CustomFont" : undefined,
+                  }}
+                >
+                  {text}
+                </span>
+              </div>
+            </div>
+          </div>
+        ) : null }
         {/* {type === "text" ? (
           <div className="bg-primary-1 text-black relative flex flex-col items-center justify-center gap-6 py-10 px-6 rounded-xl lg:col-span-1 overflow-hidden">
             <span className="font-bold text-3xl">{t("preview")}</span>
