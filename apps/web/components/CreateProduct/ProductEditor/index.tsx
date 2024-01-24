@@ -280,6 +280,16 @@ export default function ProductEditor({
                   }}
                 />
               </div>
+              <>
+                <div className="w-max ">
+                  <Select
+                    value={patchType}
+                    items={patchTypes}
+                    label={t("select_type")}
+                    onChange={update("patchType")}
+                  />
+                </div>
+              </>
               <span className="font-bold text-3xl">{t("titels.colors")}</span>
 
               <div className="w-full h-max grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
@@ -303,15 +313,6 @@ export default function ProductEditor({
               </div>
             </>
           )}
-          <div className="w-full h-max md:col-span-2">
-            <Input
-              label="Note"
-              placeholder="Write your note here..."
-              type="textarea"
-              onChange={update("note")}
-              value={note}
-            />
-          </div>
         </div>
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
           <span className="font-bold text-3xl">{t("titels.patching")}</span>
@@ -338,18 +339,7 @@ export default function ProductEditor({
             min={1}
             max={50000}
           />
-
           <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-2">
-            <>
-              <div className="w-max ">
-                <Select
-                  value={patchType}
-                  items={patchTypes}
-                  label={t("select_type")}
-                  onChange={update("patchType")}
-                />
-              </div>
-            </>
             <Select
               value={backingType}
               items={backingItems}
@@ -357,12 +347,21 @@ export default function ProductEditor({
               onChange={update("backingType")}
             />
           </div>
+          <div className="w-full h-max md:col-span-2">
+            <Input
+              label="Note"
+              placeholder="Write your note here..."
+              type="textarea"
+              onChange={update("note")}
+              value={note}
+            />
+          </div>
         </div>
         {type === "text" ? (
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
             <span className="font-bold text-3xl">{t("preview")}</span>
             <div
-              className="w-max h-max relative"
+              className="w-max h-max relative ml-2"
               style={{
                 backgroundColor,
                 borderColor,
@@ -371,7 +370,7 @@ export default function ProductEditor({
             >
               {patchType ? (
                 <img
-                  className="w-32 aspect-auto"
+                  className="w-96 aspect-auto"
                   src={
                     (patchTypes.filter(({ id }) => id === patchType)[0] as any)
                       .image
@@ -384,6 +383,7 @@ export default function ProductEditor({
                   style={{
                     color: textColor,
                     fontFamily: fontLoaded ? "CustomFont" : undefined,
+                    fontSize: 'text-4xl'
                   }}
                 >
                   {text}
