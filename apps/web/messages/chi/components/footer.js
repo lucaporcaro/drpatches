@@ -4,5 +4,6 @@ export default {
   copyright: "Dr.Patches | ALL RIGHTS RESERVED",
   privacy: '隐私',
   condizioni_generali: '一般销售条件',
-  spedizioni: '运输和交付'
+  spedizioni: '运输和交付',
+  contact: "联系",
 };
