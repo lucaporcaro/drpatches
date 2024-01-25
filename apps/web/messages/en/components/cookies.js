@@ -1,5 +1,6 @@
 export default {
-    description: "Cookies are tools that help us offer our services. By using these services, you agree to our use of cookies.",
-    accept: "I understand."
+    description: "This site uses cookies to offer you the best possible experience. By continuing to browse, you accept the use of cookies. For more information and to change your cookie preferences, please check our Privacy Policy.",
+    accept: "Accept",
+    decline: 'Decline'
 };
   

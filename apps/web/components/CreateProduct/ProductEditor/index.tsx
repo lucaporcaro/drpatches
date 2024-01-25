@@ -119,6 +119,7 @@ export default function ProductEditor({
   const jwt = useJwt();
   const router = useRouter();
   const t = useTranslations("components.product_editor");
+  const tr = useTranslations("pages.shared");
   const dispatch = useDispatch();
   const fontLoaded = useFontLoader(fontUrl);
 
@@ -206,8 +207,7 @@ export default function ProductEditor({
           <FaArrowLeft size={20} className="text-white" />
         </button>
         <h2 className="font-bold text-2xl md:text-4xl text-black">
-          Create Patch{" "}
-          {type ? type.slice(0, 1).toUpperCase() + type.slice(1) : ""}
+          {type ? tr('create_text_patch') : tr('create_image_patch')}
         </h2>
         <div className="hidden lg:block w-[68px] h-[44px]" />
       </div>
@@ -349,7 +349,7 @@ export default function ProductEditor({
           </div>
           <div className="w-full h-max md:col-span-2">
             <Input
-              label="Note"
+              label={tr('note')}
               placeholder="Write your note here..."
               type="textarea"
               onChange={update("note")}
@@ -441,7 +441,7 @@ export default function ProductEditor({
           <div className="w-max h-max flex flex-col items-center justify-center gap-6 lg:flex-row">
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
               <span className="font-semibold text-2xl">
-                Per Item: {pricePerOne}€
+              {tr('item_per_patch')}: {pricePerOne}€
               </span>
             </div>
             <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
@@ -454,7 +454,7 @@ export default function ProductEditor({
                 />
               ) : (
                 <span className="font-semibold text-2xl">
-                  Total: {updatedPrice || price}€
+                  {tr('total')}: {updatedPrice || price}€
                 </span>
               )}
             </div>

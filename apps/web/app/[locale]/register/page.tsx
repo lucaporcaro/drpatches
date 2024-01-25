@@ -6,6 +6,7 @@ import Input from "@app/components/Input";
 import Link from "@app/components/Link";
 import PhoneInput from "@app/components/PhoneInput";
 import useNoLoginRequired from "@app/hooks/useNoLoginRequired";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import {
@@ -21,6 +22,8 @@ import {
 export default function RegisterPage() {
   // Hooks
   const router = useRouter();
+  const t = useTranslations("pages.login");
+  const tr = useTranslations("pages.shared");
   useNoLoginRequired();
 
   // Functions
@@ -59,13 +62,13 @@ export default function RegisterPage() {
           className="w-full h-max flex flex-col gap-6 bg-primary-1 p-6 rounded-md"
         >
           <div className="w-full h-max grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Input label="First Name" name="firstName" type="text" required />
-            <Input label="Last Name" name="lastName" type="text" required />
+            <Input label={t('first_name')} name="firstName" type="text" required />
+            <Input label={t('last_name')} name="lastName" type="text" required />
           </div>
-          <Input label="Email" name="email" type="email" required />
-          <Input label="Password" name="password" type="password" required />
-          <PhoneInput required name="phone" label="Phone" />
-          <Input label="Fiscal Code" name="fiscal" type="text" required />
+          <Input label={t('email')} name="email" type="email" required />
+          <Input label={t('password')} name="password" type="password" required />
+          <PhoneInput required name="phone" label={tr('telephone')} />
+          <Input label={t('fiscal_code')} name="fiscal" type="text" required />
           <Button>Register</Button>
           <div className="w-max mx-auto font-semibold underline text-black">
             <Link href="/login">Already have one?</Link>

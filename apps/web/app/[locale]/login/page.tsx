@@ -5,6 +5,7 @@ import Button from "@app/components/Button";
 import Input from "@app/components/Input";
 import Link from "@app/components/Link";
 import useNoLoginRequired from "@app/hooks/useNoLoginRequired";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import {
@@ -20,6 +21,7 @@ import {
 export default function LoginPage() {
   // Hooks
   const router = useRouter();
+  const t = useTranslations("pages.login");
   useNoLoginRequired();
 
   // Functions
@@ -57,16 +59,16 @@ export default function LoginPage() {
   return (
     <div className="w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-6 lg:px-12">
       <div className="w-11/12 mx-auto h-max max-w-3xl bg-black border-primary-1 border-2 py-10 px-8 rounded-xl text-white flex flex-col items-center justify-center gap-10">
-        <h2 className="font-bold text-2xl lg:text-3xl">Login</h2>
+        <h2 className="font-bold text-2xl lg:text-3xl">{t(`login`)}</h2>
         <form
           action={loginWithErrors}
           className="w-full h-max flex flex-col gap-6 bg-primary-1 p-6 rounded-md"
         >
-          <Input label="Email" name="email" type="email" required />
-          <Input label="Password" name="password" type="password" required />
-          <Button>Login</Button>
+          <Input label={t('email')} name="email" type="email" required />
+          <Input label={t('password')} name="password" type="password" required />
+          <Button>{t(`login`)}</Button>
           <div className="w-max mx-auto font-semibold underline text-black">
-            <Link href="/register">Need an account?</Link>
+            <Link href="/register">{t(`need_account`)}</Link>
           </div>
         </form>
       </div>
