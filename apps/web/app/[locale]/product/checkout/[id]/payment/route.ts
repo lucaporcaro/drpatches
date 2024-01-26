@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
         concatMap((product) => {
             return from(stripe.checkout.sessions.create({
                 client_reference_id: ulid(),
+                payment_method_types: ['card', 'paypal'],
                 line_items: [
                     {
                         price_data: {
