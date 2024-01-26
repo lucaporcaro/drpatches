@@ -10,7 +10,6 @@ import {httpClient} from "@app/lib/axios";
 import {useQueries} from "@tanstack/react-query";
 import Image from "next/image";
 import {useMemo} from "react";
-import {mustLoggedIn} from "@app/hooks/useMustLoggedIn";
 import {useRouter} from "next/navigation";
 
 type Props = {
@@ -151,10 +150,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
                     <ShoppingItem label={`Per item`} value={"€" + perItemPrice}/>
                 </div>
                 <div className="w-full h-0.5 bg-primary-1"/>
-                <Button type={jwt ? 'submit' : 'button'} className="bg-primary-1 mx-auto" style={{color: "black"}}
-                        onClick={() => {
-                            mustLoggedIn(true, router)
-                        }}>
+                <Button className="bg-primary-1 mx-auto" style={{color: "black"}}>
                     Proceed to checkout
                 </Button>
             </div>

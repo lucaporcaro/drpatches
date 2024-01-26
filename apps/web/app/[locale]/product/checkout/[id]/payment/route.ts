@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
     const product$ = defer(() => formData$.pipe(
         concatMap((formData) => {
             jwt = formData.get('jwt') as string;
-            if (!jwt) return throwError(() => new Error('Not Authorized'))
             return from(
                 getProduct(
                     request.url.replace("/payment", "").split("/").pop() as any,
