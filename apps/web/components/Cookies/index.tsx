@@ -9,6 +9,8 @@ export default function Cookies() {
     <CookieConsent
       location="bottom"
       buttonText={t("accept")}
+      enableDeclineButton
+      declineButtonText={t('decline')}
       cookieName="myCookieConsent"
       style={{ background: '#333', color: '#fff' }}
     >
