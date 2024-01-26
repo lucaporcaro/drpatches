@@ -43,6 +43,9 @@ export async function POST(request: NextRequest) {
 
                     },
                 ],
+                tax_id_collection: {
+                    enabled: true,
+                },
                 shipping_address_collection: {allowed_countries: ['IT', 'GB', "IQ"]},
                 shipping_options: [{shipping_rate: 'shr_1Oc5aDFJwOikE4dcmUmPmDkp'}, {shipping_rate: 'shr_1Oc4z5FJwOikE4dciXDG0n4L'}],
                 mode: "payment",
