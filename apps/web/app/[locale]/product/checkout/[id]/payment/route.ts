@@ -42,6 +42,13 @@ export async function POST(request: NextRequest) {
 
                     },
                 ],
+                custom_fields: [
+                    {
+                        key: 'tax_id_code',
+                        label: {type: 'custom', custom: 'Tax ID Code'},
+                        type: 'text'
+                    }
+                ],
                 tax_id_collection: {
                     enabled: true,
                 },
