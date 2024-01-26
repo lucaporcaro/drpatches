@@ -44,8 +44,8 @@ export async function POST(request: NextRequest) {
                 ],
                 custom_fields: [
                     {
-                        key: 'tax_id_code',
-                        label: {type: 'custom', custom: 'Tax ID Code'},
+                        key: 'codice_fiscale',
+                        label: {type: 'custom', custom: 'Codice Fiscale'},
                         type: 'text'
                     }
                 ],
