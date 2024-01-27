@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
         concatMap((product) => {
             return from(stripe.checkout.sessions.create({
                 client_reference_id: ulid(),
+                payment_method_types: ['card', 'paypal'],
                 line_items: [
                     {
                         price_data: {
@@ -42,6 +43,16 @@ export async function POST(request: NextRequest) {
 
                     },
                 ],
+                custom_fields: [
+                    {
+                        key: 'codice_fiscale',
+                        label: {type: 'custom', custom: 'Codice Fiscale'},
+                        type: 'text'
+                    }
+                ],
+                tax_id_collection: {
+                    enabled: true,
+                },
                 shipping_address_collection: {allowed_countries: ['IT', 'GB', "IQ"]},
                 shipping_options: [{shipping_rate: 'shr_1Oc5aDFJwOikE4dcmUmPmDkp'}, {shipping_rate: 'shr_1Oc4z5FJwOikE4dciXDG0n4L'}],
                 mode: "payment",
