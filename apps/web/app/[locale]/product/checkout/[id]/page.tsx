@@ -10,7 +10,6 @@ import {httpClient} from "@app/lib/axios";
 import {useQueries} from "@tanstack/react-query";
 import Image from "next/image";
 import {useMemo} from "react";
-import {useRouter} from "next/navigation";
 
 type Props = {
     params: {
@@ -21,7 +20,7 @@ type Props = {
 export default function CheckoutProductPage({params: {id}}: Props) {
     // Hooks
     const jwt = useJwt();
-    const router = useRouter()
+    
     // Queries
     const [{data: product}, {data: patchTypes}] = useQueries({
         queries: [
