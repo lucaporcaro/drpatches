@@ -26,7 +26,7 @@ const initialState: CreateProductState = {
   quantity: 50,
   borderColor: "#111",
   textColor: "#111",
-  backgroundColor: "#111",
+  backgroundColor: "#fff",
   price: 0,
   type: undefined,
   text: undefined,

@@ -1,5 +1,6 @@
 export default {
-    description: "Os cookies são ferramentas que nos ajudam a oferecer os nossos serviços. Ao utilizar estes serviços, você concorda com o uso de cookies",
-    accept: "Eu entendo."
+    description: "Este site usa cookies para oferecer a melhor experiência possível. Ao continuar a navegar, você aceita o uso de cookies. Para mais informações e para alterar suas preferências de cookies, consulte nossa Política de Privacidade.",
+    accept: "Aceitar",
+    decline: 'Recusar'
 };
   

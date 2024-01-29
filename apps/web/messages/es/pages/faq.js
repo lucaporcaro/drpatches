@@ -3,52 +3,52 @@ export default {
     item_1: {
       title: "¿Qué incluye el servicio de parches personalizados?",
       description:
-        "Los parches personalizados de DrPatches se crean según su diseño o especificaciones. Ofrecemos una variedad de opciones, incluidas individuales, grandes y mayoristas. Los parches están disponibles online sin requisitos mínimos y en diferentes tamaños, desde pequeños hasta gigantes. Puede diseñar sus parches en línea o enviarnos su diseño a través del chat o formulario de cotización, y le proporcionaremos una maqueta/muestra para su aprobación"
+        "Los parches personalizados de DrPatches se crean según tu diseño o especificaciones. Ofrecemos una amplia gama de opciones, incluyendo parches individuales, de gran tamaño y al por mayor. Los parches están disponibles en línea sin requisitos mínimos y en diferentes tamaños, desde los más pequeños hasta los gigantes. Puedes diseñar tus parches en línea o enviarnos tu diseño por correo electrónico, y te proporcionaremos una maqueta/muestra para tu aprobación."
     },
     item_2: {
-      title: "¿Cuál es el tiempo estimado para la creación de parches personalizados?",
+      title: "¿Cuál es el tiempo estimado para la realización de los parches personalizados?",
       description:
-        "Estamos comprometidos a garantizar tiempos de entrega rápidos sin comprometer la calidad. Después de la aprobación de la muestra, nuestro tiempo de producción estándar es de dos semanas. También ofrecemos opciones urgentes con un costo adicional para aquellos que necesitan parches más rápido."
+        "Nos comprometemos a garantizar tiempos de entrega rápidos sin comprometer la calidad. Después de la aprobación de la muestra, nuestro tiempo de producción estándar es de 3-4 días laborables."
     },
     item_3: {
-      title: "¿Qué pasos debo seguir para crear parches personalizados?",
+      title: "¿Qué pasos debo seguir para la creación de parches personalizados?",
       description:
-        "El proceso es simple: envíenos su diseño vía chat o complete nuestro formulario de cotización con las dimensiones y cantidades deseadas. Le daremos una cotización y haremos cambios hasta que esté satisfecho. Después de la aprobación de la muestra, comenzaremos la producción y sus parches estarán listos en 2 semanas."
+        "El proceso es sencillo: compra a través del formulario de personalización en línea, ingresando la gráfica o el texto, las dimensiones y la cantidad. El formulario de personalización en línea proporciona un presupuesto en vivo para los costos de producción, especificando también el precio de cada parche individual. Antes de proceder con la producción, enviaremos un correo electrónico con el prototipo digital. Después de la aprobación del ejemplo digital, comenzaremos la producción, y tus parches estarán listos en 4 días laborables."
     },
     item_4: {
-      title: "¿Cuál es la vida útil esperada para los parches bordados?",
+      title: "¿Cuál es la duración prevista de los parches bordados?",
       description:
-        "Nuestros parches bordados están elaborados con materiales de alta calidad para asegurar su durabilidad en el tiempo. Con los cuidados adecuados, pueden durar años, aunque la vida útil depende de factores como el lavado, el uso y el secado."
+        "Nuestros parches bordados se fabrican con materiales de alta calidad para garantizar su durabilidad a lo largo del tiempo. Están hechos con hilos de poliéster de las mejores marcas (Madeira / Isacord); si se cuidan adecuadamente, pueden garantizar una vida útil ilimitada."
     },
     item_5: {
-      title: "¿Qué tamaños están disponibles para parches personalizados?",
+      title: "¿Cuáles son las dimensiones disponibles para los parches personalizados?",
       description:
-        "Ofrecemos parches en diferentes tamaños, incluidos parches de hasta 65 cm x 44 cm, chenilla de hasta 70 cm x 50 cm y pvc de hasta 30 cm x 20 cm."
+        "Ofrecemos parches de diferentes tamaños; a través del formulario de personalización en línea, se pueden personalizar y comprar parches de hasta 20 cm x 20 cm. Sin embargo, tenemos la capacidad de llegar a tamaños de 50 cm x 70 cm según una solicitud a info@drpatches.com."
     },
     item_6: {
-      title: "¿Qué formato de archivo se acepta para enviar contenido?",
+      title: "¿Qué formato de archivo se acepta para el envío de contenidos?",
       description:
-        "Aceptamos formatos como jpg, ai y pdf. Cualquier formato está bien siempre que los detalles sean legibles."
+        "Aceptamos formatos como jpg, ai y pdf. Cualquier formato es aceptable siempre que los detalles sean legibles."
     },
     item_7: {
-      title: "¿Cuánto tiempo me contactarán después de realizar la solicitud?",
+      title: "¿En cuánto tiempo seré contactado después de realizar la solicitud?",
       description:
-        "Nuestro equipo de diseñadores gráficos se comunicará con usted dentro de las 24 horas hábiles, operando de lunes a viernes de 9.30 a 18.30 horas."
+        "Serás contactado en un plazo de 24 horas laborables por nuestro equipo de diseñadores, que operan de lunes a viernes de 9:30 a 18:30 horas."
     },
     item_8: {
-      title: "¿Tendré un gráfico dedicado para todas las fases del proyecto?",
+      title: "¿Tendré un diseñador dedicado para todas las fases del proyecto?",
       description:
-        "¡Ciertamente! Siempre serás seguido por el mismo diseñador asignado a tu compra."
+        "¡Por supuesto! Serás asistido siempre por el mismo diseñador asignado a tu compra."
     },
     item_9: {
-      title: "¿Cuáles son los métodos de pago disponibles? ",
+      title: "¿Cuáles son los métodos de pago disponibles?",
       description:
-        "El pago es sencillo y aceptamos métodos habituales como tarjeta de crédito, transferencia bancaria y paypal."
+        "El pago es sencillo y aceptamos métodos comunes como tarjeta de crédito y PayPal."
     },
     item_10: {
-      title: "¿Cuántos días son necesarios para la producción de parches?",
+      title: "¿Cuántos días son necesarios para la producción de los parches?",
       description:
-        "Después de la aprobación de la muestra, nuestro tiempo de producción estándar es de dos semanas, pero ofrecemos opciones urgentes a un costo adicional para satisfacer sus necesidades de entrega más rápida. Visita esta página para más información (enlace)"
+        "Después de la aprobación de la muestra, nuestro tiempo de producción estándar es de 4 días laborables."
     },
   },
 };

@@ -8,7 +8,7 @@ import {
 } from '@mikro-orm/core';
 import { createCanvas, registerFont } from 'canvas';
 import { writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { concatMap, defer, from, lastValueFrom } from 'rxjs';
 import BaseModel from 'src/common/entities/base-model.entity';
 import Product from 'src/modules/product/entities/product.entity';
@@ -30,10 +30,12 @@ export default class Font extends BaseModel {
 
   @AfterUpdate()
   public async afterUpdate({ entity, em }: EventArgs<Font>) {
+    if (!entity.file || entity.file === 'undefined') return;
     const preview$ = from(this.generatePreviewImage(entity.name, entity.file));
     const filename$ = defer(() =>
       preview$.pipe(concatMap((preview) => from(this.savePreview(preview)))),
     );
+
     await lastValueFrom(
       defer(() =>
         filename$.pipe(
@@ -46,9 +48,17 @@ export default class Font extends BaseModel {
   }
 
   private async generatePreviewImage(name: string, path: string) {
-    registerFont(join(__dirname, `/../../../media/${path}`), {
-      family: 'Custom',
-    });
+    registerFont(
+      join(
+        process.env.NODE_ENV === 'production'
+          ? resolve('/media')
+          : join(__dirname, '/../../../media'),
+        path,
+      ),
+      {
+        family: 'Custom',
+      },
+    );
 
     const canvas = createCanvas(200, 60);
     const ctx = canvas.getContext('2d');
@@ -69,7 +79,15 @@ export default class Font extends BaseModel {
 
   private async savePreview(file: Buffer) {
     const filename = ulid() + '-font-preview.png';
-    await writeFile(join(__dirname, `/../../../media/${filename}`), file);
+    await writeFile(
+      join(
+        process.env.NODE_ENV === 'production'
+          ? resolve('/media')
+          : join(__dirname, '/../../../media'),
+        filename,
+      ),
+      file,
+    );
     return filename;
   }
 }

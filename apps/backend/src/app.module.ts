@@ -7,8 +7,7 @@ import { ProductModule } from './modules/product/product.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from './common/storages/dist';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { AdminjsModule } from './common/adminjs/adminjs.module';
+import { AdminjsModule, MEDIA_BUCKET } from './common/adminjs/adminjs.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { StripeModule } from './modules/webhooks/stripe/stripe.module';
 import { FontModule } from './modules/font/font.module';
@@ -19,7 +18,7 @@ import { FontModule } from './modules/font/font.module';
     AdminjsModule,
     MikroOrmModule.forRoot(),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'media'),
+      rootPath: MEDIA_BUCKET,
       renderPath: '/static',
     }),
     MulterModule.register({

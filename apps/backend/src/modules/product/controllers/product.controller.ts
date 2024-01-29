@@ -24,10 +24,9 @@ import JwtGuard from '../../authentication/gaurd/jwt.gaurd';
 import ProductService from '../services/product.service';
 import GetProductResponseDto from '../dtos/get-product.response.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import UpdateProductRequestDto from '../dtos/update-product.request.dto';
-import { Request as ERequest } from 'express';
 import { diskStorage } from 'src/common/storages/dist';
 import CreateProductRequestDto from '../dtos/create-product.request.dto';
+import UpdateProductRequestDto from 'src/modules/product/dtos/update-product.request.dto';
 
 @Controller({ path: 'product', version: '1' })
 @ApiTags('Products')

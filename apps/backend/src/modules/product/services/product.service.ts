@@ -107,7 +107,8 @@ export default class ProductService {
     const updateProperties$ = defer(() =>
       product$.pipe(
         concatMap((product) => {
-          const { patchType, font, ...data } = payload;
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { patchType: _, font: __, ...data } = payload;
 
           for (const key in data)
             if (data[key] === 'null') data[key] = undefined;
@@ -121,7 +122,11 @@ export default class ProductService {
         }),
         concatMap((product) => {
           const { patchType } = payload;
-          if (patchType !== 'null' && patchType !== product?.patchType?.id)
+          if (
+            patchType !== 'null' &&
+            typeof patchType !== 'undefined' &&
+            patchType !== product?.patchType?.id
+          )
             return from(
               this.patchTypeRepo.findOneOrFail({
                 id: patchType,
@@ -139,15 +144,21 @@ export default class ProductService {
         }),
         concatMap((product) => {
           const { font } = payload;
-          if (font != 'null' && font !== product?.font?.id)
+          if (
+            font !== 'null' &&
+            typeof font !== 'undefined' &&
+            font !== product?.font?.id
+          )
             return from(this.fontRepo.findOneOrFail({ id: font })).pipe(
               concatMap((font) => {
                 product.font = font;
                 return of(product);
               }),
-              catchError(() =>
-                throwError(() => new NotFoundException('Font not found')),
-              ),
+              catchError(() => {
+                return throwError(
+                  () => new NotFoundException('Font not found'),
+                );
+              }),
             );
           return of(product);
         }),
