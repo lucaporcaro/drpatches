@@ -389,10 +389,10 @@ export default function ProductEditor({
           data-alone={type === "image"}
           className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl data-[alone=true]:lg:col-span-4 lg:col-span-3 overflow-hidden"
         > */}
-                <div
+            <div
                     className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl lg:col-span-4 overflow-hidden"
                 >
-                    <div className="w-max">
+            <div className="w-max">
             <span className="font-bold text-3xl">
               {type === "image" ? t("image_patch") : t("text_patch")}
             </span>
