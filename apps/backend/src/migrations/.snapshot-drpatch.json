@@ -556,7 +556,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "default": "'#111'",
+          "default": "'#fff'",
           "mappedType": "string"
         },
         "patch_width": {
@@ -686,6 +686,16 @@
           "primary": false,
           "nullable": true,
           "mappedType": "string"
+        },
+        "is_ready_for_payment": {
+          "name": "is_ready_for_payment",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "false",
+          "mappedType": "boolean"
         }
       },
       "name": "products",

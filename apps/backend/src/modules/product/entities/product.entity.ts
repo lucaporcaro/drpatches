@@ -97,21 +97,51 @@ export default class Product extends BaseModel {
   @ManyToOne(() => Font, { nullable: true })
   font!: Font;
 
+  @Property({ name: 'is_ready_for_payment' })
+  isReadyForPayment: boolean = false;
+
   // Events
   @BeforeUpdate()
   async beforeUpdate({ entity, em }: EventArgs<Product>) {
     entity.price = parseFloat((await calculatePrice(entity, em)) as any);
+    entity.isReadyForPayment = validateProduct(entity, entity.type === 'image');
     return entity;
   }
 
   @BeforeCreate()
   async beforeCreate({ entity, em }: EventArgs<Product>) {
     entity.price = parseFloat((await calculatePrice(entity, em)) as any);
+    entity.isReadyForPayment = validateProduct(entity, entity.type === 'image');
     return entity;
   }
 }
 
+function validateProduct(entity: Product, isImage = false) {
+  const keys = isImage
+    ? ['image', 'patchHeight', 'patchWidth', 'quantity', 'backingType']
+    : [
+        'text',
+        'patchHeight',
+        'patchWidth',
+        'quantity',
+        'backingType',
+        'font',
+        'borderColor',
+        'backgroundColor',
+        'textColor',
+        'patchType',
+      ];
+
+  for (const key of keys) {
+    if (typeof entity[key] === 'undefined' || !entity[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 async function calculatePrice(entity: Product, em: EntityManager) {
+  // eslint-disable-next-line prefer-const
   let { type, backingType, patchHeight, patchWidth, quantity } = entity;
 
   patchHeight = parseFloat(patchHeight as any);

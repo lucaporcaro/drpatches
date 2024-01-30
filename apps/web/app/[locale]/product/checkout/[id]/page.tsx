@@ -9,7 +9,10 @@ import useJwt from "@app/hooks/useJwt";
 import {httpClient} from "@app/lib/axios";
 import {useQueries} from "@tanstack/react-query";
 import Image from "next/image";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
+import {useRouter} from "next/navigation";
+import {toast} from "react-toastify";
+import {timer} from "rxjs";
 
 type Props = {
     params: {
@@ -17,17 +20,19 @@ type Props = {
     };
 };
 
+let toastShowed = false;
+
 export default function CheckoutProductPage({params: {id}}: Props) {
     // Hooks
     const jwt = useJwt();
-    
+    const router = useRouter()
+
     // Queries
     const [{data: product}, {data: patchTypes}] = useQueries({
         queries: [
             {
                 queryKey: ["product", id],
                 queryFn: () => getProduct(id, jwt as string),
-                enabled: Boolean(jwt),
             },
             {
                 queryKey: ["patch_types"],
@@ -35,6 +40,20 @@ export default function CheckoutProductPage({params: {id}}: Props) {
             },
         ],
     });
+
+    // Effects
+    useEffect(() => {
+        if (!toastShowed && product && !product.isReadyForPayment) {
+            router.replace(`/product/editor/${id}`)
+            toast.error('Product is not completed, fill the informations')
+            toastShowed = true;
+        }
+        return () => {
+            timer(1000).subscribe(() => {
+                toastShowed = false;
+            })
+        }
+    }, [product]);
 
     // Memos
     const perItemPrice = useMemo(() => {

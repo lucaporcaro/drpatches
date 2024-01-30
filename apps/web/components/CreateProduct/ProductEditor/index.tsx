@@ -26,7 +26,7 @@ import {useRouter} from "next/navigation";
 import Loading from "react-loading";
 import {Font} from "@app/actions/font";
 import useFontLoader from "@app/hooks/useFontLoader";
-import RSelect from "react-select";
+import RSelect from "react-select"
 
 export const backingItems: SelectItem[] = [
     {id: "da_cucire", image: DaCucireImage.src},
@@ -350,45 +350,8 @@ export default function ProductEditor({
                         />
                     </div>
                 </div>
-                {/* {type === "text" ? (
-          <div className="bg-primary-1 text-black relative flex flex-col items-center justify-center gap-6 py-10 px-6 rounded-xl lg:col-span-1 overflow-hidden">
-            <span className="font-bold text-3xl">{t("preview")}</span>
-            <div
-              className="w-max h-max relative"
-              style={{
-                backgroundColor,
-                borderColor,
-                borderWidth: patchType ? 2 : 0,
-              }}
-            >
-              {patchType ? (
-                <img
-                  className="w-32 aspect-auto"
-                  src={
-                    (patchTypes.filter(({ id }) => id === patchType)[0] as any)
-                      .image
-                  }
-                />
-              ) : null}
-              <div className="w-max h-max  absolute inset-0 m-auto">
-                <span
-                  className=""
-                  style={{
-                    color: textColor,
-                    fontFamily: fontLoaded ? "CustomFont" : undefined,
-                  }}
-                >
-                  {text}
-                </span>
-              </div>
-            </div>
-          </div>
-        ) : null} */}
 
-                {/* <div
-          data-alone={type === "image"}
-          className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl data-[alone=true]:lg:col-span-4 lg:col-span-3 overflow-hidden"
-        > */}
+
                 <div
                     className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl lg:col-span-4 overflow-hidden"
                 >
