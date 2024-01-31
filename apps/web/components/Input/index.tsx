@@ -16,6 +16,7 @@ type Props = {
     value: string;
   }[];
   containerClassName?: string;
+  style?: Record<string, any>;
 };
 
 export default function Input({
@@ -30,15 +31,17 @@ export default function Input({
   placeholder,
   options = [],
   containerClassName = "",
+  style = {},
 }: Props) {
   return (
     <div
       className={[
-        "w-full h-max flex flex-col items-start justify-start gap-2",
+        "w-full h-max flex flex-col items-start justify-start gap-2 text-black",
         containerClassName,
       ].join(" ")}
+      style={style}
     >
-      <span className="font-semibold text-black text-xl">{label}</span>
+      <span className="font-semibold text-xl">{label}</span>
       {type === "textarea" ? (
         <textarea
           value={value}
@@ -46,7 +49,7 @@ export default function Input({
           name={name}
           defaultValue={defaultValue}
           placeholder={placeholder}
-          className="w-full h-32 p-3 text-black outline-none bg-white flex items-center justify-start px-3 rounded-xl"
+          className="w-full h-32 p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl"
           required={required}
           onChange={
             onChange
@@ -84,7 +87,7 @@ export default function Input({
           disabled={disabled}
           name={name}
           defaultValue={defaultValue}
-          className="w-full h-10 text-black outline-none bg-white flex items-center justify-start px-3 rounded-xl"
+          className="w-full h-10 outline-none bg-white flex items-center justify-start px-3 rounded-xl"
           required={required}
           onChange={
             onChange

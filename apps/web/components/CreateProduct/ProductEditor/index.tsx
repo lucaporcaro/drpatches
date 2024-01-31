@@ -245,7 +245,7 @@ export default function ProductEditor({
                 }}
                 className="w-full"
               >
-                <Input value={text} onChange={update("text")} />
+                <Input style={{color: textColor}} value={text} onChange={update("text")} />
               </div>
               <div className="w-full flex flex-row items-center justify-start gap-4">
                 <span className="font-semibold text-xl">Font</span>
