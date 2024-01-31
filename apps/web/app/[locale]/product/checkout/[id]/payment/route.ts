@@ -28,39 +28,53 @@ export async function POST(request: NextRequest) {
     ))
     const session$ = defer(() => product$.pipe(
         concatMap((product) => {
-            return from(stripe.checkout.sessions.create({
+            const sessionOptions: Stripe.Checkout.SessionCreateParams = {
                 client_reference_id: ulid(),
                 payment_method_types: ['card', 'paypal'],
                 line_items: [
                     {
                         price_data: {
-                            product_data: {name: `Custom Patch ${product.id}`},
+                            product_data: { name: `Custom Patch ${product.id}` },
                             currency: "eur",
-                            unit_amount:
-                                parseFloat((product.price as number * 100).toFixed(2)),
+                            unit_amount: parseFloat((product.price as number * 100).toFixed(2)),
                         },
                         quantity: 1,
-
                     },
                 ],
                 custom_fields: [
                     {
                         key: 'codice_fiscale',
-                        label: {type: 'custom', custom: 'Codice Fiscale'},
+                        label: { type: 'custom', custom: 'Codice Fiscale' },
                         type: 'text'
-                    }
+                    },
                 ],
                 tax_id_collection: {
                     enabled: true,
                 },
-                shipping_address_collection: {allowed_countries: ['IT', 'GB', "IQ"]},
-                shipping_options: [{shipping_rate: 'shr_1Oc5aDFJwOikE4dcmUmPmDkp'}, {shipping_rate: 'shr_1Oc4z5FJwOikE4dciXDG0n4L'}],
+                shipping_address_collection: { allowed_countries: ['IT', 'GB', "IQ"] },
+                shipping_options: [
+                    { shipping_rate: 'shr_1Oc5aDFJwOikE4dcmUmPmDkp' },
+                    { shipping_rate: 'shr_1Oc4z5FJwOikE4dciXDG0n4L' },
+                ],
                 mode: "payment",
                 success_url: `${process.env.FRONTEND_URL}/payment?success=true`,
                 cancel_url: `${process.env.FRONTEND_URL}/payment?canceled=true`,
-            }))
+            };
+    
+            // Conditionally add custom field when tax_id_collection is enabled
+             if (sessionOptions?.tax_id_collection?.enabled) {
+                 // Manually specify the type for custom_fields
+                 const customField: Stripe.Checkout.SessionCreateParams.CustomField = {
+                    key: 'sdi',
+                    label: { type: 'custom', custom: 'CODICE UNIVO/SDI' },
+                    type: 'text'
+                };
+                sessionOptions?.custom_fields?.push(customField);
+             }
+            return from(stripe.checkout.sessions.create(sessionOptions));
         })
     ))
+    
     const redirectUrl$ = defer(() => session$.pipe(
             concatMap((session) => {
                 const payload = new FormData;
