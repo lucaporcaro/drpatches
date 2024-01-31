@@ -1,16 +1,11 @@
 "use client";
 
 import NumberInput from "@app/components/NumberInput";
-import Select, { SelectItem } from "@app/components/Select";
-import { RootState } from "@app/store";
-import {
-  CreateProductState,
-  loadCreatedProduct,
-  reset,
-  updateCreatedProduct,
-} from "@app/store/slices/createProduct";
-import { useTranslations } from "next-intl";
-import { useDispatch, useSelector } from "react-redux";
+import Select, {SelectItem} from "@app/components/Select";
+import {RootState} from "@app/store";
+import {CreateProductState, loadCreatedProduct, reset, updateCreatedProduct,} from "@app/store/slices/createProduct";
+import {useTranslations} from "next-intl";
+import {useDispatch, useSelector} from "react-redux";
 import DaCucireImage from "@app/assets/images/backing/1.png";
 import TermoadesivaImage from "@app/assets/images/backing/2.png";
 import VelcroAImage from "@app/assets/images/backing/3.png";
@@ -18,27 +13,18 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { FaArrowLeft, FaImage } from "react-icons/fa6";
+import {useEffect, useMemo, useRef, useState} from "react";
+import {FaArrowLeft, FaImage} from "react-icons/fa6";
 import Button from "@app/components/Button";
-import { toast } from "react-toastify";
-import { httpClient } from "@app/lib/axios";
-import { PatchTypeT } from "@app/actions/patch-type";
+import {toast} from "react-toastify";
+import {httpClient} from "@app/lib/axios";
+import {PatchTypeT} from "@app/actions/patch-type";
 import Link from "next/link";
 import useJwt from "@app/hooks/useJwt";
-import {
-  catchError,
-  debounceTime,
-  filter,
-  from,
-  lastValueFrom,
-  map,
-  Subject,
-  throwError,
-} from "rxjs";
-import { useRouter } from "next/navigation";
+import {catchError, debounceTime, filter, from, lastValueFrom, map, Subject, throwError,} from "rxjs";
+import {useRouter} from "next/navigation";
 import Loading from "react-loading";
-import { Font } from "@app/actions/font";
+import {Font} from "@app/actions/font";
 import useFontLoader from "@app/hooks/useFontLoader";
 import RSelect from "react-select";
 
@@ -212,7 +198,7 @@ export default function ProductEditor({
         <div className="hidden lg:block w-[68px] h-[44px]" />
       </div>
       <div
-        className={`w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 grid-cols-4 gap-10`}
+        className={`w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-4 gap-10`}
       >
         <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2">
           {type === "image" ? (

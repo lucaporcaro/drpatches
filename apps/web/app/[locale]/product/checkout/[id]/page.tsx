@@ -13,6 +13,7 @@ import {useEffect, useMemo} from "react";
 import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";
 import {timer} from "rxjs";
+import {getUnixTime} from "date-fns";
 
 type Props = {
     params: {
@@ -31,7 +32,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
     const [{data: product}, {data: patchTypes}] = useQueries({
         queries: [
             {
-                queryKey: ["product", id],
+                queryKey: ["product", id, getUnixTime(new Date)],
                 queryFn: () => getProduct(id, jwt as string),
             },
             {
