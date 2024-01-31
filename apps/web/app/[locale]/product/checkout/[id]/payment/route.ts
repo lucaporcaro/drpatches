@@ -41,6 +41,9 @@ export async function POST(request: NextRequest) {
                         quantity: 1,
                     },
                 ],
+                tax_id_collection: {
+                    enabled: true,
+                },
                 custom_fields: [
                     {
                         key: 'codice_fiscale',
@@ -48,10 +51,7 @@ export async function POST(request: NextRequest) {
                         type: 'text'
                     },
                 ],
-                tax_id_collection: {
-                    enabled: true,
-                },
-                shipping_address_collection: { allowed_countries: ['IT', 'GB', "IQ"] },
+                shipping_address_collection: { allowed_countries: ['IT', 'GB'] },
                 shipping_options: [
                     { shipping_rate: 'shr_1Oc5aDFJwOikE4dcmUmPmDkp' },
                     { shipping_rate: 'shr_1Oc4z5FJwOikE4dciXDG0n4L' },
@@ -66,8 +66,9 @@ export async function POST(request: NextRequest) {
                  // Manually specify the type for custom_fields
                  const customField: Stripe.Checkout.SessionCreateParams.CustomField = {
                     key: 'sdi',
-                    label: { type: 'custom', custom: 'CODICE UNIVO/SDI' },
-                    type: 'text'
+                    label: { type: 'custom', custom: 'Codice univoco/SDI' },
+                    type: 'text',
+                    optional: true
                 };
                 sessionOptions?.custom_fields?.push(customField);
              }
