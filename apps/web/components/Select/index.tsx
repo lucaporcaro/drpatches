@@ -35,7 +35,7 @@ export default function Select({
   }, [value]);
   return (
     <div className="w-full h-max">
-      <div className="w-max flex flex-row items-center justify-start gap-4">
+      <div className="w-max flex flex-col md:flex-row items-center justify-start gap-4">
         <span className="font-semibold text-xl">{label}</span>
         <div
           className="bg-white w-max h-max rounded-md overflow-hidden cursor-pointer p-2"
