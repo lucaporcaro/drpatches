@@ -39,7 +39,7 @@ export default function Input({
         "w-full h-max flex flex-col items-start justify-start gap-2 text-black",
         containerClassName,
       ].join(" ")}
-      style={style}
+
     >
       <span className="font-semibold md:text-xl">{label}</span>
       {type === "textarea" ? (
@@ -86,6 +86,7 @@ export default function Input({
           value={value}
           disabled={disabled}
           name={name}
+          style={style}
           defaultValue={defaultValue}
           className="w-full h-10 outline-none  bg-white flex items-center justify-start px-3 rounded-xl"
           required={required}
