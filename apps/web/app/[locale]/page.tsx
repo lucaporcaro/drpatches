@@ -42,7 +42,7 @@ export default function Page(): JSX.Element {
           <img
             src={HeroImage.src}
             alt="Hero Image"
-            className="w-full max-w-[545px] aspect-auto rounded-3xl xl:max-w-[720px]"
+            className="w-fit max-w-[310px] aspect-auto rounded-3xl lg:max-w-[545px] xl:max-w-[720px]"
           />
         </div>
         <div className="w-full max-w-[706px] px-8 py-4 text-black flex flex-col items-center justify-center gap-8 text-center">

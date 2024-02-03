@@ -41,7 +41,7 @@ export default function Input({
       ].join(" ")}
       style={style}
     >
-      <span className="font-semibold text-xl">{label}</span>
+      <span className="font-semibold md:text-xl">{label}</span>
       {type === "textarea" ? (
         <textarea
           value={value}
@@ -87,7 +87,7 @@ export default function Input({
           disabled={disabled}
           name={name}
           defaultValue={defaultValue}
-          className="w-full h-10 outline-none bg-white flex items-center justify-start px-3 rounded-xl"
+          className="w-full h-10 outline-none  bg-white flex items-center justify-start px-3 rounded-xl"
           required={required}
           onChange={
             onChange

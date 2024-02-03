@@ -160,7 +160,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
                 </div>
             </div>
             <div
-                className="w-full min-w-[420px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10">
+                className="w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10">
                 <div className="w-full h-max flex flex-col items-center justify-center gap-4">
                     <ShoppingItem
                         label={`${product.quantity} Items`}
