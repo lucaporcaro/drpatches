@@ -241,11 +241,11 @@ export default function ProductEditor({
               <span className="font-bold text-3xl">{t("titels.text")}</span>
               <div
                 style={{
-                  fontFamily: fontLoaded ? "CustomFont" : undefined,
+                  fontFamily: fontLoaded ? "CustomFont" : undefined,backgroundColor: backgroundColor
                 }}
                 className="w-full"
               >
-                <Input style={{color: textColor}} value={text} onChange={update("text")} />
+                <Input style={{color: textColor,backgroundColor: backgroundColor}} value={text} onChange={update("text")} />
               </div>
               <div className="w-full flex flex-row items-center justify-start gap-4">
                 <span className="font-semibold text-xl">Font</span>
@@ -355,7 +355,7 @@ export default function ProductEditor({
 
         <div className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl lg:col-span-4 overflow-hidden">
           <div className="w-max">
-            <span className="font-bold text-3xl">
+            <span className="font-bold text-xl md:text-3xl">
               {type === "image" ? t("image_patch") : t("text_patch")}
             </span>
           </div>
