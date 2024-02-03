@@ -57,7 +57,7 @@ export default function AboutPage() {
   {items.map(({ image: { src, blur }, key }, i) => (
     <section
       key={`image_about_${i}_${key}`}
-      className="flex items-center px-10 gap-4 font-montserrat"
+      className="flex flex-col md:flex-row items-center px-10 gap-4 font-montserrat"
     >
       <figure className="m-0 max-w-sm w-full h-[20rem] overflow-hidden flex items-center justify-end">
         <Image
@@ -73,9 +73,10 @@ export default function AboutPage() {
           width={1556}
           height={458}
           alt={key}
+
         />
       </figure>
-      <div className="flex-grow">
+      <div className="w-full">
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
             {t(`items.${key}.title`)}
           </h3>

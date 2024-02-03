@@ -18,7 +18,7 @@ export default function Footer() {
            <FaPaypal className="w-10 aspect-auto text-primary-1" size={40} />
         </div>
       </div>
-      <div className="w-full h-max flex items-center justify-center">
+      <div className="w-fit h-max  flex-wrap flex justify-between items-center ">
         <Link href="/privacy" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
         <span className="hoverEffect">{t("privacy")}</span>
           </Link>
