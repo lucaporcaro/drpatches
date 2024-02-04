@@ -76,6 +76,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
     if (!product || !patchTypes) return <Loading/>;
 
     console.log(process.env.NEXT_PUBLIC_BASE_URL+"/"+ (product.image as any))
+    console.log(product)
 
     return (
         <form
@@ -84,7 +85,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
             className="w-full flex-auto p-6 flex flex-col lg:flex-row items-start justify-center gap-6"
         >
             <div
-                className="w-full h-full flex-auto bg-black border-primary-1 border-[1px] rounded-lg text-primary-1 flex flex-col items-center gap-10">
+                className="w-full h-full flex bg-black border-primary-1 border-[1px] rounded-lg text-primary-1 flex flex-col items-center gap-10">
                 <div className="w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]">
                     <p className="font-bold flex flex-wrap break-all  text-2xl">Product #{product.id}</p>
                 </div>
@@ -159,6 +160,10 @@ export default function CheckoutProductPage({params: {id}}: Props) {
                         <ShoppingItem label="Width" value={`${product.patchWidth} cm`}/>
                         <ShoppingItem label="Height" value={`${product.patchHeight} cm`}/>
                     </div>
+                    <div className="  w-full">
+                        <ShoppingItem label="Note" value={`${product.note}`}/>
+                    </div>
+
                 </div>
             </div>
             <div
@@ -199,7 +204,7 @@ const ShoppingItem = ({label, value, isColor = false}: ShoppingItemProps) => {
                     style={{backgroundColor: value}}
                 />
             ) : (
-                <span className="font-light">{value}</span>
+                <span className="font-light break-all">{value}</span>
             )}
         </div>
     );
