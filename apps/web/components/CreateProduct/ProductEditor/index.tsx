@@ -28,13 +28,7 @@ import {Font} from "@app/actions/font";
 import useFontLoader from "@app/hooks/useFontLoader";
 import RSelect from "react-select";
 
-export const backingItems: SelectItem[] = [
-  { id: "da_cucire", image: DaCucireImage.src },
-  { id: "termoadesiva", image: TermoadesivaImage.src },
-  { id: "velcro_a", image: VelcroAImage.src },
-  { id: "velcro_b", image: VelcroBImage.src },
-  { id: "velcro_a_b", image: VelcroABImage.src },
-];
+
 
 type Props = {
   initialProduct: CreateProductState;
@@ -105,6 +99,7 @@ export default function ProductEditor({
   const jwt = useJwt();
   const router = useRouter();
   const t = useTranslations("components.product_editor");
+  const b = useTranslations("pages.backing_type");
   const tr = useTranslations("pages.shared");
   const dispatch = useDispatch();
   const fontLoaded = useFontLoader(fontUrl);
@@ -179,6 +174,14 @@ export default function ProductEditor({
       subscription.unsubscribe();
     };
   }, []);
+
+  const backingItems: SelectItem[] = [
+    { id: "da_cucire", image: DaCucireImage.src,name: b("da_cucire") },
+    { id: "termoadesiva", image: TermoadesivaImage.src,name: b("termoadesiva") },
+    { id: "velcro_a", image: VelcroAImage.src,name:b("velcro_A") },
+    { id: "velcro_b", image: VelcroBImage.src, name:b("velcro_B") },
+    { id: "velcro_a_b", image: VelcroABImage.src,name: b("velcro_A_B") },
+  ];
   return (
     <>
       <div className="w-11/12 h-max flex items-center justify-between max-w-[1620px] mx-auto p-2 mb-2">
