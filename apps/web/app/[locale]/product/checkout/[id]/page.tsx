@@ -75,6 +75,8 @@ export default function CheckoutProductPage({params: {id}}: Props) {
     // Conditions
     if (!product || !patchTypes) return <Loading/>;
 
+    console.log(process.env.NEXT_PUBLIC_BASE_URL+"/"+ (product.image as any))
+
     return (
         <form
             action={`/product/checkout/${id}/payment`}
@@ -83,8 +85,8 @@ export default function CheckoutProductPage({params: {id}}: Props) {
         >
             <div
                 className="w-full h-full flex-auto bg-black border-primary-1 border-[1px] rounded-lg text-primary-1 flex flex-col items-center gap-10">
-                <div className="w-full flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]">
-                    <span className="font-bold text-2xl">Product #{product.id}</span>
+                <div className="w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]">
+                    <p className="font-bold flex flex-wrap break-all  text-2xl">Product #{product.id}</p>
                 </div>
                 <div className="w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-6 py-5 lg:py-10 gap-20">
                     <div className="w-full h-max flex flex-col items-start justify-center gap-10 font-bold">
@@ -123,7 +125,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
                         <div className="flex flex-col items-start justify-start gap-4">
                             <span className="font-bold">Selected Image</span>
                             <Image
-                                src={process.env.NEXT_PUBLIC_BASE_URL+"/"+ (product.image as any) ?? ""}
+                                src={process.env.NEXT_PUBLIC_BASE_URL+"/"+ (product.image as any)}
                                 width={240}
                                 height={240}
                                 alt="Product Selected Image"
