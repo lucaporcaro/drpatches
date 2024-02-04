@@ -18,20 +18,23 @@ export default function Footer() {
            <FaPaypal className="w-10 aspect-auto text-primary-1" size={40} />
         </div>
       </div>
-      <div className="w-fit h-max  flex-wrap flex justify-between items-center ">
-        <Link href="/privacy" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
-        <span className="hoverEffect">{t("privacy")}</span>
-          </Link>
-        <Link href="/condizioni_generali" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
-        <span className="hoverEffect"> {t("condizioni_generali")}</span>
-          </Link>
-        <Link href="/spedizioni" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
-          <span className="hoverEffect">{t("spedizioni")}</span>
-        </Link>
-        <Link href="/contact" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
-          <span className="hoverEffect">{t("contact")}</span>
-        </Link>
-      </div>
+         <div className="flex  w-full items-center justify-center">
+             <div className="w-fit h-max   flex-wrap flex justify-between items-center ">
+                 <Link href="/privacy" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+                     <span className="hoverEffect">{t("privacy")}</span>
+                 </Link>
+                 <Link href="/condizioni_generali" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+                     <span className="hoverEffect"> {t("condizioni_generali")}</span>
+                 </Link>
+                 <Link href="/spedizioni" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+                     <span className="hoverEffect">{t("spedizioni")}</span>
+                 </Link>
+                 <Link href="/contact" className="px-2 link" style={{color: '#FFCC10', cursor: 'pointer'}}>
+                     <span className="hoverEffect">{t("contact")}</span>
+                 </Link>
+             </div>
+         </div>
+
       <div className="w-full h-max flex items-center justify-center">
         <span className="font-medium">
           ©{new Date().getFullYear()} Dr. Patches di Chierchia Vincenzo - P.IVA 02971270653 - All right reserved
