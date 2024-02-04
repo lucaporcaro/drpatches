@@ -123,7 +123,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
                         <div className="flex flex-col items-start justify-start gap-4">
                             <span className="font-bold">Selected Image</span>
                             <Image
-                                src={httpClient.defaults.baseURL + (product.image as any) ?? ""}
+                                src={process.env.NEXT_PUBLIC_BASE_URL+"/"+ (product.image as any) ?? ""}
                                 width={240}
                                 height={240}
                                 alt="Product Selected Image"

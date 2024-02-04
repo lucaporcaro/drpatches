@@ -29,7 +29,9 @@ const Navbar = () => {
     useOutsideEvent({
         ref,
         callback() {
-            setOpen(false);
+
+            setOpen(false)
+
         },
     });
 
@@ -111,7 +113,7 @@ const Navbar = () => {
                 {open ? (
                     <div
                         ref={ref}
-                        className="flex md:hidden flex-col items-center justify-start py-4 gap-4 fixed top-0 left-0 z-20 animate-show-navbar w-40 h-screen bg-black border-r-primary-1 border-r-[1px]"
+                        className="flex w-[240px] z-40 md:hidden flex-col items-center justify-start py-4 gap-4 fixed top-0 left-0 z-20 animate-show-navbar w-40 h-screen bg-black border-r-primary-1 border-r-[1px]"
                     >
             <span className="font-bold text-xl text-white py-4">
               Dr.Patches
