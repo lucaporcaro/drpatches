@@ -1,11 +1,11 @@
 export default {
   links: {
-    examples: "Примеры (Primery)",
-    shipment: "Доставка (Dostavka)",
-    aboutus: "О Нас (O Nas)",
-    contact: "Контакт (Kontakt)",
-    login: "Вход (Vkhod)",
+    examples: "Примеры",
+    shipment: "Доставка",
+    aboutus: "О Нас",
+    contact: "Контакт",
+    login: "Вход",
     faq: "Часто задаваемые вопросы"
   },
-  language: "Язык (Yazyk)",
+  language: "Язык",
 };

@@ -1,11 +1,11 @@
 export default {
   links: {
-    examples: "أمثلة (Amthal)",
-    shipment: "الشحن (Al-Shiḥn)",
-    aboutus: "من نحن (Min Nahnu)",
-    contact: "اتصل (Itisal)",
-    login: "تسجيل الدخول (Tasjil al-Dukhul)",
+    examples: "أمثلة",
+    shipment: "الشحن",
+    aboutus: "من نحن ",
+    contact: "اتصل",
+    login: "تسجيل الدخول ",
     faq: "التعليمات"
   },
-  language: "لغة (Lughah) ",
+  language: "لغة",
 };
