@@ -53,7 +53,7 @@ export default function CheckoutProductPage({params: {id}}: Props) {
             },
         ],
     });
-
+    console.log("produckt",product)
     // Effects
     useEffect(() => {
         if (!toastShowed && product && !product.isReadyForPayment) {

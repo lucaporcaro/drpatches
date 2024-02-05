@@ -1,11 +1,18 @@
+/** @format */
+
 "use client";
 
 import NumberInput from "@app/components/NumberInput";
-import Select, {SelectItem} from "@app/components/Select";
-import {RootState} from "@app/store";
-import {CreateProductState, loadCreatedProduct, reset, updateCreatedProduct,} from "@app/store/slices/createProduct";
-import {useTranslations} from "next-intl";
-import {useDispatch, useSelector} from "react-redux";
+import Select, { SelectItem } from "@app/components/Select";
+import { RootState } from "@app/store";
+import {
+  CreateProductState,
+  loadCreatedProduct,
+  reset,
+  updateCreatedProduct,
+} from "@app/store/slices/createProduct";
+import { useTranslations } from "next-intl";
+import { useDispatch, useSelector } from "react-redux";
 import DaCucireImage from "@app/assets/images/backing/1.png";
 import TermoadesivaImage from "@app/assets/images/backing/2.png";
 import VelcroAImage from "@app/assets/images/backing/3.png";
@@ -13,22 +20,29 @@ import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 import Input from "@app/components/Input";
 import ColorSelector from "@app/components/ColorSelector";
-import {useEffect, useMemo, useRef, useState} from "react";
-import {FaArrowLeft, FaImage} from "react-icons/fa6";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { FaArrowLeft, FaImage } from "react-icons/fa6";
 import Button from "@app/components/Button";
-import {toast} from "react-toastify";
-import {httpClient} from "@app/lib/axios";
-import {PatchTypeT} from "@app/actions/patch-type";
+import { toast } from "react-toastify";
+import { httpClient } from "@app/lib/axios";
+import { PatchTypeT } from "@app/actions/patch-type";
 import Link from "next/link";
 import useJwt from "@app/hooks/useJwt";
-import {catchError, debounceTime, filter, from, lastValueFrom, map, Subject, throwError,} from "rxjs";
-import {useRouter} from "next/navigation";
+import {
+  catchError,
+  debounceTime,
+  filter,
+  from,
+  lastValueFrom,
+  map,
+  Subject,
+  throwError,
+} from "rxjs";
+import { useRouter } from "next/navigation";
 import Loading from "react-loading";
-import {Font} from "@app/actions/font";
+import { Font } from "@app/actions/font";
 import useFontLoader from "@app/hooks/useFontLoader";
 import RSelect from "react-select";
-
-
 
 type Props = {
   initialProduct: CreateProductState;
@@ -176,44 +190,45 @@ export default function ProductEditor({
   }, []);
 
   const backingItems: SelectItem[] = [
-    { id: "da_cucire",name: b("da_cucire") , image: DaCucireImage.src},
-    { id: "termoadesiva", image: TermoadesivaImage.src,name: b("termoadesiva") },
-    { id: "velcro_a", image: VelcroAImage.src,name:b("velcro_A") },
-    { id: "velcro_b", image: VelcroBImage.src, name:b("velcro_B") },
-    { id: "velcro_a_b", image: VelcroABImage.src,name: b("velcro_A_B") },
+    { id: "da_cucire", name: b("da_cucire"), image: DaCucireImage.src },
+    {
+      id: "termoadesiva",
+      image: TermoadesivaImage.src,
+      name: b("termoadesiva"),
+    },
+    { id: "velcro_a", image: VelcroAImage.src, name: b("velcro_A") },
+    { id: "velcro_b", image: VelcroBImage.src, name: b("velcro_B") },
+    { id: "velcro_a_b", image: VelcroABImage.src, name: b("velcro_A_B") },
   ];
   return (
     <>
-      <div className="w-11/12 h-max flex items-center justify-between max-w-[1620px] mx-auto p-2 mb-2">
+      <div className='w-11/12 h-max flex items-center justify-between max-w-[1620px] mx-auto p-2 mb-2'>
         <button
           onClick={() => {
             dispatch(reset());
             router.replace("/product/create");
           }}
-          className="w-max h-max px-6 py-3 bg-black rounded-lg"
-          title="Reset"
-        >
-          <FaArrowLeft size={20} className="text-white" />
+          className='w-max h-max px-6 py-3 bg-black rounded-lg'
+          title='Reset'>
+          <FaArrowLeft size={20} className='text-white' />
         </button>
-        <h2 className="font-bold text-2xl md:text-4xl text-black">
+        <h2 className='font-bold text-2xl md:text-4xl text-black'>
           {type ? tr("create_text_patch") : tr("create_image_patch")}
         </h2>
-        <div className="hidden lg:block w-[68px] h-[44px]" />
+        <div className='hidden lg:block w-[68px] h-[44px]' />
       </div>
       <div
-        className={`w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-4 gap-10`}
-      >
-        <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2">
+        className={`w-11/12 mx-auto h-max max-w-[1620px] bg-black border-primary-1 border-2 py-10 px-8 rounded-xl grid grid-cols-1 lg:grid-cols-4 gap-10`}>
+        <div className='bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2'>
           {type === "image" ? (
             <>
-              <span className="font-bold text-3xl">Image</span>
+              <span className='font-bold text-3xl'>Image</span>
               <div
                 onClick={() => imageRef.current?.click()}
-                className="w-full relative h-[40rem] border-black border-2 rounded-xl flex flex-col items-center justify-center gap-6 transition-all duration-200 hover:bg-black hover:text-white cursor-pointer overflow-hidden"
-              >
+                className='w-full relative h-[40rem] border-black border-2 rounded-xl flex flex-col items-center justify-center gap-6 transition-all duration-200 hover:bg-black hover:text-white cursor-pointer overflow-hidden'>
                 {image ? (
                   <img
-                    className="w-full h-full absolute inset-0"
+                    className='w-full h-full absolute inset-0'
                     src={
                       typeof image === "string"
                         ? `${httpClient.defaults.baseURL}/${image}`
@@ -222,16 +237,16 @@ export default function ProductEditor({
                   />
                 ) : (
                   <>
-                    <FaImage className="w-10 h-10" />
-                    <span className="font-medium text-center text-xl">
+                    <FaImage className='w-10 h-10' />
+                    <span className='font-medium text-center text-xl'>
                       {t("select_image")}
                     </span>
                   </>
                 )}
               </div>
               <input
-                type="file"
-                accept="image/*"
+                type='file'
+                accept='image/*'
                 hidden
                 ref={imageRef}
                 onChange={({ currentTarget: { files } }) =>
@@ -241,19 +256,27 @@ export default function ProductEditor({
             </>
           ) : (
             <>
-              <span className="font-bold text-3xl">{t("titels.text")}</span>
+              <span className='font-bold text-3xl'>{t("titels.text")}</span>
               <div
                 style={{
                   fontFamily: fontLoaded ? "CustomFont" : undefined,
                 }}
-                className="w-full"
-              >
-                <Input style={{color: textColor , "backgroundColor": backgroundColor}} value={text} onChange={update("text")} />
+                className='w-full'>
+                <Input
+                  style={{
+                    color: textColor,
+                    borderColor: borderColor,
+                    backgroundColor: backgroundColor,
+                    
+                  }}
+                  value={text}
+                  onChange={update("text")}
+                />
               </div>
-              <div className="w-full flex flex-row items-center justify-start gap-4">
-                <span className="font-semibold text-xl">Font</span>
+              <div className='w-full flex flex-row items-center justify-start gap-4'>
+                <span className='font-semibold text-xl'>Font</span>
                 <RSelect
-                  className="w-full"
+                  className='w-full'
                   value={selectedFont}
                   options={
                     fonts.map((font) => ({
@@ -280,7 +303,7 @@ export default function ProductEditor({
                 />
               </div>
               <>
-                <div className="w-max ">
+                <div className='w-max '>
                   <Select
                     value={patchType}
                     items={patchTypes}
@@ -289,9 +312,9 @@ export default function ProductEditor({
                   />
                 </div>
               </>
-              <span className="font-bold text-3xl">{t("titels.colors")}</span>
+              <span className='font-bold text-3xl'>{t("titels.colors")}</span>
 
-              <div className="w-full h-max grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6">
+              <div className='w-full h-max grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6'>
                 <ColorSelector
                   label={t("border")}
                   onChange={update("borderColor")}
@@ -302,7 +325,7 @@ export default function ProductEditor({
                   onChange={update("textColor")}
                   value={textColor}
                 />
-                <div className="w-full h-max md:col-span-2">
+                <div className='w-full h-max md:col-span-2'>
                   <ColorSelector
                     label={t("background")}
                     onChange={update("backgroundColor")}
@@ -313,13 +336,13 @@ export default function ProductEditor({
             </>
           )}
         </div>
-        <div className="bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden">
-          <span className="font-bold text-3xl">{t("titels.patching")}</span>
+        <div className='bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2 overflow-hidden'>
+          <span className='font-bold text-3xl'>{t("titels.patching")}</span>
           <NumberInput
             value={parseFloat(patchWidth as any)}
             onUpdate={update("patchWidth")}
             label={t("patch_width")}
-            unit="CM"
+            unit='CM'
             step={0.5}
             // disabled
           />
@@ -327,7 +350,7 @@ export default function ProductEditor({
             value={parseFloat(patchHeight as any)}
             onUpdate={update("patchHeight")}
             label={t("patch_height")}
-            unit="CM"
+            unit='CM'
             step={0.5}
             // disabled
           />
@@ -338,7 +361,7 @@ export default function ProductEditor({
             min={1}
             max={50000}
           />
-          <div className="w-max flex flex-col items-end justify-start gap-6 mb-0 mt-2">
+          <div className='w-max flex flex-col items-end justify-start gap-6 mb-0 mt-2'>
             <Select
               value={backingType}
               items={backingItems}
@@ -346,45 +369,45 @@ export default function ProductEditor({
               onChange={update("backingType")}
             />
           </div>
-          <div className="w-full h-max md:col-span-2">
+          <div className='w-full h-max md:col-span-2'>
             <Input
               label={tr("note")}
-              placeholder="Write your note here..."
-              type="textarea"
+              placeholder='Write your note here...'
+              type='textarea'
               onChange={update("note")}
               value={note}
             />
           </div>
         </div>
 
-        <div className="bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl lg:col-span-4 overflow-hidden">
-          <div className="w-fit">
-            <span className="font-bold text-xl md:text-3xl">
+        <div className='bg-primary-1 text-black relative flex flex-col lg:flex-row items-center justify-between gap-6 py-10 px-6 rounded-xl lg:col-span-4 overflow-hidden'>
+          <div className='w-fit'>
+            <span className='font-bold text-xl md:text-3xl'>
               {type === "image" ? t("image_patch") : t("text_patch")}
             </span>
           </div>
-          <div className="w-max h-max flex flex-col items-center justify-center gap-6 lg:flex-row">
-            <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
-              <span className="font-semibold text-2xl">
+          <div className='w-max h-max flex flex-col items-center justify-center gap-6 lg:flex-row'>
+            <div className='min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center'>
+              <span className='font-semibold text-2xl'>
                 {tr("item_per_patch")}: {pricePerOne}€
               </span>
             </div>
-            <div className="min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center">
+            <div className='min-w-[240px] h-12 bg-white rounded-xl flex items-center justify-center'>
               {isSyncing ? (
                 <Loading
-                  type="spin"
-                  color="rgb(243, 204, 16)"
+                  type='spin'
+                  color='rgb(243, 204, 16)'
                   width={28}
                   height={28}
                 />
               ) : (
-                <span className="font-semibold text-2xl">
+                <span className='font-semibold text-2xl'>
                   {tr("total")}: {updatedPrice || price}€
                 </span>
               )}
             </div>
 
-            <div className="w-max h-max">
+            <div className='w-max h-max'>
               <Link href={`/product/checkout/${product.id}`}>
                 <Button>{t("add_to_cart")}</Button>
               </Link>
