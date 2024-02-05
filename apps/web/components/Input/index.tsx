@@ -1,3 +1,5 @@
+/** @format */
+
 "use client";
 
 type Props = {
@@ -38,10 +40,8 @@ export default function Input({
       className={[
         "w-full h-max flex flex-col items-start justify-start gap-2 text-black",
         containerClassName,
-      ].join(" ")}
-
-    >
-      <span className="font-semibold md:text-xl">{label}</span>
+      ].join(" ")}>
+      <span className='font-semibold md:text-xl'>{label}</span>
       {type === "textarea" ? (
         <textarea
           value={value}
@@ -49,7 +49,7 @@ export default function Input({
           name={name}
           defaultValue={defaultValue}
           placeholder={placeholder}
-          className="w-full h-32 p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl"
+          className='w-full h-32 p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
           required={required}
           onChange={
             onChange
@@ -59,7 +59,7 @@ export default function Input({
         />
       ) : type === "select" ? (
         <select
-          className="w-full h-8 text-black font-semibold px-4 rounded-md text-sm"
+          className='w-full h-8 text-black font-semibold px-4 rounded-md text-sm'
           name={name}
           disabled={disabled}
           defaultValue={defaultValue}
@@ -69,13 +69,11 @@ export default function Input({
             onChange
               ? ({ currentTarget: { value } }) => onChange(value)
               : undefined
-          }
-        >
+          }>
           {options.map((option) => (
             <option
               key={`option_${label ?? ""}_${option.value}`}
-              value={option.value}
-            >
+              value={option.value}>
               {option.label}
             </option>
           ))}
@@ -88,7 +86,7 @@ export default function Input({
           name={name}
           style={style}
           defaultValue={defaultValue}
-          className="w-full h-10 outline-none  bg-white flex items-center justify-start px-3 rounded-xl"
+          className='w-full h-10 outline-none  border-4 bg-white flex items-center justify-start px-3 rounded-xl'
           required={required}
           onChange={
             onChange
