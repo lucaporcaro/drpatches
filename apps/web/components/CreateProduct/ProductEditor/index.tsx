@@ -176,7 +176,7 @@ export default function ProductEditor({
   }, []);
 
   const backingItems: SelectItem[] = [
-    { id: "da_cucire", image: DaCucireImage.src,name: b("da_cucire") },
+    { id: "da_cucire",name: b("da_cucire") , image: DaCucireImage.src},
     { id: "termoadesiva", image: TermoadesivaImage.src,name: b("termoadesiva") },
     { id: "velcro_a", image: VelcroAImage.src,name:b("velcro_A") },
     { id: "velcro_b", image: VelcroBImage.src, name:b("velcro_B") },
@@ -271,6 +271,7 @@ export default function ProductEditor({
                           width={200}
                           {...innerProps}
                           ref={innerRef}
+                          alt={" "}
                           src={(data as any).preview}
                         />
                       );

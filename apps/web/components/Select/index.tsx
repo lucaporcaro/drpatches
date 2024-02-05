@@ -1,3 +1,5 @@
+/** @format */
+
 "use client";
 import { useMemo, useState } from "react";
 
@@ -34,42 +36,40 @@ export default function Select({
     return items.filter(({ id }) => id === value)[0] as SelectItem;
   }, [value]);
   return (
-    <div className="w-full h-max">
-      <div className="w-max flex flex-col md:flex-row items-center justify-start gap-4">
-        <span className="font-semibold text-xl">{label}</span>
+    <div className='w-full h-max'>
+      <div className='w-max flex flex-col md:flex-row items-center justify-start gap-4'>
+        <span className='font-semibold text-xl'>{label}</span>
         <div
-          className="bg-white w-max h-max rounded-md overflow-hidden cursor-pointer p-2"
-          onClick={toggle}
-        >
+          className='bg-white w-max h-max rounded-md overflow-hidden cursor-pointer p-2'
+          onClick={toggle}>
           {value ? (
-            typeof selectedItem?.name === "string" ? (
-              <span>{selectedItem.name}</span>
-            ) : (
-              <img src={selectedItem?.image} className="w-10 aspect-auto" />
-            )
+            <>
+              <div className=' w-fit flex flex-col gap-2 items-center h-[90px] bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer'>
+                <img src={selectedItem?.image} className='w-10 aspect-auto' />
+                <p className='text-xs'>{selectedItem?.name}</p>
+              </div>
+            </>
           ) : (
-            <span className="font-semibold text-sm">Choose</span>
+            <span className='font-semibold text-sm'>Choose</span>
           )}
         </div>
       </div>
       {open ? (
         <div
-          className="w-screen h-screen fixed z-20 top-0 left-0 bg-black/30 flex items-center justify-center"
-          onClick={toggle}
-        >
-          <div className="w-max h-max max-w-[550px] py-10 px-4 bg-black rounded-lg grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-5 border-primary-1 border-2">
+          className='w-screen h-screen fixed z-20 top-0 left-0 bg-black/30 flex items-center justify-center'
+          onClick={toggle}>
+          <div className='w-max h-max max-w-[550px] py-10 px-4 bg-black rounded-lg grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-5 border-primary-1 border-2'>
             {items.map((item, i) => (
               <div
                 key={`select_item_${item.id}_${i}`}
-                className="w-[90px] flex flex-col items-center h-[120px] bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer"
-                onClick={() => onChange(item.id)}
-              >
+                className='w-fit flex flex-col items-center h-[120px] bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer'
+                onClick={() => onChange(item.id)}>
                 <img
-                  className="aspect-auto"
+                  className='aspect-auto'
                   style={{ width: image?.width ?? 64 }}
                   src={item.image}
                 />
-                <p className="text-xs">{item.name}</p>
+                <p className='text-xs'>{item.name}</p>
               </div>
             ))}
           </div>

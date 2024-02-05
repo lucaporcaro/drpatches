@@ -3,7 +3,7 @@
 import {getPatchTypes} from "@app/actions/patch-type";
 import {getProduct} from "@app/actions/product";
 import Button from "@app/components/Button";
-import {backingItems} from "@app/components/CreateProduct/ProductEditor";
+
 import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
 import {httpClient} from "@app/lib/axios";
@@ -14,13 +14,25 @@ import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";
 import {timer} from "rxjs";
 import {getUnixTime} from "date-fns";
+import {SelectItem} from "@app/components/Select";
+import DaCucireImage from "@app/assets/images/backing/1.png";
+import TermoadesivaImage from "@app/assets/images/backing/2.png";
+import VelcroAImage from "@app/assets/images/backing/3.png";
+import VelcroBImage from "@app/assets/images/backing/4.png";
+import VelcroABImage from "@app/assets/images/backing/5.png";
 
 type Props = {
     params: {
         id: string;
     };
 };
-
+const backingItems: SelectItem[] = [
+    { id: "da_cucire", image: DaCucireImage.src  },
+    { id: "termoadesiva", image: TermoadesivaImage.src },
+    { id: "velcro_a", image: VelcroAImage.src },
+    { id: "velcro_b", image: VelcroBImage.src },
+    { id: "velcro_a_b", image: VelcroABImage.src},
+];
 let toastShowed = false;
 
 export default function CheckoutProductPage({params: {id}}: Props) {
