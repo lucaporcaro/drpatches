@@ -62,7 +62,7 @@ export default function Select({
             {items.map((item, i) => (
               <div
                 key={`select_item_${item.id}_${i}`}
-                className='w-fit flex flex-col items-center h-[120px] bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer'
+                className='w-fit flex  overflow-y-scroll flex-col items-center h-[120px] bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer'
                 onClick={() => onChange(item.id)}>
                 <img
                   className='aspect-auto'
