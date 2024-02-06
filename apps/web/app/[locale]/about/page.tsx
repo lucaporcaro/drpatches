@@ -1,3 +1,5 @@
+/** @format */
+
 import JourneyImage from "@app/assets/images/about/journey.jpg";
 import AimImage from "@app/assets/images/about/aim.jpg";
 import CustomizationImage from "@app/assets/images/about/customization.jpg";
@@ -53,39 +55,37 @@ const items = [
 export default function AboutPage() {
   const t = useTranslations("pages.about_us");
   return (
-<div className="w-full h-max mx-auto py-8 flex flex-col gap-8">
-  {items.map(({ image: { src, blur }, key }, i) => (
-    <section
-      key={`image_about_${i}_${key}`}
-      className="flex flex-col md:flex-row items-center px-10 gap-4 font-montserrat"
-    >
-      <figure className="m-0 max-w-sm w-full h-[20rem] overflow-hidden flex items-center justify-end">
-        <Image
-          src={src}
-          blurDataURL={blur}
-          sizes="100vw"
-          style={{
-            width: "100%",
-            height: "auto",
-            maxHeight: 458,
-            borderRadius: '1rem'
-          }}
-          width={1556}
-          height={458}
-          alt={key}
-
-        />
-      </figure>
-      <div className="w-full">
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
-            {t(`items.${key}.title`)}
-          </h3>
-          <p className="font-normal text-lg md:text-xl lg:text-2xl">
-            {t(`items.${key}.description`)}
-          </p>
-        </div>
-    </section>
-  ))}
-</div>
+    <div className='w-full h-max mx-auto py-8 flex flex-col gap-8'>
+      {items.map(({ image: { src, blur }, key }, i) => (
+        <section
+          key={`image_about_${i}_${key}`}
+          className='flex flex-col md:flex-row items-center px-10 gap-4 font-montserrat'>
+          <figure className='m-0 max-w-sm w-full h-[20rem] overflow-hidden flex items-center justify-end'>
+            <Image
+              src={src}
+              blurDataURL={blur}
+              sizes='100vw'
+              style={{
+                width: "100%",
+                height: "auto",
+                maxHeight: 458,
+                borderRadius: "1rem",             
+              }}
+              width={1556}
+              height={458}
+              alt={key}
+            />
+          </figure>
+          <div className='w-full'>
+            <h3 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold'>
+              {t(`items.${key}.title`)}
+            </h3>
+            <p className='font-normal text-lg md:text-xl lg:text-2xl'>
+              {t(`items.${key}.description`)}
+            </p>
+          </div>
+        </section>
+      ))}
+    </div>
   );
 }
