@@ -93,7 +93,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   console.log(product);
 
   return (
-    <div>
+    <div className="w-full">
       <button
         onClick={() => {
           router.push(`/product/editor/${id}`);
