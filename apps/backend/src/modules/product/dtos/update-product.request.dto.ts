@@ -23,7 +23,7 @@ export default class UpdateProductRequestDto {
   @IsOptional()
   text?: string;
 
-  @ApiProperty({ required: false, default: '#111' })
+  @ApiProperty({ required: false, default: '#fff' })
   @IsHexColor()
   @IsOptional()
   borderColor?: string;

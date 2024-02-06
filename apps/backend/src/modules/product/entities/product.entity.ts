@@ -44,7 +44,7 @@ export default class Product extends BaseModel {
   @Property({ nullable: true, default: '' })
   text?: string;
 
-  @Property({ name: 'border_color', default: '#111' })
+  @Property({ name: 'border_color', default: '#fff' })
   borderColor?: string;
 
   @Property({ name: 'text_color', default: '#111' })
