@@ -111,6 +111,7 @@ export default function ProductEditor({
 
   // Hooks
   const jwt = useJwt();
+  console.log("jwt:", jwt)
   const router = useRouter();
   const t = useTranslations("components.product_editor");
   const b = useTranslations("pages.backing_type");
@@ -267,7 +268,6 @@ export default function ProductEditor({
                     color: textColor,
                     borderColor: borderColor,
                     backgroundColor: backgroundColor,
-                    
                   }}
                   value={text}
                   onChange={update("text")}
