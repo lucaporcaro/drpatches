@@ -58,11 +58,11 @@ export default function Select({
         <div
           className='w-screen h-screen fixed z-20 top-0 left-0 bg-black/30 flex items-center justify-center'
           onClick={toggle}>
-          <div className='w-max h-max overflow-y-scroll max-w-[550px] py-10 px-4 bg-black rounded-lg grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-5 border-primary-1 border-2'>
+          <div className='w-max max-w-[650px] py-10 px-4 bg-black rounded-lg grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-5 border-primary-1 border-2'>
             {items.map((item, i) => (
               <div
                 key={`select_item_${item.id}_${i}`}
-                className='w-fit flex   flex-col items-center h-[120px] bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer'
+                className='w-[110px] flex   flex-col items-center h-[120px] bg-white p-3 rounded-lg hover:bg-primary-1 transition-all duration-200 cursor-pointer'
                 onClick={() => onChange(item.id)}>
                 <img
                   className='aspect-auto'
