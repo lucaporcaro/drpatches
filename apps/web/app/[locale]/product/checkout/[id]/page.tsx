@@ -93,7 +93,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   console.log(product);
 
   return (
-    <div className="w-full">
+    <div className='w-full'>
       <button
         onClick={() => {
           router.push(`/product/editor/${id}`);
@@ -152,9 +152,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
                 <span className='font-bold'>Selected Image</span>
                 <Image
                   src={
-                    process.env.NEXT_PUBLIC_BASE_URL +
-                    "/" +
-                    (product.image as any)
+                    process.env.NEXT_PUBLIC_BASE_URL + (product.image as any)
                   }
                   width={240}
                   height={240}
