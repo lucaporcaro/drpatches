@@ -12,7 +12,7 @@ export default function Cookies() {
       enableDeclineButton
       declineButtonText={t('decline')}
       cookieName="myCookieConsent"
-      style={{ background: '#333', color: '#fff' }}
+      style={{ background: '#333', color: '#ffffff' }}
     >
       {t("description")}
     </CookieConsent>
