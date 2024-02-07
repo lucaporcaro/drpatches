@@ -1,6 +1,6 @@
 export default {
   links: {
-    examples: "Примеры",
+    examples: "Настройте свои патчи",
     shipment: "Доставка",
     aboutus: "О Нас",
     contact: "Контакт",

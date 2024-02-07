@@ -1,6 +1,6 @@
 export default {
   links: {
-    examples: "示例",
+    examples: "定制您的贴片",
     shipment: "运输",
     aboutus: "关于我们",
     contact: "联系",

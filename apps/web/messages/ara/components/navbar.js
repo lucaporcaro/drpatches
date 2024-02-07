@@ -1,6 +1,6 @@
 export default {
   links: {
-    examples: "أمثلة",
+    examples: "قم بتخصيص رقعك",
     shipment: "الشحن",
     aboutus: "من نحن ",
     contact: "اتصل",

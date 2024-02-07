@@ -1,6 +1,6 @@
 export default {
   links: {
-    examples: "Ejemplos",
+    examples: "Personaliza tus parches",
     shipment: "Envío",
     aboutus: "Acerca de Nosotros",
     contact: "Contactos",
