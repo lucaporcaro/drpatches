@@ -159,6 +159,8 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
                   alt='Product Selected Image'
                   className='rounded-lg border-primary-1 border-[1px]'
                 />
+
+               
               </div>
             ) : (
               <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
