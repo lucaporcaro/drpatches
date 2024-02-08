@@ -8,6 +8,7 @@ import Button from "@app/components/Button";
 import { FaArrowLeft } from "react-icons/fa6";
 import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
+import { useTranslations } from "next-intl";
 import { httpClient } from "@app/lib/axios";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
@@ -41,6 +42,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
   const jwt = useJwt();
   const router = useRouter();
+  const t = useTranslations("components.fillInformation");
 
   // Queries
   const [{ data: product }, { data: patchTypes }] = useQueries({
@@ -60,7 +62,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   useEffect(() => {
     if (!toastShowed && product && !product.isReadyForPayment) {
       router.replace(`/product/editor/${id}`);
-      toast.error("Product is not completed, fill the informations");
+      toast.error(t("title"));
       toastShowed = true;
     }
     return () => {
@@ -159,8 +161,6 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
                   alt='Product Selected Image'
                   className='rounded-lg border-primary-1 border-[1px]'
                 />
-
-               
               </div>
             ) : (
               <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
