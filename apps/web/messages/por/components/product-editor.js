@@ -1,8 +1,11 @@
+/** @format */
+
 export default {
   titels: {
     patching: "Opções de Patch",
     text: "Texto",
     colors: "Cores",
+    image: "imagem",
   },
   border: "Borda",
   text: "Texto",

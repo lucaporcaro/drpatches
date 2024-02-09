@@ -3,6 +3,7 @@ export default {
     patching: "补丁选项 (Bǔdiàn Xuǎnxiàng)",
     text: "文本 (Wénti)",
     colors: "颜色 (Yánsè)",
+    image:"图像"
   },
   border: "边框 (Biānkuàng)",
   text: "文本 (Wénti)",

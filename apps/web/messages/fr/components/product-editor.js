@@ -3,6 +3,7 @@ export default {
     patching: "Options de Patch",
     text: "Texte",
     colors: "Couleurs",
+    image:"image"
   },
   border: "Bordure",
   text: "Texte",

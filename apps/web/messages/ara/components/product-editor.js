@@ -3,6 +3,7 @@ export default {
     patching: "خيارات التصحيح (Khiarat Al-Tasheeh)",
     text: "نص (Nass)",
     colors: "ألوان (Alwan)",
+    image:"صورة"
   },
   border: "حدود (Hudud)",
   text: "نص (Nass)",
