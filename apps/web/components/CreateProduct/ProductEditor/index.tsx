@@ -319,9 +319,7 @@ export default function ProductEditor({
             <>
               <span className='font-bold text-3xl'>
               {tr("image")}
-                {image === null && (
-                  <p className='text-3xl text-red-700'>*</p>
-                )}{" "}
+               {" "}
               </span>
 
               <div
@@ -363,7 +361,6 @@ export default function ProductEditor({
                   fontFamily: fontLoaded ? "CustomFont" : undefined,
                 }}
                 className='w-full'>
-                {!text && <span className='text-3xl text-red-700'>* </span>}
                 <Input
                   style={{
                     color: textColor,
