@@ -7,5 +7,6 @@ export default {
     note: 'Campo de notas',
     address: 'Dirección',
     telephone: 'Teléfono',
-    email: 'Correo electrónico'
+    email: 'Correo electrónico',
+    image: 'Imagen'
 }

@@ -7,5 +7,6 @@ export default {
     note: 'Note field',
     address: 'Address',
     telephone: 'Telephone',
-    email: 'Email'
+    email: 'Email',
+    image: 'Image'
 }
