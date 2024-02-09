@@ -57,7 +57,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
       },
     ],
   });
-  console.log("produckt", product);
+
   // Effects
   useEffect(() => {
     if (!toastShowed && product && !product.isReadyForPayment) {
@@ -91,7 +91,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // Conditions
   if (!product || !patchTypes) return <Loading />;
 
-  console.log(process.env.NEXT_PUBLIC_BASE_URL + "/" + (product.image as any));
+  console.log(process.env.NEXT_PUBLIC_BASE_URL  + (product.image as any));
   console.log(product);
 
   return (

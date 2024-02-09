@@ -317,10 +317,12 @@ export default function ProductEditor({
         <div className='bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2'>
           {type === "image" ? (
             <>
-              <span className='font-bold text-3xl'>{t("titels.image")}</span>
-              {image === null && (
-                <p className=' text-red-700'>* image is required</p>
-              )}
+              <span className='font-bold text-3xl'>
+                {t("titels.image")}
+                {image === null && (
+                  <p className='text-3xl text-red-700'>*</p>
+                )}{" "}
+              </span>
 
               <div
                 onClick={() => imageRef.current?.click()}
@@ -361,9 +363,7 @@ export default function ProductEditor({
                   fontFamily: fontLoaded ? "CustomFont" : undefined,
                 }}
                 className='w-full'>
-                {!text && (
-                  <span className=' text-red-700'>* text is required</span>
-                )}
+                {!text && <span className='text-3xl text-red-700'>* </span>}
                 <Input
                   style={{
                     color: textColor,
@@ -374,10 +374,10 @@ export default function ProductEditor({
                   onChange={update("text")}
                 />
               </div>{" "}
-              {!selectedFont && (
-                <span className=' text-red-700'>* Font is required</span>
-              )}
               <div className='w-full flex flex-row items-center justify-start gap-4'>
+                {!selectedFont && (
+                  <span className='text-3xl text-red-700'>* </span>
+                )}
                 <span className='font-semibold text-xl'>Font</span>
 
                 <RSelect
@@ -408,11 +408,9 @@ export default function ProductEditor({
                 />
               </div>
               <>
-                <div className='w-max '>
+                <div className='w-max flex'>
                   {!patchType && (
-                    <span className=' text-red-700'>
-                      * patchType is required
-                    </span>
+                    <span className=' text-3xl text-red-700'>*</span>
                   )}
                   <Select
                     value={patchType}

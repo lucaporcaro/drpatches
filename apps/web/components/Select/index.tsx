@@ -60,7 +60,7 @@ export default function Select({
           className='w-screen h-screen fixed z-20 top-0 left-0 bg-black/30 flex items-center justify-center'
           onClick={toggle}>
           <div
-            className={`w-max ${label === "Selected Type" && "overflow-y-scroll h-screen"}   max-w-[650px] py-10 px-4
+            className={`w-max max-w-[650px] ${label === "Selected Type" && "overflow-y-scroll "}h-screen    py-10 px-4
            bg-black rounded-lg grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-5 border-primary-1 border-2`}>
             {items.map((item, i) => (
               <div
