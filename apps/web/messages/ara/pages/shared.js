@@ -8,5 +8,6 @@ export default {
     address: 'عنوان',
     telephone: 'هاتف',
     email: 'البريد الإلكتروني',
-    image: ' صورة'
+    image: ' صورة',
+    info: 'معلومات مفيدة'
 }

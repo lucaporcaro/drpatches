@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default function Footer() {
   const t = useTranslations("components.footer");
+  const tr = useTranslations("pages.shared");
   return (
     <footer className='w-full h-max py-10 px-8 gap-2.5 flex flex-col items-start justify-start text-white bg-black'>
       <div className='w-max h-max flex flex-col items-start justify-start gap-6'>
@@ -51,7 +52,7 @@ export default function Footer() {
             href='/info'
             className='px-2 link'
             style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect'>INFO</span>
+            <span className='hoverEffect'>{t("info")}</span>
           </Link>
         </div>
       </div>

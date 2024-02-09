@@ -9,5 +9,5 @@ export default {
     telephone: '电话',
     email: '电子邮件',
     image: '图像',
-    
+    info: '有用信息'
 }
