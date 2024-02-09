@@ -11,7 +11,7 @@ export default {
   patch_width: "Patch Width",
   patch_height: "Patch Height",
   quantity: "Quantity",
-  select_type: "Selected Type",
+  select_type: "Patch shape",
   select_backing_type: "Selected Backing",
   select_image: "Select your image",
   add_to_cart: "Add To Cart",

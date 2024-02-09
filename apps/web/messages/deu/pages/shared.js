@@ -7,5 +7,7 @@ export default {
     note: 'Notizfeld',
     address: 'Adresse',
     telephone: 'Telefon',
-    email: 'E-Mail'
+    email: 'E-Mail',
+    image: 'Bild',
+    info: 'NÜTZLICHE INFORMATIONEN'
 }

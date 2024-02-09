@@ -5,5 +5,5 @@ export default {
   privacy: 'PRIVACY',
   condizioni_generali: 'CONDIZIONI GENERALI',
   spedizioni: 'SPEDIZIONE',
-  contact: 'CONTACTS'
+  contact: 'CONTATTI'
 };
