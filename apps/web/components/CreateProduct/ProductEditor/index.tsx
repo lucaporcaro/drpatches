@@ -292,6 +292,11 @@ export default function ProductEditor({
     { id: "type39", image: type39.src },
     { id: "type40", image: type40.src },
   ];
+
+  console.log("text is  " , text)
+
+
+
   return (
     <>
       <div className='w-11/12 h-max flex items-center justify-between max-w-[1620px] mx-auto p-2 mb-2'>
@@ -315,9 +320,12 @@ export default function ProductEditor({
           {type === "image" ? (
             <>
               <span className='font-bold text-3xl'>Image</span>
+              {image === null &&<p className=" text-red-700">* image is required</p> }
+
               <div
                 onClick={() => imageRef.current?.click()}
                 className='w-full relative h-[40rem] border-black border-2 rounded-xl flex flex-col items-center justify-center gap-6 transition-all duration-200 hover:bg-black hover:text-white cursor-pointer overflow-hidden'>
+
                 {image ? (
                   <img
                     className='w-full h-full absolute inset-0'
@@ -329,6 +337,7 @@ export default function ProductEditor({
                   />
                 ) : (
                   <>
+
                     <FaImage className='w-10 h-10' />
                     <span className='font-medium text-center text-xl'>
                       {t("select_image")}
@@ -354,6 +363,7 @@ export default function ProductEditor({
                   fontFamily: fontLoaded ? "CustomFont" : undefined,
                 }}
                 className='w-full'>
+                {!text &&<span className=" text-red-700">* text is required</span> }
                 <Input
                   style={{
                     color: textColor,
@@ -363,9 +373,10 @@ export default function ProductEditor({
                   value={text}
                   onChange={update("text")}
                 />
-              </div>
+              </div> {!selectedFont &&<span className=" text-red-700">* Font is required</span> }
               <div className='w-full flex flex-row items-center justify-start gap-4'>
                 <span className='font-semibold text-xl'>Font</span>
+
                 <RSelect
                   className='w-full'
                   value={selectedFont}
@@ -395,6 +406,7 @@ export default function ProductEditor({
               </div>
               <>
                 <div className='w-max '>
+                  {!patchType &&<span className=" text-red-700">* patchType is required</span> }
                   <Select
                     value={patchType}
                     items={patchTypes}
