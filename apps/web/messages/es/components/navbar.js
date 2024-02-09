@@ -1,10 +1,10 @@
 export default {
   links: {
-    examples: "Ejemplos",
+    examples: "Personaliza tus parches",
     shipment: "Envío",
     aboutus: "Acerca de Nosotros",
     contact: "Contactos",
-    login: "Login/Iniciar Sesión",
+    login: "Iniciar Sesión",
     faq: "Preguntas"
   },
   language: "Idioma",

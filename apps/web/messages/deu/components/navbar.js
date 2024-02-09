@@ -1,6 +1,6 @@
 export default {
   links: {
-    examples: "Beispiele",
+    examples: "Individualisiere deine Patches",
     shipment: "Versand",
     aboutus: "Über Uns",
     contact: "Kontakt",

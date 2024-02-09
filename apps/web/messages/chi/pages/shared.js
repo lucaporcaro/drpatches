@@ -7,5 +7,7 @@ export default {
     note: '备注栏',
     address: '地址',
     telephone: '电话',
-    email: '电子邮件'
+    email: '电子邮件',
+    image: '图像',
+    info: '有用信息'
 }

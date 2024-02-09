@@ -318,7 +318,7 @@ export default function ProductEditor({
           {type === "image" ? (
             <>
               <span className='font-bold text-3xl'>
-                {t("titels.image")}
+              {tr("image")}
                 {image === null && (
                   <p className='text-3xl text-red-700'>*</p>
                 )}{" "}

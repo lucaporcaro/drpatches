@@ -11,7 +11,7 @@ export default {
   patch_width: "Ancho del Parche",
   patch_height: "Altura del Parche",
   quantity: "Cantidad",
-  select_type: "Tipo Seleccionado",
+  select_type: "Forma de parche",
   select_backing_type: "Respaldo Seleccionado",
   select_image: "Selecciona tu imagen",
   add_to_cart: "añadir a la cesta",

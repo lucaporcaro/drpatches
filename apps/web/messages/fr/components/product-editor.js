@@ -11,7 +11,7 @@ export default {
   patch_width: "Largeur du Patch",
   patch_height: "Hauteur du Patch",
   quantity: "Quantité",
-  select_type: "Type Sélectionné",
+  select_type: "Forme de patch",
   select_backing_type: "Support Sélectionné",
   select_image: "Sélectionnez votre image",
   add_to_cart: "Ajouter au panier",

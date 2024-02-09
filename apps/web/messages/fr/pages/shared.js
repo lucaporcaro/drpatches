@@ -7,5 +7,7 @@ export default {
     note: 'Champ de notes',
     address: 'Adresse',
     telephone: 'Téléphone',
-    email: 'Courriel'
+    email: 'Courriel',
+    image: 'Image',
+    info: 'INFORMATIONS UTILES'
 }

@@ -1,11 +1,13 @@
 export default {
-    login: 'Inicio de sesión',
+    customize_patch: 'Personaliza tus parches',
+    create_text_patch: 'Crea parches con texto',
+    create_image_patch: 'Crea parches con imagen',
+    item_per_patch: 'Por parche',
+    total: 'Total',
+    note: 'Campo de notas',
+    address: 'Dirección',
+    telephone: 'Teléfono',
     email: 'Correo electrónico',
-    password: 'Contraseña',
-    need_account: '¿Necesitas una cuenta?',
-    first_name: 'Nombre',
-    last_name: 'Apellido',
-    fiscal_code: 'Código fiscal',
-    vat: 'NIF',
-    billing_address: 'Dirección de facturación'
-};
+    image: 'Imagen',
+    info: 'INFORMACIÓN ÚTIL'
+}

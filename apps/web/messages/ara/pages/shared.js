@@ -7,5 +7,7 @@ export default {
     note: 'حقل الملاحظات',
     address: 'عنوان',
     telephone: 'هاتف',
-    email: 'البريد الإلكتروني'
+    email: 'البريد الإلكتروني',
+    image: ' صورة',
+    info: 'معلومات مفيدة'
 }
