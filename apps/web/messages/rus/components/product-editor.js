@@ -3,6 +3,7 @@ export default {
     patching: "Варианты патчинга",
     text: "Текст",
     colors: "Цвета",
+    image:"изображение"
   },
   border: "Граница",
   text: "Текст",

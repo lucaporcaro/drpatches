@@ -1,8 +1,9 @@
 export default {
   titels: {
     patching: "خيارات التصحيح",
-    text: "نص",
+    text: "نص ",
     colors: "ألوان",
+    image:"صورة"
   },
   border: "حدود",
   text: "نص",

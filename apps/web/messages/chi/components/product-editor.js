@@ -3,6 +3,7 @@ export default {
     patching: "补丁选项",
     text: "文本",
     colors: "颜色",
+    image:"图像"
   },
   border: "边框",
   text: "文本",
