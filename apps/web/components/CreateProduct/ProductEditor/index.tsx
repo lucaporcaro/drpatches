@@ -411,7 +411,7 @@ export default function ProductEditor({
                   )}
                   <Select
                     value={patchType}
-                    items={patchTypesdefult}
+                    items={patchTypes}
                     label={t("select_type")}
                     onChange={update("patchType")}
                   />
