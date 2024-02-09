@@ -9,5 +9,5 @@ export default {
     telephone: 'Telefono',
     email: 'Email',
     image: 'Image',
-    info: 'Informazioni utili'
+    info: 'INFORMAZIONI UTILI'
 }
