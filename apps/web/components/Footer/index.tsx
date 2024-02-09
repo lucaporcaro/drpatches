@@ -52,7 +52,7 @@ export default function Footer() {
             href='/info'
             className='px-2 link'
             style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect'>{t("info")}</span>
+            <span className='hoverEffect'>{tr("info")}</span>
           </Link>
         </div>
       </div>
