@@ -11,6 +11,7 @@ import { AdminjsModule, MEDIA_BUCKET } from './common/adminjs/adminjs.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { StripeModule } from './modules/webhooks/stripe/stripe.module';
 import { FontModule } from './modules/font/font.module';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { FontModule } from './modules/font/font.module';
     ProductModule,
     StripeModule,
     FontModule,
+    CartModule,
   ],
 })
 export class AppModule {}
