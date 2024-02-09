@@ -91,7 +91,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // Conditions
   if (!product || !patchTypes) return <Loading />;
 
-  console.log(process.env.NEXT_PUBLIC_BASE_URL  + (product.image as any));
+  console.log(process.env.NEXT_PUBLIC_BASE_URL + (product.image as any));
   console.log(product);
 
   return (
@@ -183,6 +183,15 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
                   isColor
                   value={product.textColor}
                 />
+
+                <span
+                  style={{
+                    color: product.textColor,
+                    borderColor: product.borderColor,
+                    backgroundColor: product.backgroundColor,
+                  }}>
+                  {product.text}
+                </span>
               </div>
             )}
             <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
