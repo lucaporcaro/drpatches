@@ -46,20 +46,21 @@ export class CartService {
     const user = await this.findUser(userId);
     const cart = await this.getCart(user);
     const products = await this.productRepo.find({
-      $and: [
-        {
-          id: { $in: addToCartDto.products },
-        },
-        {
-          status: { $in: [ProductStatus.CREATED, ProductStatus.DELIVERED] },
-        },
-        {
-          user: user.id,
-        },
-      ],
+      // $and: [
+      //   {
+      //     id: { $in: addToCartDto.products },
+      //   },
+      //   {
+      //     status: { $in: [ProductStatus.CREATED, ProductStatus.DELIVERED] },
+      //   },
+      //   {
+      //     user: user.id,
+      //   },
+      // ],
+      id: { $in: addToCartDto.products },
     });
     if (products.length > 0) {
-      for (const product of user.products) {
+      for (const product of products) {
         if (!cart.products.find((p) => p.id === product.id))
           cart.products.add(product);
       }
