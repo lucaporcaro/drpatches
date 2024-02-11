@@ -43,7 +43,23 @@ export async function getProduct(
         )
     );
 }
-
+export async function getProductInCart(
+    id: string,
+    jwt: string | null = null
+) {
+    return lastValueFrom(
+        from(
+            httpClient.get(`/v1/cart`, {
+                headers: {
+                    Authorization: !jwt ? undefined : `Bearer ${jwt}`,
+                },
+            })
+        ).pipe(
+            map(({data}) => data),
+            catchError((e) => throwError(() => e))
+        )
+    );
+}
 export async function getAllProducts(
     jwt: string
 ): Promise<CreateProductState[]> {

@@ -3,9 +3,9 @@
 "use client";
 
 import { getPatchTypes } from "@app/actions/patch-type";
-import { getProduct } from "@app/actions/product";
+import { getProductInCart } from "@app/actions/product";
 import Button from "@app/components/Button";
-import { FaArrowLeft } from "react-icons/fa6";
+
 import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
 import { useTranslations } from "next-intl";
@@ -24,6 +24,7 @@ import VelcroAImage from "@app/assets/images/backing/3.png";
 import VelcroBImage from "@app/assets/images/backing/4.png";
 import VelcroABImage from "@app/assets/images/backing/5.png";
 
+import Link from "@app/components/Link";
 type Props = {
   params: {
     id: string;
@@ -45,11 +46,11 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const t = useTranslations("components.fillInformation");
 
   // Queries
-  const [{ data: product }, { data: patchTypes }] = useQueries({
+  const [{ data: products }, { data: patchTypes }] = useQueries({
     queries: [
       {
         queryKey: ["product", id, getUnixTime(new Date())],
-        queryFn: () => getProduct(id, jwt as string),
+        queryFn: () => getProductInCart(id, jwt as string),
       },
       {
         queryKey: ["patch_types"],
@@ -59,56 +60,57 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   });
 
   // Effects
-  useEffect(() => {
-    if (!toastShowed && product && !product.isReadyForPayment) {
-      router.replace(`/product/editor/${id}`);
-      toast.error(t("title"));
-      toastShowed = true;
-    }
-    return () => {
-      timer(1000).subscribe(() => {
-        toastShowed = false;
-      });
-    };
-  }, [product]);
+  // useEffect(() => {
+  console.log("CheckoutProductPage  products:", products)
+  //   if (!toastShowed && product && !product.isReadyForPayment) {
+  //     router.replace(`/product/editor/${id}`);
+  //     toast.error(t("title"));
+  //     toastShowed = true;
+  //   }
+  //   return () => {
+  //     timer(1000).subscribe(() => {
+  //       toastShowed = false;
+  //     });
+  //   };
+  // }, [product]);
 
   // Memos
-  const perItemPrice = useMemo(() => {
-    if (!product) return "0";
-    return (parseFloat(product.price as string) / product.quantity).toFixed(2);
-  }, [product]);
+  // const perItemPrice = useMemo(() => {
+  //   if (!product) return "0";
+  //   return (parseFloat(product.price as string) / product.quantity).toFixed(2);
+  // }, [product]);
 
-  const backingType = useMemo(() => {
-    if (!product) return null;
-    return backingItems.filter(({ id }) => id === product.backingType)[0];
-  }, [product]);
+  // const backingType = useMemo(() => {
+  //   if (!product) return null;
+  //   return backingItems.filter(({ id }) => id === product.backingType)[0];
+  // }, [product]);
 
-  const selectedPatchType = useMemo(() => {
-    if (!patchTypes || !product || !product.patchType) return null;
-    return patchTypes.filter(({ id }) => id === product.patchType)[0];
-  }, [patchTypes, product]);
+  // const selectedPatchType = useMemo(() => {
+  //   if (!patchTypes || !product || !product.patchType) return null;
+  //   return patchTypes.filter(({ id }) => id === product.patchType)[0];
+  // }, [patchTypes, product]);
 
-  // Conditions
-  if (!product || !patchTypes) return <Loading />;
+  // // Conditions
+  if (!products || !patchTypes || products.products) return <Loading />;
 
-  console.log(process.env.NEXT_PUBLIC_BASE_URL + (product.image as any));
-  console.log(product);
+  // console.log(process.env.NEXT_PUBLIC_BASE_URL + (product.image as any));
+  // console.log(product);
 
+ 
+  // @ts-ignore
   return (
     <div className='w-full'>
-      <button
-        onClick={() => {
-          router.push(`/product/editor/${id}`);
-        }}
-        className='px-6 py-3 mt-5 bg-black mx-6 rounded-lg'
-        title='Reset'>
-        <FaArrowLeft size={20} className='text-white' />{" "}
-      </button>
       <form
         action={`/product/checkout/${id}/payment`}
         method='POST'
-        className='w-full flex-auto p-6 flex flex-col lg:flex-row items-start justify-center gap-6'>
-        <div className='w-full h-full flex bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>
+        className='  w-full flex-auto p-6 flex flex-col lg:flex-row items-start justify-center gap-6'>
+
+          {products &&(products as any).map((product)=>{        
+          <div
+          onClick={() => {
+            router.push(`/product/editor/${id}`);
+          }}
+          className='w-full h-full flex cursor-pointer bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>
           <div className='w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]'>
             <p className='font-bold flex flex-wrap break-all  text-2xl'>
               Product #{product.id}
@@ -128,19 +130,19 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
                 <span>Backing Type: </span>
                 <div className='bg-primary-1 w-max p-2 rounded-lg'>
                   <Image
-                    src={backingType?.image || ""}
+                    src={product.backingType?.image || ""}
                     width={52}
                     height={52}
                     alt='Backing Type Image'
                   />
                 </div>
               </div>
-              {selectedPatchType && selectedPatchType.image ? (
+              {product.patchType && product.patchType.image ? (
                 <div className='w-full flex flex-row items-center justify-between gap-4'>
                   <span>Patch Type: </span>
                   <div className='bg-primary-1 w-max p-2 rounded-lg'>
                     <Image
-                      src={selectedPatchType?.image || ""}
+                      src={product.patchType?.image || ""}
                       width={52}
                       height={52}
                       alt='Patch Type Image'
@@ -212,8 +214,9 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
               <ShoppingItem label='Note' value={`${product.note}`} />
             </div>
           </div>
-        </div>
-        <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
+        </div>})}
+
+        {/* <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`${product.quantity} Items`}
@@ -225,9 +228,14 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           <Button className='bg-primary-1 mx-auto' style={{ color: "black" }}>
             Proceed to checkout
           </Button>
-        </div>
+        </div> */}
         <input hidden name='jwt' value={jwt || undefined} />
       </form>
+      <Link href={"/product/create"}>
+        <span className='bg-yellow-500 m-10 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full'>
+          new
+        </span>
+      </Link>
     </div>
   );
 }
