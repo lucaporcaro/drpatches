@@ -1,12 +1,15 @@
 /** @format */
+"Client Component";
 import level1 from "./../../../assets/images/info/level1.jpg";
 import level2 from "./../../../assets/images/info/level2.jpg";
 import level3 from "./../../../assets/images/info/level3.jpg";
 import level4 from "./../../../assets/images/info/level4.jpg";
 import { useTranslations } from "next-intl";
 
+import DownloadPDF from "@app/components/DownloadPDF/DownloadPDF";
 export default function Info() {
   const t = useTranslations("pages.info");
+
   return (
     <div className='  flex flex-col items-center justify-center'>
       <h1 className=' text-2xl md:text-7xl my-9'>{t(`titel`)}</h1>
@@ -29,6 +32,7 @@ export default function Info() {
         <img className='   w-[400px]' src={level4.src} alt='' />
         <p className='  text-3xl  w-8/12'>{t(`level4`)}</p>
       </div>
+      <DownloadPDF></DownloadPDF>
     </div>
   );
 }

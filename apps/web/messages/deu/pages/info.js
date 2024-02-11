@@ -15,4 +15,5 @@ export default {
 
   level4:
     "Drehen Sie den Stoff um und bügeln Sie den Bereich hinter dem Fleck, wobei Sie mindestens 30 Sekunden lang Druck ausüben. Lassen Sie den Bereich weitere fünf Minuten abkühlen.",
+    Color:"Farbtabelle"
 };

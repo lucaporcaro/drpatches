@@ -14,4 +14,5 @@ export default {
 
   level4:
     "Turn the fabric upside down and press the area behind the patch, applying pressure for at least 30 seconds. Let the area cool for another five minutes.",
+    Color:" Color chart"
 };

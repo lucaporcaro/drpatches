@@ -12,7 +12,9 @@ export default {
   
     level4:
       "Vire o tecido ao contrário e pressione a área por trás do remendo, aplicando pressão durante pelo menos 30 segundos. Deixe a área arrefecer durante mais cinco minutos.",
-  };
+      Color:"Tabela de cores"
+    
+    };
 
   
 

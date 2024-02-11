@@ -14,4 +14,5 @@ export default {
 
   level4:
     "Dé la vuelta a la tela y planche la zona situada detrás del parche, aplicando presión durante al menos 30 segundos. Deje enfriar la zona otros cinco minutos.",
-};
+    Color:"Tabla de colores"
+  };
