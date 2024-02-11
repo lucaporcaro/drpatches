@@ -13,7 +13,13 @@ import { CartService } from './cart.service';
 import { AddToCartDto } from './dtos/add-to-cart.dto';
 // import { UpdateCartDto } from './dtos/update-cart.dto';
 import JwtGuard from '../authentication/gaurd/jwt.gaurd';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { RemoveFromCartDto } from './dtos/remove-from-cart.dto';
 import Cart from './entities/cart.entity';
 
@@ -21,7 +27,6 @@ import Cart from './entities/cart.entity';
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
-
   @Post()
   @ApiBearerAuth()
   @ApiBody({ type: AddToCartDto })
@@ -34,25 +39,21 @@ export class CartController {
     return this.cartService.addToCart(id, createCartDto);
   }
 
-  
-  @Get(':id')
-  @ApiParam({ name: 'id', description: 'get cart info' })
+  @Get()
   @ApiResponse({ type: Cart })
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Request() { user: { id } }: any) {
     return this.cartService.findOne(id);
   }
 
-
-  @Patch(':id')
-  @ApiParam({ name: 'id', description: 'id of user that you want remove product from cart' })
+  @Patch()
   @ApiBody({ type: RemoveFromCartDto })
   @ApiResponse({ type: Cart })
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
   remove(
-    @Param('id') id: string,
+    @Request() { user: { id } }: any,
     @Body() removeFromCartDto: RemoveFromCartDto,
   ) {
     return this.cartService.remove(id, removeFromCartDto);

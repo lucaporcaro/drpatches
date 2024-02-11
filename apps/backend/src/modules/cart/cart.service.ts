@@ -24,7 +24,7 @@ export class CartService {
     try {
       cart = await this.cartRepo.findOneOrFail(
         { user },
-        { populate: ['products.id'] },
+        { populate: ['products.id', 'user.id'] },
       );
     } catch (e) {
       cart = this.cartRepo.create({ user });
@@ -68,11 +68,12 @@ export class CartService {
         .reduce((a, b) => a + b, 0);
       await this.cartRepo.persistAndFlush([cart]);
     }
-    return cart;
+    return { products: cart.products, totalPrice: cart.totalPrice };
   }
 
   async findOne(userId: string) {
-    return this.getCart(await this.findUser(userId));
+    const cart = await this.getCart(await this.findUser(userId));
+    return { products: cart.products, totalPrice: cart.totalPrice };
   }
 
   async remove(userId: string, removeFromCartDto: RemoveFromCartDto) {
@@ -80,17 +81,6 @@ export class CartService {
     const cart = await this.getCart(user);
     cart.products.remove((p) => removeFromCartDto.products.includes(p.id));
     await this.cartRepo.persistAndFlush([cart]);
-    return cart;
+    return { products: cart.products, totalPrice: cart.totalPrice };
   }
-  /*
-
-  findAll() {
-    return `This action returns all cart`;
-  }
-
-  update(id: number, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
-  }
-
-  */
 }

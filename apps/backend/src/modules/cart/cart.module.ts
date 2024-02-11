@@ -7,7 +7,7 @@ import User from '../user/entities/user.entity';
 import Product from '../product/entities/product.entity';
 
 @Module({
-  imports: [MikroOrmModule.forFeature({ entities: [Cart, User, Product] })],
+  imports: [MikroOrmModule.forFeature([User, Product, Cart])],
   controllers: [CartController],
   providers: [CartService],
 })

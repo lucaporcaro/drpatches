@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class RemoveFromCartDto {
   @ApiProperty({ example: ['01HPC1PWARYTRPVHMZB455XPZJ'], isArray: true })

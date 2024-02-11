@@ -16,7 +16,7 @@ export default class Cart extends BaseModel {
   @Property({ type: 'double', default: 0 })
   totalPrice: number;
 
-  @ApiProperty({ })
+  @ApiProperty({})
   @Property({ name: 'stripe_id', nullable: true })
   stripeId?: string;
 
@@ -25,9 +25,6 @@ export default class Cart extends BaseModel {
   products = new Collection<Product>(this);
 
   // @ApiProperty()
-  @OneToOne(() => User, (user) => user.cart, {
-    orphanRemoval: true,
-    nullable: true,
-  })
+  @OneToOne(() => User, (user) => user.cart, { owner: true, nullable: true })
   user?: User;
 }
