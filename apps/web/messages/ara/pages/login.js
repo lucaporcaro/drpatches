@@ -8,4 +8,5 @@ export default {
     fiscal_code: 'الرمز الضريبي',
     vat: 'الرقم الضريبي',
     billing_address: 'عنوان الفواتير'
+  
 };
