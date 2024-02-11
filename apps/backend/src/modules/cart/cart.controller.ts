@@ -1,18 +1,32 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { CartService } from './cart.service';
-import { CreateCartDto } from './dtos/create-cart.dto';
-import { UpdateCartDto } from './dtos/update-cart.dto';
+import { AddToCartDto } from './dtos/add-to-cart.dto';
+// import { UpdateCartDto } from './dtos/update-cart.dto';
+import JwtGuard from '../authentication/gaurd/jwt.gaurd';
 
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
-  /*
+  @UseGuards(JwtGuard)
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  addToCart(
+    @Request() { user: { id } }: any,
+    @Body() createCartDto: AddToCartDto,
+  ) {
+    return this.cartService.addToCart(id, createCartDto);
   }
-
+  /*
   @Get()
   findAll() {
     return this.cartService.findAll();
