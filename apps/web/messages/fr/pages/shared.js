@@ -10,4 +10,6 @@ export default {
     email: 'Courriel',
     image: 'Image',
     info: 'INFORMATIONS UTILES'
+    ,register:"Registre",
+    have_accont:"Vous en avez déjà un ?"
 }

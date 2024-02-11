@@ -14,4 +14,5 @@ export default {
 
   level4:
     "Retournez le tissu et appuyez sur la zone située derrière la pièce, en exerçant une pression pendant au moins 30 secondes. Laissez la zone refroidir pendant cinq minutes supplémentaires.",
-};
+    Color:"Tableau des couleurs"
+  };

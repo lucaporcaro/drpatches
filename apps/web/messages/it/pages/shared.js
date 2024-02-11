@@ -10,4 +10,6 @@ export default {
     email: 'Email',
     image: 'Image',
     info: 'INFORMAZIONI UTILI'
+    ,register:"Registrati",
+    have_accont:"Ne hai già uno?"
 }
