@@ -58,7 +58,7 @@ export default function RegisterPage() {
   return (
     <div className='w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-2 lg:px-12'>
       <div className='w-11/12 mx-auto h-max max-w-3xl bg-black border-primary-1 border-2 py-10 px-8 rounded-xl text-white flex flex-col items-center justify-center gap-10'>
-        <h2 className='font-bold text-2xl lg:text-3xl'>Register</h2>
+        <h2 className='font-bold text-2xl lg:text-3xl'>{tr("register")}</h2>
         <form
           action={registerWithErrors}
           className='w-full h-max flex flex-col gap-2 bg-primary-1 p-2 md:p-6 md:gap-6 rounded-md'>

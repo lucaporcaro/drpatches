@@ -183,15 +183,22 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
                   isColor
                   value={product.textColor}
                 />
-
-                <span
+                <div
                   style={{
-                    color: product.textColor,
-                    borderColor: product.borderColor,
-                    backgroundColor: product.backgroundColor,
-                  }}>
-                  {product.text}
-                </span>
+                    fontFamily: product.font ? "CustomFont" : undefined,
+                  }}
+                  className='w-full flex flex-row data-[color=true]:items-start items-center gap-6 justify-between text-primary-1'>
+                  <span
+                    style={{
+                      color: product.textColor,
+                      borderColor: product.borderColor,
+                      backgroundColor: product.backgroundColor,
+                    }}
+                    className='font-bold border-4'>
+                    {" "}
+                    {product.text}
+                  </span>
+                </div>
               </div>
             )}
             <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
