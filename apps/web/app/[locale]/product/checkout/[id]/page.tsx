@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { httpClient } from "@app/lib/axios";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { timer } from "rxjs";
@@ -30,6 +30,7 @@ type Props = {
     id: string;
   };
 };
+
 const backingItems: SelectItem[] = [
   { id: "da_cucire", image: DaCucireImage.src },
   { id: "termoadesiva", image: TermoadesivaImage.src },
@@ -44,13 +45,13 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const jwt = useJwt();
   const router = useRouter();
   const t = useTranslations("components.fillInformation");
-
+  const [ts, stt] = useState(false);
   // Queries
   const [{ data: products }, { data: patchTypes }] = useQueries({
     queries: [
       {
-        queryKey: ["product", id, getUnixTime(new Date())],
-        queryFn: () => getProductInCart(id, jwt as string),
+        queryKey: ["product", getUnixTime(new Date())],
+        queryFn: () => getProductInCart(jwt as string),
       },
       {
         queryKey: ["patch_types"],
@@ -61,7 +62,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
 
   // Effects
   // useEffect(() => {
-  console.log("CheckoutProductPage  products:", products)
+  console.log("CheckoutProductPage  products:", products);
   //   if (!toastShowed && product && !product.isReadyForPayment) {
   //     router.replace(`/product/editor/${id}`);
   //     toast.error(t("title"));
@@ -91,151 +92,190 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // }, [patchTypes, product]);
 
   // // Conditions
-  if (!products || !patchTypes || products.products) return <Loading />;
+  if (!products || !patchTypes) return <Loading />;
 
-  // console.log(process.env.NEXT_PUBLIC_BASE_URL + (product.image as any));
-  // console.log(product);
-
- 
-  // @ts-ignore
   return (
-    <div className='w-full'>
+    <div className='w-full flex'>
       <form
-        action={`/product/checkout/${id}/payment`}
+        action={`/product/checkout/`}
         method='POST'
         className='  w-full flex-auto p-6 flex flex-col lg:flex-row items-start justify-center gap-6'>
-
-          {products &&(products as any).map((product)=>{        
-          <div
-          onClick={() => {
-            router.push(`/product/editor/${id}`);
-          }}
-          className='w-full h-full flex cursor-pointer bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>
-          <div className='w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]'>
-            <p className='font-bold flex flex-wrap break-all  text-2xl'>
-              Product #{product.id}
-            </p>
-          </div>
-          <div className='w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-6 py-5 lg:py-10 gap-20'>
-            <div className='w-full h-max flex flex-col items-start justify-center gap-10 font-bold'>
-              <span>
-                Patch with
-                {product.type
-                  ? " " +
-                    product.type[0]?.toUpperCase() +
-                    product.type?.slice(1)
-                  : ""}
-              </span>
-              <div className='w-full flex flex-row items-center justify-between gap-4'>
-                <span>Backing Type: </span>
-                <div className='bg-primary-1 w-max p-2 rounded-lg'>
-                  <Image
-                    src={product.backingType?.image || ""}
-                    width={52}
-                    height={52}
-                    alt='Backing Type Image'
-                  />
+        <div className='flex w-full flex-col gap-5'>
+          {products.products?.map((product: any) => {
+            return (
+              <div
+                onClick={() => {
+                  router.push(`/product/editor/${product.id}`);
+                }}
+                className='w-full h-full flex  cursor-pointer bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>
+                <div className='w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]'>
+                  <p className='font-bold flex flex-wrap break-all  text-2xl'>
+                    Product #{product.id}
+                  </p>
                 </div>
-              </div>
-              {product.patchType && product.patchType.image ? (
-                <div className='w-full flex flex-row items-center justify-between gap-4'>
-                  <span>Patch Type: </span>
-                  <div className='bg-primary-1 w-max p-2 rounded-lg'>
-                    <Image
-                      src={product.patchType?.image || ""}
-                      width={52}
-                      height={52}
-                      alt='Patch Type Image'
+                <div className='w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-6 py-5 lg:py-10 gap-20'>
+                  <div className='w-full h-max flex flex-col items-start justify-center gap-10 font-bold'>
+                    <span>
+                      Patch with
+                      {product.type
+                        ? " " +
+                          product.type[0]?.toUpperCase() +
+                          product.type?.slice(1)
+                        : ""}
+                    </span>
+                    <div className='w-full flex flex-row items-center justify-between gap-4'>
+                      <span>Backing Type: </span>
+                      <div className='bg-primary-1 w-max p-2 rounded-lg'>
+                        {product.backingType === "da_cucire" && (
+                          <Image
+                            src={DaCucireImage.src}
+                            width={52}
+                            height={52}
+                            alt='Backing Type Image'
+                          />
+                        )}
+                        {product.backingType === "termoadesiva" && (
+                          <Image
+                            src={TermoadesivaImage.src}
+                            width={52}
+                            height={52}
+                            alt='Backing Type Image'
+                          />
+                        )}
+                        {product.backingType === "velcro_a" && (
+                          <Image
+                            src={VelcroAImage.src}
+                            width={52}
+                            height={52}
+                            alt='Backing Type Image'
+                          />
+                        )}
+                        {product.backingType === "velcro_b" && (
+                          <Image
+                            src={VelcroBImage.src}
+                            width={52}
+                            height={52}
+                            alt='Backing Type Image'
+                          />
+                        )}
+                        {product.backingType === "velcro_a_b" && (
+                          <Image
+                            src={VelcroABImage.src}
+                            width={52}
+                            height={52}
+                            alt='Backing Type Image'
+                          />
+                        )}
+                      </div>
+                    </div>
+                    {product.patchType && product.patchType.image ? (
+                      <div className='w-full flex flex-row items-center justify-between gap-4'>
+                        <span>Patch Type: </span>
+                        <div className='bg-primary-1 w-max p-2 rounded-lg'>
+                          <Image
+                            src={product.patchType.image}
+                            width={52}
+                            height={52}
+                            alt='Patch Type Image'
+                          />
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                  {product.type === "image" ? (
+                    <div className='flex flex-col items-start justify-start gap-4'>
+                      <span className='font-bold'>Selected Image</span>
+                      <Image
+                        src={
+                          process.env.NEXT_PUBLIC_BASE_URL +
+                          (product.image as any)
+                        }
+                        width={240}
+                        height={240}
+                        alt='Product Selected Image'
+                        className='rounded-lg border-primary-1 border-[1px]'
+                      />
+                    </div>
+                  ) : (
+                    <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
+                      <ShoppingItem
+                        label='Text'
+                        value={product.text ?? "No text provided"}
+                      />
+                      <ShoppingItem
+                        label='Border Color'
+                        isColor
+                        value={product.borderColor}
+                      />
+                      <ShoppingItem
+                        label='Background Color'
+                        isColor
+                        value={product.backgroundColor}
+                      />
+                      <ShoppingItem
+                        label='Text Color'
+                        isColor
+                        value={product.textColor}
+                      />
+                      <div
+                        style={{
+                          fontFamily: product.font ? "CustomFont" : undefined,
+                        }}
+                        className='w-full flex flex-row data-[color=true]:items-start items-center gap-6 justify-between text-primary-1'>
+                        <p>previwe</p>
+                        <span
+                          style={{
+                            color: product.textColor,
+                            borderColor: product.borderColor,
+                            backgroundColor: product.backgroundColor,
+                          }}
+                          className='font-bold border-4'>
+                          {" "}
+                          {product.text}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
+                    <ShoppingItem
+                      label='Width'
+                      value={`${product.patchWidth} cm`}
+                    />
+                    <ShoppingItem
+                      label='Height'
+                      value={`${product.patchHeight} cm`}
                     />
                   </div>
-                </div>
-              ) : null}
-            </div>
-            {product.type === "image" ? (
-              <div className='flex flex-col items-start justify-start gap-4'>
-                <span className='font-bold'>Selected Image</span>
-                <Image
-                  src={
-                    process.env.NEXT_PUBLIC_BASE_URL + (product.image as any)
-                  }
-                  width={240}
-                  height={240}
-                  alt='Product Selected Image'
-                  className='rounded-lg border-primary-1 border-[1px]'
-                />
-              </div>
-            ) : (
-              <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
-                <ShoppingItem
-                  label='Text'
-                  value={product.text ?? "No text provided"}
-                />
-                <ShoppingItem
-                  label='Border Color'
-                  isColor
-                  value={product.borderColor}
-                />
-                <ShoppingItem
-                  label='Background Color'
-                  isColor
-                  value={product.backgroundColor}
-                />
-                <ShoppingItem
-                  label='Text Color'
-                  isColor
-                  value={product.textColor}
-                />
-                <div
-                  style={{
-                    fontFamily: product.font ? "CustomFont" : undefined,
-                  }}
-                  className='w-full flex flex-row data-[color=true]:items-start items-center gap-6 justify-between text-primary-1'>
-                  <span
-                    style={{
-                      color: product.textColor,
-                      borderColor: product.borderColor,
-                      backgroundColor: product.backgroundColor,
-                    }}
-                    className='font-bold border-4'>
-                    {" "}
-                    {product.text}
-                  </span>
+                  <div className='  w-full'>
+                    <ShoppingItem label='Note' value={`${product.note}`} />
+                  </div>
                 </div>
               </div>
-            )}
-            <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
-              <ShoppingItem label='Width' value={`${product.patchWidth} cm`} />
-              <ShoppingItem
-                label='Height'
-                value={`${product.patchHeight} cm`}
-              />
-            </div>
-            <div className='  w-full'>
-              <ShoppingItem label='Note' value={`${product.note}`} />
-            </div>
-          </div>
-        </div>})}
+            );
+          })}
+        </div>
 
-        {/* <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
-          <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
+        <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
+          {/* <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`${product.quantity} Items`}
               value={"€" + product.price.toString()}
             />
             <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
-          </div>
+          </div> */}
           <div className='w-full h-0.5 bg-primary-1' />
-          <Button className='bg-primary-1 mx-auto' style={{ color: "black" }}>
-            Proceed to checkout
-          </Button>
-        </div> */}
-        <input hidden name='jwt' value={jwt || undefined} />
+          <div>
+            <Button className='bg-primary-1 mx-auto' style={{ color: "black" }}>
+              Proceed to checkout
+            </Button>
+            <Link href={"/product/create"}>
+              <span className='bg-yellow-500 m-10 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full'>
+                new
+              </span>
+            </Link>
+          </div>
+        </div>
       </form>
-      <Link href={"/product/create"}>
-        <span className='bg-yellow-500 m-10 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full'>
-          new
-        </span>
-      </Link>
     </div>
   );
 }
