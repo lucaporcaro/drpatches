@@ -1,6 +1,14 @@
-import { Collection, Entity, Enum, OneToMany, Property } from '@mikro-orm/core';
+import {
+  Collection,
+  Entity,
+  Enum,
+  OneToMany,
+  OneToOne,
+  Property,
+} from '@mikro-orm/core';
 import BaseModel from 'src/common/entities/base-model.entity';
 import Address from 'src/modules/addresses/entities/address.entity';
+import Cart from 'src/modules/cart/entities/cart.entity';
 import Product from 'src/modules/product/entities/product.entity';
 
 export enum UserRole {
@@ -36,4 +44,10 @@ export default class User extends BaseModel {
 
   @OneToMany(() => Product, (product) => product.user)
   products = new Collection<Product>(this);
+
+  @OneToOne(() => Cart, (cart) => cart.user, {
+    orphanRemoval: true,
+    nullable: true,
+  })
+  cart?: Cart;
 }

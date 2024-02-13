@@ -1,36 +1,61 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { CartService } from './cart.service';
-import { CreateCartDto } from './dtos/create-cart.dto';
-import { UpdateCartDto } from './dtos/update-cart.dto';
+import { AddToCartDto } from './dtos/add-to-cart.dto';
+// import { UpdateCartDto } from './dtos/update-cart.dto';
+import JwtGuard from '../authentication/gaurd/jwt.gaurd';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { RemoveFromCartDto } from './dtos/remove-from-cart.dto';
+import Cart from './entities/cart.entity';
 
+@ApiTags('Carts')
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
-
-  /*
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  @ApiBearerAuth()
+  @ApiBody({ type: AddToCartDto })
+  @ApiResponse({ type: Cart })
+  @UseGuards(JwtGuard)
+  addToCart(
+    @Request() { user: { id } }: any,
+    @Body() createCartDto: AddToCartDto,
+  ) {
+    return this.cartService.addToCart(id, createCartDto);
   }
 
   @Get()
-  findAll() {
-    return this.cartService.findAll();
+  @ApiResponse({ type: Cart })
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  findOne(@Request() { user: { id } }: any) {
+    return this.cartService.findOne(id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  @Patch()
+  @ApiBody({ type: RemoveFromCartDto })
+  @ApiResponse({ type: Cart })
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  remove(
+    @Request() { user: { id } }: any,
+    @Body() removeFromCartDto: RemoveFromCartDto,
+  ) {
+    return this.cartService.remove(id, removeFromCartDto);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(+id, updateCartDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
-  }
-  */
 }
