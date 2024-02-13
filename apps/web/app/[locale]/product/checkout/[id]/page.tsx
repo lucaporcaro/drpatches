@@ -108,9 +108,12 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         className='  w-full flex-auto p-6 flex flex-col lg:flex-row items-start justify-center gap-6'>
         <div className='flex w-full flex-col gap-5'>
           {products.products &&
-            products.products.map((product: any) => {
+            products.products.map((product: any , index: number) => {
               return (
-                <Product product={product} refetch={refetchProduct}></Product>
+                <div key={index}>
+                  <Product product={product} refetch={refetchProduct}></Product>
+                </div>
+                
               );
             })}
         </div>
@@ -140,7 +143,7 @@ const Product = ({ product, refetch }: any) => {
     const data = {
       products: [product.id],
     };
-    const res = fetch("http://localhost:3001/v1/cart", {
+    const res = fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/cart`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${jwt}`,
