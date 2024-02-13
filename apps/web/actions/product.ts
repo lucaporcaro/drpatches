@@ -46,18 +46,19 @@ export async function getProduct(
   );
 }
 export async function getProductInCart(jwt: string | null = null) {
- const res = fetch("http://localhost:3001/v1/cart", {
+  const res = fetch("http://localhost:3001/v1/cart", {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
   })
     .then((res) => {
+      console.log(res);
       return res.json();
     })
     .then((res) => {
       return res;
     });
-    return res
+  return res
   //   return lastValueFrom(
   //     from(
   //       httpClient.get(`/v1/cart`, {
