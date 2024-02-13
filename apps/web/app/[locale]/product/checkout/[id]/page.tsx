@@ -103,7 +103,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   return (
     <div className='w-full flex'>
       <form
-        // action={`/product/checkout/`}
+        action={ `/product/checkout/zz/payment`}
         method='POST'
         className='  w-full flex-auto p-6 flex flex-col lg:flex-row items-start justify-center gap-6'>
         <div className='flex w-full flex-col gap-5'>
@@ -122,8 +122,8 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
               Proceed to checkout
             </Button>
             <Link href={"/product/create"}>
-              <p className='bg-yellow-500 m-10 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full'>
-                add new item to cart
+              <p className='bg-yellow-500 text-center m-10 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full'>
+                new 
               </p>
             </Link>
           </div>
@@ -306,7 +306,9 @@ const Product = ({ product, refetch }: any) => {
           </p>
           <div>
             <Link href={`/product/editor/${product.id}`}>
-              <p className=' rounded-2xl text-center py-1 w-20 bg-blue-600'>edit</p>
+              <p className=' rounded-2xl text-center py-1 w-20 bg-blue-600'>
+                edit
+              </p>
             </Link>
           </div>
         </div>

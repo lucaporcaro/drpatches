@@ -206,7 +206,7 @@ export default function ProductEditor({
   ];
 
   const addtocart = () => {
-    if (image) {
+    if ((text && font && patchType) || image) {
       const data = {
         products: [product.id],
       };
@@ -223,33 +223,10 @@ export default function ProductEditor({
         })
         .then((res) => {
           console.log(res);
+          router.push(`/product/checkout/${product.id}`);
         });
-
-      // httpClient.post(`/v1/cart`, data, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${jwt}`,
-      //   },
-      // });
-
-      router.push(`/product/checkout/${product.id}`);
     } else {
-      if (text && font && patchType) {
-        const data = {
-          products: [product.id],
-        };
-
-        httpClient.post(`/v1/cart`, data, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-
-        router.push(`/product/checkout/${product.id}`);
-      } else {
-        toast.error(a("title"));
-      }
+      toast.error(a("title"));
     }
   };
 
