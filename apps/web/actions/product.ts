@@ -46,7 +46,7 @@ export async function getProduct(
   );
 }
 export async function getProductInCart(jwt: string | null = null) {
-  const res = fetch("http://localhost:3001/v1/cart", {
+  const res = fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/cart`, {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
