@@ -45,9 +45,12 @@ export default class User extends BaseModel {
   @OneToMany(() => Product, (product) => product.user)
   products = new Collection<Product>(this);
 
-  @OneToOne(() => Cart, (cart) => cart.user, {
-    orphanRemoval: true,
-    nullable: true,
-  })
-  cart?: Cart;
+  @OneToMany(() => Cart, (cart) => cart.user)
+  carts = new Collection<Cart>(this);
+
+  // @OneToOne(() => Cart, (cart) => cart.user, {
+  //   orphanRemoval: true,
+  //   nullable: true,
+  // })
+  // cart?: Cart;
 }
