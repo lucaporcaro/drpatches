@@ -46,7 +46,7 @@ export default class ProductController {
   @Post('select')
   @ApiResponse({ type: SelectProductDto })
   selectProduct(@Body() { products }: SelectProductDto) {
-
+    return this.service.selectProduct(products);
   }
 
   @Get(':id')
