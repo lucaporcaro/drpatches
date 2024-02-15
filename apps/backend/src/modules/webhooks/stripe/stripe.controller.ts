@@ -5,13 +5,16 @@ import {
   BadRequestException,
   Body,
   Controller,
+  NotFoundException,
   Post,
   RawBodyRequest,
   Request,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { throws } from 'assert';
 import { config } from 'dotenv';
 import { from, switchMap } from 'rxjs';
+import Cart, { CartStatus } from 'src/modules/cart/entities/cart.entity';
 import Product, {
   ProductStatus,
 } from 'src/modules/product/entities/product.entity';
@@ -29,14 +32,16 @@ export class StripeController {
   constructor(
     @InjectRepository(Product)
     private readonly productRepo: EntityRepository<Product>,
+    @InjectRepository(Cart)
+    private readonly cartRepo: EntityRepository<Cart>,
   ) {
     this.em = productRepo.getEntityManager();
   }
 
   @Post()
-  handle(@Body() event: Stripe.Event) {
+  async handle(@Body() event: Stripe.Event) {
     if (event.type === 'checkout.session.completed') {
-      return from(
+      /*return from(
         this.productRepo.findOne({
           stripeId: event.data.object.client_reference_id,
         }),
@@ -45,7 +50,24 @@ export class StripeController {
           product.status = ProductStatus.PAID;
           return from(this.em.flush());
         }),
-      );
+      );*/
+      try {
+        const cart = await this.cartRepo.findOneOrFail(
+          {
+            stripeId: event.data.object.client_reference_id,
+          },
+          { populate: ['products.id', 'products.status'] },
+        );
+        for (const product of cart.products) {
+          product.status = ProductStatus.PAID;
+        }
+        // cart.products.removeAll();
+        cart.status = CartStatus.CLOSE;
+        await this.cartRepo.persistAndFlush(cart);
+        await this.em.flush();
+      } catch (e) {
+        throw new NotFoundException('cart not found');
+      }
     }
   }
 }

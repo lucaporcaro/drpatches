@@ -67,7 +67,10 @@ export class AuthenticationService {
 
   public login(email: string, password: string) {
     return from(
-      this.user.findOne({ email }, { fields: ['password', 'email', 'id'] }),
+      this.user.findOne(
+        { email /*password: { $or: [{ $ne: null }, { $ne: '' }] }*/ },
+        { fields: ['password', 'email', 'id'] },
+      ),
     ).pipe(
       mergeMap((user) => {
         if (!user || user.password !== this.hashPassword(password))
