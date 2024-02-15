@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { GuestUserService } from './guest-user.service';
 import { CreateGuestUserDto } from './dto/create-guest-user.dto';
-import { UpdateGuestUserDto } from './dto/update-guest-user.dto';
 import { ApiBody } from '@nestjs/swagger';
 
 @Controller('guest-user')
