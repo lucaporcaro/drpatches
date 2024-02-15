@@ -33,7 +33,7 @@ export default class User extends BaseModel {
   @Property({ name: 'last_name', nullable: false })
   lastName: string;
 
-  @Property({ unique: true, nullable: false })
+  @Property({ nullable: false })
   phone: string;
 
   @Property({ unique: true, nullable: true })
