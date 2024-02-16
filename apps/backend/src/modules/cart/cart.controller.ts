@@ -63,6 +63,7 @@ export class CartController {
 
   @Put()
   @ApiBody({ type: AssignStripeIdDto })
+  @UseGuards(JwtGuard)
   assignStripeId(
     @Request() { user: { id } }: any,
     @Body() { stripeId }: AssignStripeIdDto,
