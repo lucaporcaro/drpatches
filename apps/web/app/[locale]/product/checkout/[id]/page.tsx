@@ -1,7 +1,10 @@
 /** @format */
 
 "use client";
-
+import {
+  clearPersistedProducts,
+  loadPersistedProducts,
+} from "@app/store/slices/persistedProducts";
 import { getPatchTypes } from "@app/actions/patch-type";
 import { getProductinDB } from "@app/actions/product";
 import Button from "@app/components/Button";
@@ -45,11 +48,15 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
   );
-  const productsIdList = products.map((product) => {
-    return product.id;
-  });
+  console.log("CheckoutProductPage  products:", products);
 
-  console.log("proooooooooooooo", productsIdList);
+  const productsIdList = products.map((product) => {
+    if (product?.id !== undefined) {
+      return product.id;
+    }
+  });
+  console.log(productsIdList);
+
   const jwt = useJwt();
   const router = useRouter();
   const t = useTranslations("components.fillInformation");
@@ -75,7 +82,6 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
     ],
   });
 
-  console.log("serverproduct", productfromserver);
   useEffect(() => {
     refetchProduct();
   }, [productsIdList]);
@@ -141,10 +147,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
             }
           }
         );
-        console.log(
-          "productlistforaddtocart  productlistforaddtocart:",
-          productlistforaddtocart
-        );
+
         fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
           method: "POST",
           headers: {
@@ -160,28 +163,19 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           })
           .then((result) => {
             console.log(result);
-            // fetch(
-            //   `${process.env.FRONTEND_URL}/product/checkout/${result[0].cart}/payment`,
-            //   { method: "post" }
-            // );
+            fetch(`${process.env.FRONTEND_URL}/product/checkout/qwer/payment`, {
+              method: "post",
+            });
 
-            // router.push(`/product/checkout/${result[0].cart}/payment`)
+            // router.push(`/product/checkout/qwer/payment`);
           });
       });
   };
 
   return (
     <div className='w-full'>
-      <button
-        onClick={() => {
-          router.push(`/product/editor/${id}`);
-        }}
-        className='px-6 py-3 mt-5 bg-black mx-6 rounded-lg'
-        title='Reset'>
-        <FaArrowLeft size={20} className='text-white' />{" "}
-      </button>
       <form
-        action={`/product/checkout/${id}/payment`}
+        action={`/product/checkout/qwer/payment`}
         method='POST'
         className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
         {productfromserver.map((product: any) => {
@@ -299,19 +293,19 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           </div>
         </div> */}
 
-        <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
-          {/* <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
+        {/* <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
+         <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`${product.quantity} Items`}
               value={"€" + product.price.toString()}
             />
              <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
-          </div> */}
+          </div>
           <div className='w-full h-0.5 bg-primary-1' />
           <Button className='bg-primary-1 mx-auto' style={{ color: "black" }}>
             Proceed to checkout
           </Button>
-        </div>
+        </div> */}
 
         <div className='w-full flex-col  min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex  items-center justify-center gap-10'>
           <div className='flex  w-full items-center justify-center gap-3'>
@@ -371,6 +365,8 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
 }
 
 const ProductContaner = ({ product, patchTypes }: any) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   // Memos
   const perItemPrice = useMemo(() => {
     if (!product) return "0";
@@ -387,9 +383,40 @@ const ProductContaner = ({ product, patchTypes }: any) => {
     return patchTypes.filter(({ id }: any) => id === product.patchType)[0];
   }, [patchTypes, product]);
 
-  // if (!product.isReadyForPayment) {
-  //   return <p></p>;
-  // }
+  if (!product.isReadyForPayment) {
+    return <p></p>;
+  }
+  const allProduct = useSelector(
+    (state: RootState) => state.persistedProducts.products
+  );
+
+  const onDeleteProduct = () => {
+    const filterProduct = allProduct.map((item) => {
+      if (item?.id !== product.id) {
+        return item;
+      }
+    });
+
+    console.log("onDeleteProduct  products:", filterProduct);
+    if (filterProduct.length !== 0)
+      localStorage.setItem(
+        "created_products",
+        JSON.stringify([...filterProduct])
+      );
+
+    const productsFromLocalStorage = localStorage.getItem("created_products");
+    if (productsFromLocalStorage)
+      dispatch(loadPersistedProducts(JSON.parse(productsFromLocalStorage)));
+
+    // useEffect(() => {
+
+    //   if (products.length !== 0)
+    //     localStorage.setItem("created_products", JSON.stringify([...products]));
+    // }, [products]);
+    // useEffect(() => {
+
+    // }, []);
+  };
   return (
     <div className='w-full h-full flex bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>
       <div className='w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]'>
@@ -486,6 +513,31 @@ const ProductContaner = ({ product, patchTypes }: any) => {
         </div>
         <div className='  w-full'>
           <ShoppingItem label='Note' value={`${product.note}`} />
+        </div>{" "}
+        <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
+          <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
+            <ShoppingItem
+              label={`${product.quantity} Items`}
+              value={"€" + product.price.toString()}
+            />
+            <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
+          </div>
+          <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
+            <div
+              onClick={() => {
+                router.push(`/product/editor/${product.id}`);
+              }}
+              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
+              title='Reset'>
+              edit
+            </div>
+            <div
+              onClick={onDeleteProduct}
+              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
+              title='Reset'>
+              delete
+            </div>
+          </div>
         </div>
       </div>
     </div>
