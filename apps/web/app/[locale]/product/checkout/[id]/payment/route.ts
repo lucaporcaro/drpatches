@@ -1,6 +1,6 @@
 /** @format */
 
-import { getProduct } from "@app/actions/product";
+import { getCart } from "@app/actions/product";
 import { httpClient } from "@app/lib/axios";
 import { ulid } from "ulid";
 import { NextRequest } from "next/server";
@@ -19,7 +19,7 @@ import {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(request: NextRequest) {
-  let cartId = request.url.replace("/payment", "").split("/").pop();
+ // let cartId;
   let jwt: string;
 
   const formData$ = from(request.formData());
@@ -27,9 +27,9 @@ export async function POST(request: NextRequest) {
     formData$.pipe(
       concatMap((formData) => {
         jwt = formData.get("jwt") as string;
-        return from(getProduct(jwt)).pipe(
+        return from(getCart(jwt)).pipe(
           map((product) => {
-            // productId = product.id as string;
+          //  cartId = product.products[0].id as string;
             return product;
           })
         );
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
                 product_data: { name: `Custom Patch ${product.id}` },
                 currency: "eur",
                 unit_amount: parseFloat(
-                  ((product.price as number) * 100).toFixed(2)
+                  ((product.totalPrice as number) * 100).toFixed(2)
                 ),
               },
               quantity: 1,
@@ -93,8 +93,7 @@ export async function POST(request: NextRequest) {
   const redirectUrl$ = defer(() =>
     session$.pipe(
       concatMap((session) => {
-        
-       const payload = { stripeId: session.client_reference_id as string };
+        const payload = { stripeId: session.client_reference_id as string };
         return from(
           httpClient.putForm(`/v1/cart`, payload, {
             headers: {
