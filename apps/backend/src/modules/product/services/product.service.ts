@@ -218,4 +218,8 @@ export default class ProductService {
     //   catchError((e) => throwError(() => e)),
     // );
   }
+
+  public selectProduct(products: string[]) {
+    return this.productRepo.find({ id: { $in: products } });
+  }
 }

@@ -14,7 +14,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { throws } from 'assert';
 import { config } from 'dotenv';
 import { from, switchMap } from 'rxjs';
-import Cart from 'src/modules/cart/entities/cart.entity';
+import Cart, { CartStatus } from 'src/modules/cart/entities/cart.entity';
 import Product, {
   ProductStatus,
 } from 'src/modules/product/entities/product.entity';
@@ -61,7 +61,8 @@ export class StripeController {
         for (const product of cart.products) {
           product.status = ProductStatus.PAID;
         }
-        cart.products.removeAll();
+        // cart.products.removeAll();
+        cart.status = CartStatus.CLOSE;
         await this.cartRepo.persistAndFlush(cart);
         await this.em.flush();
       } catch (e) {

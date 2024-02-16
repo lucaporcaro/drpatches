@@ -8,6 +8,7 @@ import {
   Delete,
   Request,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dtos/add-to-cart.dto';
@@ -22,6 +23,7 @@ import {
 } from '@nestjs/swagger';
 import { RemoveFromCartDto } from './dtos/remove-from-cart.dto';
 import Cart from './entities/cart.entity';
+import { AssignStripeIdDto } from './dtos/assign-stripeid.dto';
 
 @ApiTags('Carts')
 @Controller('cart')
@@ -57,5 +59,15 @@ export class CartController {
     @Body() removeFromCartDto: RemoveFromCartDto,
   ) {
     return this.cartService.remove(id, removeFromCartDto);
+  }
+
+  @Put()
+  @ApiBody({ type: AssignStripeIdDto })
+  @UseGuards(JwtGuard)
+  assignStripeId(
+    @Request() { user: { id } }: any,
+    @Body() { stripeId }: AssignStripeIdDto,
+  ) {
+    return this.cartService.assignStripeId(id, stripeId);
   }
 }

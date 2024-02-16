@@ -1,8 +1,8 @@
 export default {
   hero: {
-    title: "Crea il tuo Patch personalizzato",
+    title: "Crea la tua Patch personalizzata",
     subtitle:
-      "Puoi creare il tuo patch personalizzato con la nostra piattaforma semplice",
+      "Puoi creare la tua patch personalizzata con la nostra piattaforma semplice",
     order_now: "Ordina Ora",
   },
   why_us: {
