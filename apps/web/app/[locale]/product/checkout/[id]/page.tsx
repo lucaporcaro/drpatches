@@ -513,21 +513,32 @@ const ProductContaner = ({ product, patchTypes }: any) => {
         </div>
         <div className='  w-full'>
           <ShoppingItem label='Note' value={`${product.note}`} />
+        </div>{" "}
+        <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
+          <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
+            <ShoppingItem
+              label={`${product.quantity} Items`}
+              value={"€" + product.price.toString()}
+            />
+            <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
+          </div>
+          <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
+            <div
+              onClick={() => {
+                router.push(`/product/editor/${product.id}`);
+              }}
+              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
+              title='Reset'>
+              edit
+            </div>
+            <div
+              onClick={onDeleteProduct}
+              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
+              title='Reset'>
+              delete
+            </div>
+          </div>
         </div>
-      </div>
-      <div
-        onClick={() => {
-          router.push(`/product/editor/${product.id}`);
-        }}
-        className='px-6 py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
-        title='Reset'>
-        edit
-      </div>
-      <div
-        onClick={onDeleteProduct}
-        className='px-6 py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
-        title='Reset'>
-        delete
       </div>
     </div>
   );
