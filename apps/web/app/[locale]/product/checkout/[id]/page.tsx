@@ -160,12 +160,12 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           })
           .then((result) => {
             console.log(result);
-            // fetch(
-            //   `${process.env.FRONTEND_URL}/product/checkout/${result[0].cart}/payment`,
-            //   { method: "post" }
-            // );
+            fetch(
+              `${process.env.FRONTEND_URL}/product/checkout/${result[0].cart}/payment`,
+              { method: "post" }
+            );
 
-            // router.push(`/product/checkout/${result[0].cart}/payment`)
+            router.push(`/product/checkout/${result[0].cart}/payment`)
           });
       });
   };
@@ -181,7 +181,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         <FaArrowLeft size={20} className='text-white' />{" "}
       </button>
       <form
-        action={`/product/checkout/${id}/payment`}
+        action={`/product/checkout/qwer/payment`}
         method='POST'
         className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
         {productfromserver.map((product: any) => {
