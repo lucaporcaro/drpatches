@@ -379,12 +379,12 @@ const ProductContaner = ({ product, patchTypes }: any) => {
 
   const backingType = useMemo(() => {
     if (!product) return null;
-    return backingItems.filter(({ id }) => id === product.backingType)[0];
+    return backingItems.filter(({ id }: any) => id === product.backingType)[0];
   }, [product]);
 
   const selectedPatchType = useMemo(() => {
     if (!patchTypes || !product || !product.patchType) return null;
-    return patchTypes.filter(({ id }) => id === product.patchType)[0];
+    return patchTypes.filter(({ id }: any) => id === product.patchType)[0];
   }, [patchTypes, product]);
 
   // if (!product.isReadyForPayment) {
