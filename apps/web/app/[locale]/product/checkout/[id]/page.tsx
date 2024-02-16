@@ -145,7 +145,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           "productlistforaddtocart  productlistforaddtocart:",
           productlistforaddtocart
         );
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/product/select`, {
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -160,12 +160,12 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           })
           .then((result) => {
             console.log(result);
-            fetch(
-              `${process.env.FRONTEND_URL}/product/checkout/${result[0].cart}/payment`,
-              { method: "post" }
-            );
+            // fetch(
+            //   `${process.env.FRONTEND_URL}/product/checkout/${result[0].cart}/payment`,
+            //   { method: "post" }
+            // );
 
-            router.push(`/product/checkout/${result[0].cart}/payment`)
+            // router.push(`/product/checkout/${result[0].cart}/payment`)
           });
       });
   };
