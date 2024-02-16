@@ -172,17 +172,16 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
 
   return (
     <div className='w-full'>
-      <button
+      {/* <button
         onClick={() => {
           router.push(`/product/editor/${id}`);
         }}
         className='px-6 py-3 mt-5 bg-black mx-6 rounded-lg'
         title='Reset'>
         <FaArrowLeft size={20} className='text-white' />{" "}
-      </button>
-      <form
-        action={`/product/checkout/${id}/payment`}
-        method='POST'
+      </button> */}
+      <div
+       
         className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
         {productfromserver.map((product: any) => {
           return (
@@ -298,20 +297,20 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
             </div>
           </div>
         </div> */}
-
+{/* 
         <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
-          {/* <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
+          <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`${product.quantity} Items`}
               value={"€" + product.price.toString()}
             />
              <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
-          </div> */}
+          </div>
           <div className='w-full h-0.5 bg-primary-1' />
           <Button className='bg-primary-1 mx-auto' style={{ color: "black" }}>
             Proceed to checkout
           </Button>
-        </div>
+        </div> */}
 
         <div className='w-full flex-col  min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex  items-center justify-center gap-10'>
           <div className='flex  w-full items-center justify-center gap-3'>
@@ -365,7 +364,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         </div>
 
         {/* <input hidden name='jwt' value={jwt || undefined} /> */}
-      </form>
+      </div>
     </div>
   );
 }
