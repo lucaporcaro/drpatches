@@ -161,11 +161,11 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           .then((result) => {
             console.log(result);
             fetch(
-              `${process.env.FRONTEND_URL}/product/checkout/${result[0].cart}/payment`,
+              `${process.env.FRONTEND_URL}/product/checkout/qwer/payment`,
               { method: "post" }
             );
 
-            router.push(`/product/checkout/${result[0].cart}/payment`)
+            router.push(`/product/checkout/qwer/payment`)
           });
       });
   };
