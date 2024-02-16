@@ -31,30 +31,30 @@ export default function ProductProvider({ children }: any) {
     if (productsFromLocalStorage)
       dispatch(loadPersistedProducts(JSON.parse(productsFromLocalStorage)));
   }, []);
-  useEffect(() => {
-    if (jwt && products.length !== 0)
-      (async (jwt: string) => {
-        await lastValueFrom(
-          from(products).pipe(
-            mergeMap((product) => {
-              return from(
-                httpClient.put(
-                  `v1/product/assign/${product.id}`,
-                  {},
-                  {
-                    headers: {
-                      Authorization: `Bearer ${jwt}`,
-                    },
-                  }
-                )
-              );
-            }),
-            catchError((e) => throwError(() => e))
-          )
-        );
-        dispatch(clearPersistedProducts());
-      })(jwt);
-  }, [jwt, products]);
+  // useEffect(() => {
+  //   if (jwt && products.length !== 0)
+  //     (async (jwt: string) => {
+  //       await lastValueFrom(
+  //         from(products).pipe(
+  //           mergeMap((product) => {
+  //             return from(
+  //               httpClient.put(
+  //                 `v1/product/assign/${product.id}`,
+  //                 {},
+  //                 {
+  //                   headers: {
+  //                     Authorization: `Bearer ${jwt}`,
+  //                   },
+  //                 }
+  //               )
+  //             );
+  //           }),
+  //           catchError((e) => throwError(() => e))
+  //         )
+  //       );
+  //       dispatch(clearPersistedProducts());
+  //     })(jwt);
+  // }, [jwt, products]);
 
   return children;
 }

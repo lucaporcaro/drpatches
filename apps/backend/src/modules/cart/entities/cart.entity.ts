@@ -1,6 +1,8 @@
 import {
   Collection,
   Entity,
+  Enum,
+  ManyToOne,
   OneToMany,
   OneToOne,
   Property,
@@ -9,6 +11,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import BaseModel from 'src/common/entities/base-model.entity';
 import Product from 'src/modules/product/entities/product.entity';
 import User from 'src/modules/user/entities/user.entity';
+
+export enum CartStatus {
+  OPEN = 'open',
+  CLOSE = 'close',
+}
 
 @Entity({ tableName: 'carts' })
 export default class Cart extends BaseModel {
@@ -25,6 +32,16 @@ export default class Cart extends BaseModel {
   products = new Collection<Product>(this);
 
   // @ApiProperty()
-  @OneToOne(() => User, (user) => user.cart, { owner: true, nullable: true })
+  // @OneToOne(() => User, (user) => user.cart, { owner: true, nullable: true })
+  // user?: User;
+
+  @ManyToOne(() => User, { nullable: true })
   user?: User;
+
+  @Enum({
+    items: () => CartStatus,
+    index: true,
+    default: CartStatus.OPEN,
+  })
+  status!: CartStatus;
 }

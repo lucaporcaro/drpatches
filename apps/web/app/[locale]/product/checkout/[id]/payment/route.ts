@@ -1,6 +1,6 @@
 /** @format */
 
-import { getProductInCart } from "@app/actions/product";
+import { getCart } from "@app/actions/product";
 import { httpClient } from "@app/lib/axios";
 import { ulid } from "ulid";
 import { NextRequest } from "next/server";
@@ -19,7 +19,7 @@ import {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(request: NextRequest) {
-  let productId: string;
+ // let cartId;
   let jwt: string;
 
   const formData$ = from(request.formData());
@@ -27,14 +27,9 @@ export async function POST(request: NextRequest) {
     formData$.pipe(
       concatMap((formData) => {
         jwt = formData.get("jwt") as string;
-        return from(
-          getProductInCart(
-            // request.url.replace("/payment", "").split("/").pop() as any,
-            jwt
-          )
-        ).pipe(
+        return from(getCart(jwt)).pipe(
           map((product) => {
-            productId = product.products[0].cart as string;
+          //  cartId = product.products[0].id as string;
             return product;
           })
         );
@@ -50,7 +45,7 @@ export async function POST(request: NextRequest) {
           line_items: [
             {
               price_data: {
-                product_data: { name: `Custom Patch ${product.products[0].id}` },
+                product_data: { name: `Custom Patch ${product.id}` },
                 currency: "eur",
                 unit_amount: parseFloat(
                   ((product.totalPrice as number) * 100).toFixed(2)
@@ -98,12 +93,11 @@ export async function POST(request: NextRequest) {
   const redirectUrl$ = defer(() =>
     session$.pipe(
       concatMap((session) => {
-        const payload = new FormData();
-        payload.append("stripeId", session.client_reference_id as string);
+        const payload = { stripeId: session.client_reference_id as string };
         return from(
-          httpClient.patchForm(`/v1/product/${productId}`, payload, {
+          httpClient.putForm(`/v1/cart`, payload, {
             headers: {
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json",
               Authorization: `Bearer ${jwt}`,
             },
           })

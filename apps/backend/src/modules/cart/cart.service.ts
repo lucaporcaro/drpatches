@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { AddToCartDto } from './dtos/add-to-cart.dto';
 // import { UpdateCartDto } from './dtos/update-cart.dto';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import Cart from './entities/cart.entity';
+import Cart, { CartStatus } from './entities/cart.entity';
 import { EntityRepository, Loaded } from '@mikro-orm/core';
 import User from '../user/entities/user.entity';
 import Product, { ProductStatus } from '../product/entities/product.entity';
@@ -23,7 +23,7 @@ export class CartService {
     let cart: Cart;
     try {
       cart = await this.cartRepo.findOneOrFail(
-        { user },
+        { user, status: CartStatus.OPEN },
         { populate: ['products.id', 'user.id'] },
       );
     } catch (e) {
@@ -83,5 +83,13 @@ export class CartService {
     cart.products.remove((p) => removeFromCartDto.products.includes(p.id));
     await this.cartRepo.persistAndFlush([cart]);
     return { products: cart.products, totalPrice: cart.totalPrice };
+  }
+
+  async assignStripeId(userId: string, stripeId: string) {
+    const user = await this.findUser(userId);
+    const cart = await this.getCart(user);
+    cart.stripeId = stripeId;
+    await this.cartRepo.persistAndFlush([cart]);
+    return { data: { message: 'successful assign stripeid' } };
   }
 }

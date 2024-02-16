@@ -17,6 +17,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiParam,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
@@ -27,6 +28,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'src/common/storages/dist';
 import CreateProductRequestDto from '../dtos/create-product.request.dto';
 import UpdateProductRequestDto from 'src/modules/product/dtos/update-product.request.dto';
+import { SelectProductDto } from '../dtos/select-product.dto';
 
 @Controller({ path: 'product', version: '1' })
 @ApiTags('Products')
@@ -39,6 +41,12 @@ export default class ProductController {
   @UseGuards(JwtGuard)
   public getAll(@Request() { user: { id } }: any) {
     return this.service.getAll(id);
+  }
+
+  @Post('select')
+  @ApiResponse({ type: SelectProductDto })
+  selectProduct(@Body() { products }: SelectProductDto) {
+    return this.service.selectProduct(products);
   }
 
   @Get(':id')
