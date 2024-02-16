@@ -3,7 +3,7 @@
 "use client";
 
 import { getPatchTypes } from "@app/actions/patch-type";
-import { getProduct } from "@app/actions/product";
+import { getProductinDB } from "@app/actions/product";
 import Button from "@app/components/Button";
 import { FaArrowLeft } from "react-icons/fa6";
 import Loading from "@app/components/Loading";
@@ -13,7 +13,7 @@ import { httpClient } from "@app/lib/axios";
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { map, timer } from "rxjs";
@@ -45,22 +45,28 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
   );
-  const productsIdList = products.map((product)=>{
-   
-     return product.id
-  })
- 
-  console.log("proooooooooooooo",productsIdList);
+  const productsIdList = products.map((product) => {
+    return product.id;
+  });
+
+  console.log("proooooooooooooo", productsIdList);
   const jwt = useJwt();
   const router = useRouter();
   const t = useTranslations("components.fillInformation");
 
+  const [email, setEmail] = useState("");
+  const [fiscal, setFiscal] = useState("");
+  const [password, setPassword] = useState("");
+
   // Queries
-  const [{ data: product }, { data: patchTypes }] = useQueries({
+  const [
+    { data: productfromserver, refetch: refetchProduct },
+    { data: patchTypes },
+  ] = useQueries({
     queries: [
       {
-        queryKey: ["product", id, getUnixTime(new Date())],
-        queryFn: () => getProduct(id, jwt as string),
+        queryKey: ["product"],
+        queryFn: () => getProductinDB(productsIdList),
       },
       {
         queryKey: ["patch_types"],
@@ -69,19 +75,23 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
     ],
   });
 
-  // Effects
+  console.log("serverproduct", productfromserver);
   useEffect(() => {
-    if (!toastShowed && product && !product.isReadyForPayment) {
-      router.replace(`/product/editor/${id}`);
-      toast.error(t("title"));
-      toastShowed = true;
-    }
-    return () => {
-      timer(1000).subscribe(() => {
-        toastShowed = false;
-      });
-    };
-  }, [product]);
+    refetchProduct();
+  }, [productsIdList]);
+  // Effects
+  // useEffect(() => {
+  //   if (!toastShowed && product && !product.isReadyForPayment) {
+  //     router.replace(`/product/editor/${id}`);
+  //     toast.error(t("title"));
+  //     toastShowed = true;
+  //   }
+  //   return () => {
+  //     timer(1000).subscribe(() => {
+  //       toastShowed = false;
+  //     });
+  //   };
+  // }, [product]);
 
   // // Memos
   // const perItemPrice = useMemo(() => {
@@ -100,10 +110,65 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // }, [patchTypes, product]);
 
   // Conditions
-  if (!product || !patchTypes) return <Loading />;
+  if (!productfromserver || !patchTypes) return <Loading />;
 
-  console.log(process.env.NEXT_PUBLIC_BASE_URL + (product.image as any));
-  console.log(product);
+  const paymentWithForm = () => {
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/guest-user`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        fiscal,
+        password,
+      }),
+    })
+      .then((res) => {
+        if (res.status === 500) {
+          toast.error("dublicate information");
+        }
+        return res.json();
+      })
+      .then((res) => {
+        localStorage.setItem("SESSION_TOKEN", res.token);
+
+        //-----
+        const productlistforaddtocart = productfromserver.map(
+          (product: any) => {
+            if (product.isReadyForPayment) {
+              return product.id;
+            }
+          }
+        );
+        console.log(
+          "productlistforaddtocart  productlistforaddtocart:",
+          productlistforaddtocart
+        );
+        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/product/select`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${res.token}`,
+          },
+          body: JSON.stringify({
+            products: productlistforaddtocart,
+          }),
+        })
+          .then((result) => {
+            return result.json();
+          })
+          .then((result) => {
+            console.log(result);
+            fetch(
+              `${process.env.FRONTEND_URL}/product/checkout/${result[0].cart}/payment`,
+              { method: "post" }
+            );
+
+            router.push(`/product/checkout/${result[0].cart}/payment`)
+          });
+      });
+  };
 
   return (
     <div className='w-full'>
@@ -119,7 +184,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         action={`/product/checkout/${id}/payment`}
         method='POST'
         className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
-         {products.map((product) => {
+        {productfromserver.map((product: any) => {
           return (
             <ProductContaner
               key={product.id}
@@ -235,25 +300,77 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         </div> */}
 
         <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
-          <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
+          {/* <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`${product.quantity} Items`}
               value={"€" + product.price.toString()}
             />
-            {/* <ShoppingItem label={`Per item`} value={"€" + perItemPrice} /> */}
-          </div>
+             <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
+          </div> */}
           <div className='w-full h-0.5 bg-primary-1' />
           <Button className='bg-primary-1 mx-auto' style={{ color: "black" }}>
             Proceed to checkout
           </Button>
         </div>
-        <input hidden name='jwt' value={jwt || undefined} />
+
+        <div className='w-full flex-col  min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex  items-center justify-center gap-10'>
+          <div className='flex  w-full items-center justify-center gap-3'>
+            <label
+              className='font-semibold text-white md:text-xl'
+              htmlFor='email'>
+              email
+            </label>
+            <input
+              className='w-full p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+              type='text'
+              name='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className='flex  w-full items-center justify-center gap-3'>
+            <label
+              className='font-semibold text-white md:text-xl'
+              htmlFor='fiscal'>
+              fiscal
+            </label>
+            <input
+              className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+              type='text'
+              name='fiscal'
+              value={fiscal}
+              onChange={(e) => setFiscal(e.target.value)}
+            />
+          </div>
+          <div className='flex  w-full items-center justify-center gap-3'>
+            <label
+              className='font-semibold text-white md:text-xl'
+              htmlFor='password'>
+              password
+            </label>
+            <input
+              className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+              type='password'
+              name='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>{" "}
+          <p
+            onClick={paymentWithForm}
+            className='bg-primary-1 mx-auto p-4  flex items-center justify-center rounded-xl font-semibold text-base text-white'
+            style={{ color: "black" }}>
+            payment
+          </p>
+        </div>
+
+        {/* <input hidden name='jwt' value={jwt || undefined} /> */}
       </form>
     </div>
   );
 }
 
-const ProductContaner = ({ product, patchTypes }) => {
+const ProductContaner = ({ product, patchTypes }: any) => {
   // Memos
   const perItemPrice = useMemo(() => {
     if (!product) return "0";
