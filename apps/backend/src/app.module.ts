@@ -13,6 +13,7 @@ import { StripeModule } from './modules/webhooks/stripe/stripe.module';
 import { FontModule } from './modules/font/font.module';
 import { CartModule } from './modules/cart/cart.module';
 import { GuestUserModule } from './modules/guest-user/guest-user.module';
+import { join } from 'path';
 
 @Module({
   imports: [

@@ -17,6 +17,8 @@ import {
   throwIfEmpty,
 } from 'rxjs';
 import Font from 'src/modules/font/entities/font.entity';
+import { moveSync } from 'fs-extra';
+import { join } from 'path';
 
 @Injectable()
 export default class ProductService {
@@ -116,7 +118,11 @@ export default class ProductService {
           for (const key of ['patchWidth', 'patchHeight', 'quantity'])
             if (payload[key]) payload[key] = parseFloat(payload[key]);
           Object.assign(product, data);
-          if (image) product.image = image.filename;
+          if (image) {
+            product.image = image.filename;
+            //product.image = `/static/${image.filename}`;
+            //moveSync(image.path, join(__dirname, '..', '..', '..', '..', 'static', image.filename));
+          }
 
           return of(product);
         }),
@@ -222,4 +228,6 @@ export default class ProductService {
   public selectProduct(products: string[]) {
     return this.productRepo.find({ id: { $in: products } });
   }
+
+
 }
