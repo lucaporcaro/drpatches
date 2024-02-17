@@ -126,8 +126,8 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   return (
     <div className='w-full'>
       <form
-        action={`/product/checkout/qwer/payment`}
-        method='POST'
+        // action={`/product/checkout/qwer/payment`}
+        // method='POST'
         className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
         <div className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
           {productfromserver.map((product: any) => {

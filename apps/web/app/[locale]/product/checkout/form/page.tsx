@@ -67,7 +67,7 @@ export default function Form() {
   useEffect(() => {
     refetchProduct();
   }, [productsIdList]);
-
+  const formData = new FormData();
   const paymentWithForm = () => {
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/guest-user`, {
       method: "POST",
@@ -87,6 +87,7 @@ export default function Form() {
         return res.json();
       })
       .then((res) => {
+        
         localStorage.setItem("SESSION_TOKEN", res.token);
 
         //-----
@@ -113,8 +114,10 @@ export default function Form() {
           })
           .then((result) => {
             console.log(result);
-            fetch(`${process.env.FRONTEND_URL}/product/checkout/qwer/payment`, {
+            formData.append("jwt", res.token);
+            fetch(`/product/checkout/qwer/payment`, {
               method: "post",
+              body: formData,
             });
 
             // router.push(`/product/checkout/qwer/payment`);
