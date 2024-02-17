@@ -45,6 +45,7 @@ let toastShowed = false;
 
 export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
+  const [price, setPrice] = useState(0);
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
   );
@@ -60,10 +61,6 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const jwt = useJwt();
   const router = useRouter();
   const t = useTranslations("components.fillInformation");
-
-  const [email, setEmail] = useState("");
-  const [fiscal, setFiscal] = useState("");
-  const [password, setPassword] = useState("");
 
   // Queries
   const [
@@ -118,59 +115,13 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // Conditions
   if (!productfromserver || !patchTypes) return <Loading />;
 
-  const paymentWithForm = () => {
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/guest-user`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        fiscal,
-        password,
-      }),
-    })
-      .then((res) => {
-        if (res.status === 500) {
-          toast.error("dublicate information");
-        }
-        return res.json();
-      })
-      .then((res) => {
-        localStorage.setItem("SESSION_TOKEN", res.token);
-
-        //-----
-        const productlistforaddtocart = productfromserver.map(
-          (product: any) => {
-            if (product.isReadyForPayment) {
-              return product.id;
-            }
-          }
-        );
-
-        fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${res.token}`,
-          },
-          body: JSON.stringify({
-            products: productlistforaddtocart,
-          }),
-        })
-          .then((result) => {
-            return result.json();
-          })
-          .then((result) => {
-            console.log(result);
-            fetch(`${process.env.FRONTEND_URL}/product/checkout/qwer/payment`, {
-              method: "post",
-            });
-
-            // router.push(`/product/checkout/qwer/payment`);
-          });
-      });
-  };
+  if (!productfromserver || !patchTypes) return <Loading />;
+  // if (productfromserver) {
+  //    productfromserver.map((product: any) => {
+  //   setPrice((prevstate) => (prevstate + product.price));
+  //   product.price;
+  // });
+  // }
 
   return (
     <div className='w-full'>
@@ -178,187 +129,33 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         action={`/product/checkout/qwer/payment`}
         method='POST'
         className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
-        {productfromserver.map((product: any) => {
-          return (
-            <ProductContaner
-              key={product.id}
-              patchTypes={patchTypes}
-              product={product}></ProductContaner>
-          );
-        })}
-
-        {/* <div className='w-full h-full flex bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>
-          <div className='w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]'>
-            <p className='font-bold flex flex-wrap break-all  text-2xl'>
-              Product #{product.id}
-            </p>
-          </div>
-          <div className='w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-6 py-5 lg:py-10 gap-20'>
-            <div className='w-full h-max flex flex-col items-start justify-center gap-10 font-bold'>
-              <span>
-                Patch with
-                {product.type
-                  ? " " +
-                    product.type[0]?.toUpperCase() +
-                    product.type?.slice(1)
-                  : ""}
-              </span>
-              <div className='w-full flex flex-row items-center justify-between gap-4'>
-                <span>Backing Type: </span>
-                <div className='bg-primary-1 w-max p-2 rounded-lg'>
-                  <Image
-                    src={backingType?.image || ""}
-                    width={52}
-                    height={52}
-                    alt='Backing Type Image'
-                  />
-                </div>
-              </div>
-              {selectedPatchType && selectedPatchType.image ? (
-                <div className='w-full flex flex-row items-center justify-between gap-4'>
-                  <span>Patch Type: </span>
-                  <div className='bg-primary-1 w-max p-2 rounded-lg'>
-                    <Image
-                      src={selectedPatchType?.image || ""}
-                      width={52}
-                      height={52}
-                      alt='Patch Type Image'
-                    />
-                  </div>
-                </div>
-              ) : null}
-            </div>
-            {product.type === "image" ? (
-              <div className='flex flex-col items-start justify-start gap-4'>
-                <span className='font-bold'>Selected Image</span>
-                <Image
-                  src={
-                    process.env.NEXT_PUBLIC_BASE_URL + (product.image as any)
-                  }
-                  width={240}
-                  height={240}
-                  alt='Product Selected Image'
-                  className='rounded-lg border-primary-1 border-[1px]'
-                />
-              </div>
-            ) : (
-              <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
-                <ShoppingItem
-                  label='Text'
-                  value={product.text ?? "No text provided"}
-                />
-                <ShoppingItem
-                  label='Border Color'
-                  isColor
-                  value={product.borderColor}
-                />
-                <ShoppingItem
-                  label='Background Color'
-                  isColor
-                  value={product.backgroundColor}
-                />
-                <ShoppingItem
-                  label='Text Color'
-                  isColor
-                  value={product.textColor}
-                />
-                <div
-                  style={{
-                    fontFamily: product.font ? "CustomFont" : undefined,
-                  }}
-                  className='w-full flex flex-row data-[color=true]:items-start items-center gap-6 justify-between text-primary-1'>
-                  <span
-                    style={{
-                      color: product.textColor,
-                      borderColor: product.borderColor,
-                      backgroundColor: product.backgroundColor,
-                    }}
-                    className='font-bold border-4'>
-                    {" "}
-                    {product.text}
-                  </span>
-                </div>
-              </div>
-            )}
-            <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
-              <ShoppingItem label='Width' value={`${product.patchWidth} cm`} />
-              <ShoppingItem
-                label='Height'
-                value={`${product.patchHeight} cm`}
-              />
-            </div>
-            <div className='  w-full'>
-              <ShoppingItem label='Note' value={`${product.note}`} />
-            </div>
-          </div>
-        </div> */}
-
-        {/* <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
-         <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
-            <ShoppingItem
-              label={`${product.quantity} Items`}
-              value={"€" + product.price.toString()}
-            />
-             <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
-          </div>
-          <div className='w-full h-0.5 bg-primary-1' />
-          <Button className='bg-primary-1 mx-auto' style={{ color: "black" }}>
-            Proceed to checkout
-          </Button>
-        </div> */}
-
-        <div className='w-full flex-col  min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex  items-center justify-center gap-10'>
-          <div className='flex  w-full items-center justify-center gap-3'>
-            <label
-              className='font-semibold text-white md:text-xl'
-              htmlFor='email'>
-              email
-            </label>
-            <input
-              className='w-full p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
-              type='text'
-              name='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className='flex  w-full items-center justify-center gap-3'>
-            <label
-              className='font-semibold text-white md:text-xl'
-              htmlFor='fiscal'>
-              fiscal
-            </label>
-            <input
-              className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
-              type='text'
-              name='fiscal'
-              value={fiscal}
-              onChange={(e) => setFiscal(e.target.value)}
-            />
-          </div>
-          <div className='flex  w-full items-center justify-center gap-3'>
-            <label
-              className='font-semibold text-white md:text-xl'
-              htmlFor='password'>
-              password
-            </label>
-            <input
-              className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
-              type='password'
-              name='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>{" "}
-          <p
-            onClick={paymentWithForm}
-            className='bg-primary-1 mx-auto p-4  flex items-center justify-center rounded-xl font-semibold text-base text-white'
-            style={{ color: "black" }}>
-            payment
-          </p>
+        <div className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
+          {productfromserver.map((product: any) => {
+            return (
+              <ProductContaner
+                key={product.id}
+                patchTypes={patchTypes}
+                product={product}></ProductContaner>
+            );
+          })}
         </div>
-
-        {/* <input hidden name='jwt' value={jwt || undefined} /> */}
+        <div className='w-full min-w-[220px]   h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col lg:flex-row items-center justify-center gap-10'>
+          <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
+            <ShoppingItem label={`total price`} value={"€" + `${price} `} />
+          </div>
+          <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
+            <div
+              onClick={() => router.push("/product/checkout/form")}
+              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'>
+              payment
+            </div>
+            <div
+              onClick={() => router.push("/product/create")}
+              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'>
+              new item
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   );
@@ -494,6 +291,8 @@ const ProductContaner = ({ product, patchTypes }: any) => {
                 fontFamily: product.font ? "CustomFont" : undefined,
               }}
               className='w-full flex flex-row data-[color=true]:items-start items-center gap-6 justify-between text-primary-1'>
+              <span className='font-bold'>preview</span>
+
               <span
                 style={{
                   color: product.textColor,
@@ -501,7 +300,6 @@ const ProductContaner = ({ product, patchTypes }: any) => {
                   backgroundColor: product.backgroundColor,
                 }}
                 className='font-bold border-4'>
-                {" "}
                 {product.text}
               </span>
             </div>
@@ -514,7 +312,7 @@ const ProductContaner = ({ product, patchTypes }: any) => {
         <div className='  w-full'>
           <ShoppingItem label='Note' value={`${product.note}`} />
         </div>{" "}
-        <div className='w-full min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col items-center justify-center gap-10'>
+        <div className='w-full min-w-[220px]  lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col lg:flex-row items-center justify-center gap-10'>
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`${product.quantity} Items`}
