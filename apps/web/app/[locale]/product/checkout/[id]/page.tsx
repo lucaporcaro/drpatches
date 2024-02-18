@@ -46,6 +46,7 @@ let toastShowed = false;
 export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
   const [price, setPrice] = useState(0);
+  const [isEmpty, setIsEmpty] = useState(false);
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
   );
@@ -65,6 +66,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // Queries
   const [
     { data: productfromserver, refetch: refetchProduct },
+
     { data: patchTypes },
   ] = useQueries({
     queries: [
@@ -78,57 +80,16 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
       },
     ],
   });
-
+  console.log("CheckoutProductPage  productfromserver:", productfromserver);
   useEffect(() => {
     refetchProduct();
   }, [productsIdList]);
-  // Effects
-  // useEffect(() => {
-  //   if (!toastShowed && product && !product.isReadyForPayment) {
-  //     router.replace(`/product/editor/${id}`);
-  //     toast.error(t("title"));
-  //     toastShowed = true;
-  //   }
-  //   return () => {
-  //     timer(1000).subscribe(() => {
-  //       toastShowed = false;
-  //     });
-  //   };
-  // }, [product]);
-
-  // // Memos
-  // const perItemPrice = useMemo(() => {
-  //   if (!product) return "0";
-  //   return (parseFloat(product.price as string) / product.quantity).toFixed(2);
-  // }, [product]);
-
-  // const backingType = useMemo(() => {
-  //   if (!product) return null;
-  //   return backingItems.filter(({ id }) => id === product.backingType)[0];
-  // }, [product]);
-
-  // const selectedPatchType = useMemo(() => {
-  //   if (!patchTypes || !product || !product.patchType) return null;
-  //   return patchTypes.filter(({ id }) => id === product.patchType)[0];
-  // }, [patchTypes, product]);
 
   // Conditions
   if (!productfromserver || !patchTypes) return <Loading />;
-
-  if (!productfromserver || !patchTypes) return <Loading />;
-  // if (productfromserver) {
-  //    productfromserver.map((product: any) => {
-  //   setPrice((prevstate) => (prevstate + product.price));
-  //   product.price;
-  // });
-  // }
-
   return (
     <div className='w-full'>
-      <form
-        // action={`/product/checkout/qwer/payment`}
-        // method='POST'
-        className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
+      <form className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
         <div className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
           {productfromserver.map((product: any) => {
             return (
@@ -138,6 +99,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
                 product={product}></ProductContaner>
             );
           })}
+          {isEmpty && <h2 className=' text-center'>EMPTY</h2>}
         </div>
         <div className='w-full min-w-[220px]   h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col lg:flex-row items-center justify-center gap-10'>
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>

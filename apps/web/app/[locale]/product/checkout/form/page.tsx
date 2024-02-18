@@ -76,7 +76,7 @@ export default function Form() {
       },
       body: JSON.stringify({
         email,
-        fiscal:`${country} - ${city} - ${address} - ${fiscal}` ,
+        fiscal: `${country} - ${city} - ${address} - ${fiscal}`,
         password,
       }),
     })
@@ -87,7 +87,6 @@ export default function Form() {
         return res.json();
       })
       .then((res) => {
-        
         localStorage.setItem("SESSION_TOKEN", res.token);
 
         //-----
@@ -129,8 +128,8 @@ export default function Form() {
     <div className='w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-6 lg:px-12'>
       <div className='w-11/12 mx-auto h-max max-w-3xl bg-black border-primary-1 border-2 py-10 px-8 rounded-xl text-white flex flex-col items-center justify-center gap-10'>
         <h2 className='font-bold text-2xl lg:text-3xl'>guest</h2>
-        <form action='' className=" w-full">
-          <div className='w-full flex-col  min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex  items-center justify-center gap-10'>
+        <form action='' className=' w-full'>
+          <div className='w-full flex-col  min-w-[220px] lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex items-start gap-10'>
             <div className='flex  w-full items-center justify-center gap-3'>
               <label
                 className='font-semibold text-white md:text-xl'
@@ -138,7 +137,7 @@ export default function Form() {
                 email
               </label>
               <input
-                className='w-full p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+                className=' w-10/12 p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
                 type='text'
                 name='email'
                 value={email}
@@ -152,7 +151,7 @@ export default function Form() {
                 country
               </label>
               <input
-                className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+                className=' w-10/12  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
                 type='text'
                 name='country'
                 value={country}
@@ -166,7 +165,7 @@ export default function Form() {
                 city
               </label>
               <input
-                className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+                className=' w-10/12  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
                 type='text'
                 name='city'
                 value={city}
@@ -180,7 +179,7 @@ export default function Form() {
                 address
               </label>
               <input
-                className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+                className=' w-10/12  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
                 type='text'
                 name='address'
                 value={address}
@@ -194,7 +193,7 @@ export default function Form() {
                 fiscal
               </label>
               <input
-                className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+                className=' w-10/12  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
                 type='text'
                 name='fiscal'
                 value={fiscal}
@@ -208,7 +207,7 @@ export default function Form() {
                 password
               </label>
               <input
-                className='w-full  p-3 outline-none bg-white flex items-center justify-start px-3 rounded-xl'
+                className=' w-10/12  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
                 type='password'
                 name='password'
                 value={password}

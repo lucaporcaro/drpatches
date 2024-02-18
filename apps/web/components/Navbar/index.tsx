@@ -19,6 +19,7 @@ const Navbar = () => {
     const t = useTranslations("components.navbar");
     const user: any = useSelector((state: RootState) => state.user);
 
+
     // Memo
     const isLoggedIn = useMemo(() => Object.keys(user).length !== 0, [user]);
 
@@ -90,7 +91,7 @@ const Navbar = () => {
                         <ButtonCustom className="hoverButtonEffect">{t("links.examples")}</ButtonCustom>
                     </Link>
 
-                    <Link href="/profile/products" passHref className="link">
+                    <Link href="/product/checkout/01HPWFPT68S4XXCDCP1NC2BP" passHref className="link">
                         <FaBasketShopping className="text-white w-8 aspect-auto hoverEffect"/>
                     </Link>
                 </div>
