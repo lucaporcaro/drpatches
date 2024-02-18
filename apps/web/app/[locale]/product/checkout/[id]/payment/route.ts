@@ -19,10 +19,14 @@ import {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(request: NextRequest) {
+
  // let cartId;
   let jwt: string;
 
+    console.log("==========================================------+++++===============================")
   const formData$ = from(request.formData());
+ 
+  
   const product$ = defer(() =>
     formData$.pipe(
       concatMap((formData) => {
