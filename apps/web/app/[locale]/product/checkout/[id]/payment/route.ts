@@ -44,12 +44,14 @@ export async function POST(request: NextRequest) {
     product$.pipe(
       concatMap((product) => {
         const sessionOptions: Stripe.Checkout.SessionCreateParams = {
+          
+          
           client_reference_id: ulid(),
           payment_method_types: ["card", "paypal"],
           line_items: [
             {
               price_data: {
-                product_data: { name: `Custom Patch ${product.id}` },
+                product_data: { name: `Custom Patch ${product.products[0].cart}` },
                 currency: "eur",
                 unit_amount: parseFloat(
                   ((product.totalPrice as number) * 100).toFixed(2)
@@ -120,5 +122,6 @@ export async function POST(request: NextRequest) {
       })
     )
   );
+
   return lastValueFrom(redirectUrl$);
 }
