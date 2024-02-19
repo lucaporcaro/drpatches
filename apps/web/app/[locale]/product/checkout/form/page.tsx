@@ -31,6 +31,7 @@ import VelcroABImage from "@app/assets/images/backing/5.png";
 import { RootState } from "@app/store";
 
 export default function Form() {
+  const router = useRouter()
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
@@ -114,10 +115,21 @@ export default function Form() {
           .then((result) => {
             console.log(result);
             formData.append("jwt", res.token);
-            fetch(`/product/checkout/qwer/payment`, {
+            const  cc = fetch(`/product/checkout/qwer/payment`, {
               method: "post",
               body: formData,
-            });
+            })
+              .then((ressss) => {
+                console.log("res1", ressss);
+
+                return ressss.json();
+              })
+              .then((ress) => {
+                window.location.assign(ress.data)
+                router.push(`/product/checkout/qwer/payment`);
+                console.log("lojjjjj", ress.data);
+              });
+            console.log("ccccccccccccccccc", cc);
 
             // router.push(`/product/checkout/qwer/payment`);
           });
