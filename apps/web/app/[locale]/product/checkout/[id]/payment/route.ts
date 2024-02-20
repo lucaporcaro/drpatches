@@ -98,6 +98,7 @@ export async function POST(request: NextRequest) {
 
   const redirectUrl$ = defer(() =>
     session$.pipe(
+    
       concatMap((session) => {
         const payload = { stripeId: session.client_reference_id as string };
         return from(
@@ -108,7 +109,8 @@ export async function POST(request: NextRequest) {
             },
           })
         ).pipe(
-          map(() => session),
+          map(() => {
+           return session}),
           catchError((e) =>
             throwError(() => {
               console.dir(e.response.data);
@@ -118,7 +120,9 @@ export async function POST(request: NextRequest) {
         );
       }),
       concatMap((session) => {
-        return of(Response.redirect(session.url as string));
+        
+        
+        return of(Response.json(session.url as string));
       })
     )
   );
