@@ -45,19 +45,19 @@ let toastShowed = false;
 
 export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
-  const [price, setPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [isEmpty, setIsEmpty] = useState(false);
+
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
   );
-  console.log("CheckoutProductPage  products:", products);
+
 
   const productsIdList = products.map((product) => {
     if (product?.id !== undefined) {
       return product.id;
     }
   });
-  console.log(productsIdList);
 
   const jwt = useJwt();
   const router = useRouter();
@@ -80,10 +80,25 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
       },
     ],
   });
-  console.log("CheckoutProductPage  productfromserver:", productfromserver);
+
   useEffect(() => {
     refetchProduct();
+   
+   
   }, [productsIdList]);
+
+  useEffect(() => {
+    setTotalPrice(0);
+    if (productfromserver ) {
+
+       productfromserver.map((product: any) => {
+      setTotalPrice((prevstate) => prevstate + product.price);
+    });
+
+    console.log("total price", totalPrice);
+    }
+   
+  }, [productfromserver]);
 
   // Conditions
   if (!productfromserver || !patchTypes) return <Loading />;
@@ -103,7 +118,10 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         </div>
         <div className='w-full min-w-[220px]   h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col lg:flex-row items-center justify-center gap-10'>
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
-            <ShoppingItem label={`total price`} value={"€" + `${price} `} />
+            <ShoppingItem
+              label={`total price`}
+              value={"€" + `${totalPrice} `}
+            />
           </div>
           <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
             <div
@@ -156,7 +174,7 @@ const ProductContaner = ({ product, patchTypes }: any) => {
       }
     });
 
-    console.log("onDeleteProduct  products:", filterProduct);
+
     if (filterProduct.length !== 0)
       localStorage.setItem(
         "created_products",
