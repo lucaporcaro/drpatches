@@ -106,15 +106,10 @@ export default function Form() {
               body: formData,
             })
               .then((ressss) => {
-                console.log("res1", ressss);
-                console.log(typeof ressss);
-
                 return ressss.json();
               })
               .then((ress) => {
-                console.log("-------------------------");
                 router.push(ress);
-                console.log("lojjjjj", ress);
               });
             console.log("ccccccccccccccccc", cc);
           });

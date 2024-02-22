@@ -52,7 +52,6 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
     (state: RootState) => state.persistedProducts.products
   );
 
-
   const productsIdList = products.map((product) => {
     if (product?.id !== undefined) {
       return product.id;
@@ -83,21 +82,17 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
 
   useEffect(() => {
     refetchProduct();
-   
-   
   }, [productsIdList]);
 
   useEffect(() => {
     setTotalPrice(0);
-    if (productfromserver ) {
+    if (productfromserver.isReadyForPayment) {
+      productfromserver.map((product: any) => {
+        setTotalPrice((prevstate) => prevstate + product.price);
+      });
 
-       productfromserver.map((product: any) => {
-      setTotalPrice((prevstate) => prevstate + product.price);
-    });
-
-    console.log("total price", totalPrice);
+      console.log("total price", totalPrice);
     }
-   
   }, [productfromserver]);
 
   // Conditions
@@ -173,7 +168,6 @@ const ProductContaner = ({ product, patchTypes }: any) => {
         return item;
       }
     });
-
 
     if (filterProduct.length !== 0)
       localStorage.setItem(
