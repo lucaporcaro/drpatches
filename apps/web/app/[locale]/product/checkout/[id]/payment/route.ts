@@ -19,21 +19,21 @@ import {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(request: NextRequest) {
-
- // let cartId;
+  // let cartId;
   let jwt: string;
 
-    console.log("==========================================------+++++===============================")
+  console.log(
+    "==========================================------+++++==============================="
+  );
   const formData$ = from(request.formData());
- 
-  
+
   const product$ = defer(() =>
     formData$.pipe(
       concatMap((formData) => {
         jwt = formData.get("jwt") as string;
         return from(getCart(jwt)).pipe(
           map((product) => {
-          //  cartId = product.products[0].id as string;
+            //  cartId = product.products[0].id as string;
             return product;
           })
         );
@@ -43,18 +43,19 @@ export async function POST(request: NextRequest) {
   const session$ = defer(() =>
     product$.pipe(
       concatMap((product) => {
+      
         const sessionOptions: Stripe.Checkout.SessionCreateParams = {
-          
-          
           client_reference_id: ulid(),
           payment_method_types: ["card", "paypal"],
           line_items: [
             {
               price_data: {
-                product_data: { name: `Custom Patch ${product.products[0].cart}` },
+                product_data: {
+                  name: `Custom Patch ${product.products[0].cart}`,
+                },
                 currency: "eur",
                 unit_amount: parseFloat(
-                  ((product.totalPrice as number) * 100).toFixed(2)
+                  ((product.totalPrice as number) * 2).toFixed(2)
                 ),
               },
               quantity: 1,
@@ -98,7 +99,6 @@ export async function POST(request: NextRequest) {
 
   const redirectUrl$ = defer(() =>
     session$.pipe(
-    
       concatMap((session) => {
         const payload = { stripeId: session.client_reference_id as string };
         return from(
@@ -110,7 +110,8 @@ export async function POST(request: NextRequest) {
           })
         ).pipe(
           map(() => {
-           return session}),
+            return session;
+          }),
           catchError((e) =>
             throwError(() => {
               console.dir(e.response.data);
@@ -120,8 +121,6 @@ export async function POST(request: NextRequest) {
         );
       }),
       concatMap((session) => {
-        
-        
         return of(Response.json(session.url as string));
       })
     )
