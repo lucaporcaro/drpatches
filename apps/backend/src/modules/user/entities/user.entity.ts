@@ -36,7 +36,7 @@ export default class User extends BaseModel {
   @Property({ nullable: false })
   phone: string;
 
-  @Property({ unique: true, nullable: true })
+  @Property({ nullable: true })
   fiscal: string;
 
   @OneToMany(() => Address, (address) => address.user)
