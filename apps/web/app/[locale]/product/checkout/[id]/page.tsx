@@ -86,11 +86,15 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
 
   useEffect(() => {
     setTotalPrice(0);
-    if (productfromserver && productfromserver.isReadyForPayment) {
-      productfromserver.map((product: any) => {
-        setTotalPrice((prevstate) => prevstate + product.price);
-      });
-
+    if (productfromserver) {
+  
+        productfromserver.map((product: any) => {
+          if (product.isReadyForPayment) {
+            setTotalPrice((prevstate) => prevstate + product.price);
+          }
+          
+        });
+      
       console.log("total price", totalPrice);
     }
   }, [productfromserver]);
