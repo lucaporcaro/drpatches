@@ -9,6 +9,7 @@ import { config } from 'dotenv';
 import Font from 'src/modules/font/entities/font.entity';
 import { existsSync } from 'node:fs';
 import { mkdir } from 'fs/promises';
+import Cart from 'src/modules/cart/entities/cart.entity';
 
 config();
 
@@ -79,6 +80,9 @@ async function isAdmin(email: string, password: string) {
               withMadeWithLove: false,
             },
             resources: [
+              {
+                resource: { model: Cart, orm },
+              },
               {
                 resource: { model: User, orm },
               },
