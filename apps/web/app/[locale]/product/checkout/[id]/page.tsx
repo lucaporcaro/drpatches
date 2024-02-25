@@ -103,7 +103,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
       console.log("total price", totalPrice);
     }
   }, [productfromserver]);
-
+  const formData = new FormData();
   useEffect(() => {
     if (jwt) {
       fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
@@ -122,7 +122,27 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         });
     }
   }, [jwt]);
+const submitform=()=>{
+  if (jwt) {
+    formData.append("jwt",jwt);
+             fetch(`/product/checkout/qwer/payment`, {
+              method: "post",
+              body: formData,
+            })
+              .then((ressss) => {
+                return ressss.json();
+              })
+              .then((ress) => {
+            
+                
+                router.push(ress);
+              });
+  }else{
+     router.push("/product/checkout/form")
+  }
+ 
 
+}
   // Conditions
   if (!productfromserver || !patchTypes || !productincart) return <Loading />;
   return (
@@ -158,7 +178,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           </div>
           <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
             <div
-              onClick={() => router.push("/product/checkout/form")}
+              onClick={submitform}
               className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'>
               payment
             </div>

@@ -72,10 +72,10 @@ export async function POST(request: NextRequest) {
             },
           ],
           shipping_address_collection: { allowed_countries: ["IT", "GB"] },
-          shipping_options: [
-            { shipping_rate: "shr_1Oc5aDFJwOikE4dcmUmPmDkp" },
-            { shipping_rate: "shr_1Oc4z5FJwOikE4dciXDG0n4L" },
-          ],
+          // shipping_options: [
+          //   { shipping_rate: "shr_1Oc5aDFJwOikE4dcmUmPmDkp" },
+          //   { shipping_rate: "shr_1Oc4z5FJwOikE4dciXDG0n4L" },
+          // ],
           mode: "payment",
           success_url: `${process.env.FRONTEND_URL}/payment?success=true`,
           cancel_url: `${process.env.FRONTEND_URL}/payment?canceled=true`,
