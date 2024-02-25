@@ -210,7 +210,7 @@ export default function ProductEditor({
       const data = {
         products: [product.id],
       };
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/cart`, {
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
