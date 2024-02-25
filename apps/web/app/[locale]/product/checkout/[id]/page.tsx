@@ -39,7 +39,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
   const [totalPrice, setTotalPrice] = useState(0);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [productincart, setproductincart] = useState();
+  const [productincart, setproductincart] = useState([]);
   const [isDelete,setIsDelete]=useState(false)
 
   const products = useSelector(
@@ -61,7 +61,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
     { data: productfromserver, refetch: refetchProduct },
 
     { data: patchTypes },
-    { data: productincarts },
+
   ] = useQueries({
     queries: [
       {
@@ -72,19 +72,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         queryKey: ["patch_types"],
         queryFn: () => getPatchTypes(),
       },
-      {
-        queryKey: ["productincarts"],
-        queryFn: () => fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      })
-        .then((result) => {
-          console.log("res4444444ult0,", result);
-
-          return result.json();
-        }),
-      },
+     
     ],
   });
 
