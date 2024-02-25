@@ -1,26 +1,19 @@
 /** @format */
 
 "use client";
-import {
-  clearPersistedProducts,
-  loadPersistedProducts,
-} from "@app/store/slices/persistedProducts";
+import { loadPersistedProducts } from "@app/store/slices/persistedProducts";
 import { getPatchTypes } from "@app/actions/patch-type";
 import { getProductinDB } from "@app/actions/product";
-import Button from "@app/components/Button";
-import { FaArrowLeft } from "react-icons/fa6";
+
 import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
 import { useTranslations } from "next-intl";
-import { httpClient } from "@app/lib/axios";
+
 import { useQueries } from "@tanstack/react-query";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import { map, timer } from "rxjs";
-import { getUnixTime } from "date-fns";
 import { SelectItem } from "@app/components/Select";
 import DaCucireImage from "@app/assets/images/backing/1.png";
 import TermoadesivaImage from "@app/assets/images/backing/2.png";
@@ -41,12 +34,12 @@ const backingItems: SelectItem[] = [
   { id: "velcro_b", image: VelcroBImage.src },
   { id: "velcro_a_b", image: VelcroABImage.src },
 ];
-let toastShowed = false;
 
 export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
   const [totalPrice, setTotalPrice] = useState(0);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [productincart, setproductincart] = useState();
 
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
@@ -67,6 +60,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
     { data: productfromserver, refetch: refetchProduct },
 
     { data: patchTypes },
+    { data: productincarts },
   ] = useQueries({
     queries: [
       {
@@ -76,6 +70,19 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
       {
         queryKey: ["patch_types"],
         queryFn: () => getPatchTypes(),
+      },
+      {
+        queryKey: ["productincarts"],
+        queryFn: () => fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+        .then((result) => {
+          console.log("res4444444ult0,", result);
+
+          return result.json();
+        }),
       },
     ],
   });
@@ -87,32 +94,59 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   useEffect(() => {
     setTotalPrice(0);
     if (productfromserver) {
-  
-        productfromserver.map((product: any) => {
-          if (product.isReadyForPayment) {
-            setTotalPrice((prevstate) => prevstate + product.price);
-          }
-          
-        });
-      
+      productfromserver.map((product: any) => {
+        if (product.isReadyForPayment) {
+          setTotalPrice((prevstate) => prevstate + product.price);
+        }
+      });
+
       console.log("total price", totalPrice);
     }
   }, [productfromserver]);
 
+  useEffect(() => {
+    if (jwt) {
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+        .then((result) => {
+          console.log("res4444444ult0,", result);
+
+          return result.json();
+        })
+        .then((res) => {
+          console.log("res 444444add to cart", res);
+          setproductincart(res.products);
+        });
+    }
+  }, [jwt]);
+
   // Conditions
-  if (!productfromserver || !patchTypes) return <Loading />;
+  if (!productfromserver || !patchTypes || !productincart) return <Loading />;
   return (
     <div className='w-full'>
       <form className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
         <div className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
-          {productfromserver.map((product: any) => {
-            return (
-              <ProductContaner
-                key={product.id}
-                patchTypes={patchTypes}
-                product={product}></ProductContaner>
-            );
-          })}
+          {productfromserver &&
+            productfromserver.map((product: any) => {
+              return (
+                <ProductContaner
+                  key={product.id}
+                  patchTypes={patchTypes}
+                  product={product}></ProductContaner>
+              );
+            })}
+          {productfromserver &&
+            productincart.map((product: any) => {
+              return (
+                <ProductContaner
+                  key={product.id}
+                  patchTypes={patchTypes}
+                  product={product}></ProductContaner>
+              );
+            })}
           {isEmpty && <h2 className=' text-center'>EMPTY</h2>}
         </div>
         <div className='w-full min-w-[220px]   h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col lg:flex-row items-center justify-center gap-10'>
@@ -165,32 +199,47 @@ const ProductContaner = ({ product, patchTypes }: any) => {
   const allProduct = useSelector(
     (state: RootState) => state.persistedProducts.products
   );
-
+  const jwt = useJwt();
   const onDeleteProduct = () => {
-    const filterProduct = allProduct.map((item) => {
-      if (item?.id !== product.id) {
-        return item;
-      }
-    });
+    if (jwt) {
+      console.log("mow");
 
-    if (filterProduct.length !== 0)
-      localStorage.setItem(
-        "created_products",
-        JSON.stringify([...filterProduct])
-      );
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          products: [product.id],
+        }),
+      })
+        .then((result) => {
+          console.log("res4444444ult0,", result);
 
-    const productsFromLocalStorage = localStorage.getItem("created_products");
-    if (productsFromLocalStorage)
-      dispatch(loadPersistedProducts(JSON.parse(productsFromLocalStorage)));
+          return result.json();
+        })
+        .then((res) => {
+          console.log("res 444444add to cart", res);
+          
+        });
+    } else {
+      const filterProduct = allProduct.map((item) => {
+        if (item?.id !== product.id) {
+          return item;
+        }
+      });
 
-    // useEffect(() => {
+      if (filterProduct.length !== 0)
+        localStorage.setItem(
+          "created_products",
+          JSON.stringify([...filterProduct])
+        );
 
-    //   if (products.length !== 0)
-    //     localStorage.setItem("created_products", JSON.stringify([...products]));
-    // }, [products]);
-    // useEffect(() => {
-
-    // }, []);
+      const productsFromLocalStorage = localStorage.getItem("created_products");
+      if (productsFromLocalStorage)
+        dispatch(loadPersistedProducts(JSON.parse(productsFromLocalStorage)));
+    }
   };
   return (
     <div className='w-full h-full flex bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>

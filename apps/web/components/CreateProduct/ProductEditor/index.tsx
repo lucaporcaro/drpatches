@@ -77,7 +77,7 @@ export default function ProductEditor({
     note,
     font,
   } = product;
-  console.log("image:", image);
+
   const [updatedPrice, setUpdatedPrice] = useState(price);
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
   const [pricePerOne, setPricePerOne] = useState<string>("0");
@@ -113,7 +113,7 @@ export default function ProductEditor({
 
   // Hooks
   const jwt = useJwt();
-  console.log("jwt:", jwt);
+
   const router = useRouter();
   const a = useTranslations("components.fillInformation");
   const t = useTranslations("components.product_editor");
@@ -222,7 +222,7 @@ export default function ProductEditor({
           return res.json();
         })
         .then((res) => {
-          console.log(res);
+      
           router.push(`/product/checkout/${product.id}`);
         });
     } else {

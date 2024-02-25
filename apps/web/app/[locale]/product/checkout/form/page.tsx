@@ -99,12 +99,12 @@ export default function Form() {
           }),
         })
           .then((result) => {
-            console.log("ddddd", typeof result);
+          
 
             return result.json();
           })
           .then((result) => {
-            console.log(result);
+         
 
             formData.append("jwt", res.token);
             const cc = fetch(`/product/checkout/qwer/payment`, {
@@ -117,7 +117,7 @@ export default function Form() {
               .then((ress) => {
                 router.push(ress);
               });
-            console.log("ccccccccccccccccc", cc);
+          
           });
       });
   };
@@ -172,12 +172,12 @@ export default function Form() {
           }),
         })
           .then((result) => {
-            console.log("ddddd", typeof result);
+        
 
             return result.json();
           })
           .then((result) => {
-            console.log(result);
+         
 
             formData.append("jwt", res.token);
             const cc = fetch(`/product/checkout/qwer/payment`, {
@@ -190,7 +190,7 @@ export default function Form() {
               .then((ress) => {
                 router.push(ress);
               });
-            console.log("ccccccccccccccccc", cc);
+           
           });
       });
 
@@ -254,12 +254,12 @@ export default function Form() {
           }),
         })
           .then((result) => {
-            console.log("ddddd", typeof result);
+         
 
             return result.json();
           })
           .then((result) => {
-            console.log(result);
+         
 
             formData.append("jwt", res.token);
             const cc = fetch(`/product/checkout/qwer/payment`, {
@@ -270,11 +270,11 @@ export default function Form() {
                 return ressss.json();
               })
               .then((ress) => {
-                console.log("redirecy");
+            
                 
                 router.push(ress);
               });
-            console.log("ccccccccccccccccc", cc);
+        
           });
       });
 
