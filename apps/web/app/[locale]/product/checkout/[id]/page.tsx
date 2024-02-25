@@ -40,6 +40,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [isEmpty, setIsEmpty] = useState(false);
   const [productincart, setproductincart] = useState();
+  const [isDelete,setIsDelete]=useState(false)
 
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
@@ -121,7 +122,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           setproductincart(res.products);
         });
     }
-  }, [jwt]);
+  }, [jwt,isDelete]);
 const submitform=()=>{
   if (jwt) {
     formData.append("jwt",jwt);
@@ -163,6 +164,7 @@ const submitform=()=>{
               return (
                 <ProductContaner
                   key={product.id}
+                  setIsDelete={setIsDelete}
                   patchTypes={patchTypes}
                   product={product}></ProductContaner>
               );
@@ -194,7 +196,7 @@ const submitform=()=>{
   );
 }
 
-const ProductContaner = ({ product, patchTypes }: any) => {
+const ProductContaner = ({ product, patchTypes,setIsDelete }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   // Memos
@@ -241,7 +243,7 @@ const ProductContaner = ({ product, patchTypes }: any) => {
         })
         .then((res) => {
           console.log("res 444444add to cart", res);
-          
+          setIsDelete((prevestate:any)=>!prevestate)
         });
     } else {
       const filterProduct = allProduct.map((item) => {
