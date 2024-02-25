@@ -108,6 +108,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         .then((res) => {
           console.log("res 444444add to cart", res);
           setproductincart(res.products);
+          setTotalPrice(res.totalPrice)
         });
     }
   }, [jwt,isDelete]);
@@ -163,7 +164,9 @@ const submitform=()=>{
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`total price`}
-              value={"€" + `${totalPrice} `}
+              value={"€" + `${parseFloat(
+                ((totalPrice as number) * 2).toFixed(2)
+              )} `}
             />
           </div>
           <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
