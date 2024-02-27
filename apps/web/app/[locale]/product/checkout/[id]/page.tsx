@@ -165,7 +165,7 @@ const submitform=()=>{
             <ShoppingItem
               label={`total price`}
               value={"€" + `${parseFloat(
-                ((totalPrice as number) * 2).toFixed(2)
+                ((totalPrice as number)).toFixed(2)
               )} `}
             />
           </div>

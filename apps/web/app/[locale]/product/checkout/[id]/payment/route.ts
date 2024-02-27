@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
                 },
                 currency: "eur",
                 unit_amount: parseFloat(
-                  ((product.totalPrice as number) * 2).toFixed(2)
+                  ((product.totalPrice as number) *100).toFixed(2)
                 ),
               },
               quantity: 1,
