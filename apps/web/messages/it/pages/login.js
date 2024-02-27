@@ -8,4 +8,7 @@ export default {
     fiscal_code: 'Codice fiscale',
     vat: 'Partita IVA',
     billing_address: 'Indirizzo di fatturazione'
+    ,country:"Paese"
+    ,city:"città"
+    ,address:"indirizzo"
 };
