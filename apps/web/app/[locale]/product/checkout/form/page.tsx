@@ -5,7 +5,7 @@
 import { getProductinDB } from "@app/actions/product";
 
 import { useQueries } from "@tanstack/react-query";
-
+import { useTranslations } from "next-intl";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import { RootState } from "@app/store";
 
 export default function Form() {
+  const tr = useTranslations("pages.shared");
+  const t = useTranslations("pages.login");
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
@@ -292,14 +294,14 @@ export default function Form() {
       {form === "register" && (
         <div className='w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-6 lg:px-12'>
           <div className='w-11/12 mx-auto h-max max-w-3xl bg-black border-primary-1 border-2 py-10 px-8 rounded-xl text-white flex flex-col items-center justify-center gap-10'>
-            <h2 className='font-bold text-2xl lg:text-3xl'> PYMENT FORM</h2>
+            <h2 className='font-bold text-2xl lg:text-3xl'> {tr("register")}</h2>
             <form action='' className=' w-full'>
               <div className='w-full h-max flex flex-col gap-6 bg-primary-1 p-6 rounded-md'>
                 <div className='flex flex-col  w-full items-start justify-center gap-3'>
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='firstName'>
-                    firstName
+                    {t("first_name")}
                   </label>
                   <input
                     className=' w-full   text-black p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
@@ -313,7 +315,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='lastName'>
-                    lastName
+                    {t("last_name")}
                   </label>
                   <input
                     className=' w-full   text-black p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
@@ -327,7 +329,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='email'>
-                    email
+                    {t("email")}
                   </label>
                   <input
                     className=' w-full   text-black p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
@@ -341,7 +343,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='phone'>
-                    phone
+                    {tr("telephone")}
                   </label>
                   <input
                     className=' w-full   text-black p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
@@ -355,7 +357,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='country'>
-                    country
+                   {t("country")} 
                   </label>
                   <input
                     className=' w-full  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl text-black '
@@ -369,7 +371,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='city'>
-                    city
+                  {t("city")}  
                   </label>
                   <input
                     className=' w-full  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl text-black '
@@ -383,7 +385,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='address'>
-                    address
+                   {t("address")} 
                   </label>
                   <input
                     className=' w-full  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl text-black '
@@ -397,7 +399,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='fiscal'>
-                    fiscal
+                    {t("fiscal_code")}
                   </label>
                   <input
                     className=' w-full  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl text-black '
@@ -411,7 +413,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='password'>
-                    password
+                    {t("password")}
                   </label>
                   <input
                     className=' w-full  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl text-black '
@@ -424,10 +426,10 @@ export default function Form() {
                 <p
                   onClick={registerWithErrors}
                   className='bg-black  mx-auto p-4 w-full  flex items-center justify-center rounded-xl font-semibold text-base text-white'>
-                  PAYMENT{" "}
+                 {tr("register")}
                 </p>
                 <div className="w-max mx-auto font-semibold underline text-black">
-            <button onClick={() => setForm("login")}>have account</button>
+            <button onClick={() => setForm("login")}>{tr("have_accont")}</button>
           </div>
               </div>
             </form>
@@ -438,14 +440,14 @@ export default function Form() {
       {form === "login" && (
         <div className='w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-6 lg:px-12'>
           <div className='w-11/12 mx-auto h-max max-w-3xl bg-black border-primary-1 border-2 py-10 px-8 rounded-xl text-white flex flex-col items-center justify-center gap-10'>
-            <h2 className='font-bold text-2xl lg:text-3xl'>LOGIN</h2>
+            <h2 className='font-bold text-2xl lg:text-3xl'>{t(`login`)}</h2>
             <form action='' className=' w-full'>
               <div className='w-full h-max flex flex-col gap-6 bg-primary-1 p-6 rounded-md'>
                 <div className='flex flex-col  w-full items-start justify-center gap-3'>
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='email'>
-                    email
+                    {t(`email`)}
                   </label>
                   <input
                     className=' w-full   text-black p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl'
@@ -459,7 +461,7 @@ export default function Form() {
                   <label
                     className='font-semibold text-black md:text-xl'
                     htmlFor='password'>
-                    password
+                    {t(`password`)}
                   </label>
                   <input
                     className=' w-full  p-3 outline-none bg-white flex items-end justify-start px-3 rounded-xl text-black '
@@ -472,10 +474,10 @@ export default function Form() {
                 <p
                   onClick={loginWithErrors}
                   className='bg-black  mx-auto p-4 w-full  flex items-center justify-center rounded-xl font-semibold text-base text-white'>
-                  PAYMENT{" "}
+                  {t(`login`)}{" "}
                 </p>
                 <div className="w-max mx-auto font-semibold underline text-black">
-            <button onClick={() => setForm("register")}>need account</button>
+            <button onClick={() => setForm("register")}>{t(`need_account`)}</button>
           </div>
               </div>
             </form>

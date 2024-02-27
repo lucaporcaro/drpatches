@@ -8,4 +8,7 @@ export default {
     fiscal_code: 'Налоговый кодекс',
     vat: 'НДС',
     billing_address: 'Адрес для выставления счетов'
+    ,country:"страна"
+    ,city:"город"
+    ,address:"адрес"
 };

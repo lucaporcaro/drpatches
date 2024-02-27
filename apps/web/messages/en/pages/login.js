@@ -7,6 +7,9 @@ export default {
     last_name: 'Last name',
     fiscal_code: 'Fiscal code',
     vat: 'VAT',
-    billing_address: 'Billing address',
+    billing_address: 'Billing address'
+    ,country:"country"
+    ,city:"city"
+    ,address:"address"
   
 };

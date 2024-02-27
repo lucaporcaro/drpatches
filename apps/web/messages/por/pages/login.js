@@ -8,4 +8,7 @@ export default {
     fiscal_code: 'NIF',
     vat: 'NIF',
     billing_address: 'Endereço de faturação'
+    ,country:"país"
+    ,city:"cidade"
+    ,address:"endereço"
 };

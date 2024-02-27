@@ -8,4 +8,7 @@ export default {
     fiscal_code: 'Code fiscal',
     vat: 'TVA',
     billing_address: 'Adresse de facturation'
+    ,country:"pays"
+    ,city:"ville"
+    ,address:"adresse"
 };
