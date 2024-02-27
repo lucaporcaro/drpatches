@@ -164,9 +164,9 @@ const submitform=()=>{
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
               label={`total price`}
-              value={"€" + `${parseFloat(
-                ((totalPrice as number) * 2).toFixed(2)
-              )} `}
+              value={"€" + `${
+                ((totalPrice as number)).toFixed(2)
+              } `}
             />
           </div>
           <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
