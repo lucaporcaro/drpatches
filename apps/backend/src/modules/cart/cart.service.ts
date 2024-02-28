@@ -65,7 +65,7 @@ export class CartService {
           cart.products.add(product);
       }
       cart.totalPrice = cart.products
-        .map((product) => Number(product.price) * product.quantity)
+        .map((product) => Number(product.price) /** product.quantity*/)
         .reduce((a, b) => a + b, 0);
       await this.cartRepo.persistAndFlush([cart]);
     }
@@ -82,7 +82,7 @@ export class CartService {
     const cart = await this.getCart(user);
     cart.products.remove((p) => removeFromCartDto.products.includes(p.id));
     cart.totalPrice = cart.products
-        .map((product) => Number(product.price) * product.quantity)
+        .map((product) => Number(product.price) /** product.quantity*/)
         .reduce((a, b) => a + b, 0);
     await this.cartRepo.persistAndFlush([cart]);
     return { products: cart.products, totalPrice: cart.totalPrice };

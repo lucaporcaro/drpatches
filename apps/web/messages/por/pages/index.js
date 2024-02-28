@@ -7,5 +7,5 @@ export default {
   faq: require("./faq").default,  info: require("./info").default,
   shared: require("./shared").default,
   login: require("./login").default,
-  backing_type: require("./backing_type").default,
+  backing_type: require("./backing_type").default,  payment: require("./payment").default,
 };

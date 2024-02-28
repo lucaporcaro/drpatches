@@ -40,7 +40,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [isEmpty, setIsEmpty] = useState(false);
   const [productincart, setproductincart] = useState([]);
-  const [isDelete,setIsDelete]=useState(false)
+  const [isDelete, setIsDelete] = useState(false);
 
   const products = useSelector(
     (state: RootState) => state.persistedProducts.products
@@ -61,7 +61,6 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
     { data: productfromserver, refetch: refetchProduct },
 
     { data: patchTypes },
-
   ] = useQueries({
     queries: [
       {
@@ -72,7 +71,6 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         queryKey: ["patch_types"],
         queryFn: () => getPatchTypes(),
       },
-     
     ],
   });
 
@@ -108,37 +106,36 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
         .then((res) => {
           console.log("res 444444add to cart", res);
           setproductincart(res.products);
-          setTotalPrice(res.totalPrice)
+          setTotalPrice(res.totalPrice);
         });
     }
-  }, [jwt,isDelete]);
-const submitform=()=>{
-  if (jwt) {
-    formData.append("jwt",jwt);
-             fetch(`/product/checkout/qwer/payment`, {
-              method: "post",
-              body: formData,
-            })
-              .then((ressss) => {
-                return ressss.json();
-              })
-              .then((ress) => {
-            
-                
-                router.push(ress);
-              });
-  }else{
-    localStorage.setItem("REDIRECT_AFTER_LOGIN"," /product/checkout/01HPWFPT68S4XXCDCP1NC2BP")
-     router.push("/login")
-  }
- 
-
-}
+  }, [jwt, isDelete]);
+  const submitform = () => {
+    if (jwt) {
+      formData.append("jwt", jwt);
+      fetch(`/product/checkout/qwer/payment`, {
+        method: "post",
+        body: formData,
+      })
+        .then((ressss) => {
+          return ressss.json();
+        })
+        .then((ress) => {
+          router.push(ress);
+        });
+    } else {
+      localStorage.setItem(
+        "REDIRECT_AFTER_LOGIN",
+        " /product/checkout/01HPWFPT68S4XXCDCP1NC2BP"
+      );
+      router.push("/login");
+    }
+  };
   // Conditions
   if (!productfromserver || !patchTypes || !productincart) return <Loading />;
   return (
     <div className='w-full'>
-      <form className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
+      <form className='w-full flex-auto p-6 flex flex-col lg:flex-row  items-start justify-center gap-6'>
         <div className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
           {productfromserver &&
             productfromserver.map((product: any) => {
@@ -161,25 +158,27 @@ const submitform=()=>{
             })}
           {isEmpty && <h2 className=' text-center'>EMPTY</h2>}
         </div>
-        <div className='w-full min-w-[220px]   h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col lg:flex-row items-center justify-center gap-10'>
+        <div className=' hidden lg:block w-[750px] h-4'></div>
+
+        <div
+          className='w-full min-w-[220px] lg:w-[550px] p-28  lg:fixed   lg:right-3 top-[175px]  h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4
+                        flex flex-col  items-center justify-center gap-10'>
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
-              label={`total price`}
-              value={"€" + `${
-                ((totalPrice as number)).toFixed(2)
-              } `}
+              label={`Total Price`}
+              value={"€" + `${(totalPrice as number).toFixed(2)} `}
             />
           </div>
-          <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
+          <div className='flex flex-col lg:flex-row justify-center items-center gap-3 mb-7 '>
             <div
               onClick={submitform}
               className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'>
-              payment
+              Payment
             </div>
             <div
               onClick={() => router.push("/product/create")}
               className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'>
-              new item
+              Add New Item
             </div>
           </div>
         </div>
@@ -188,7 +187,7 @@ const submitform=()=>{
   );
 }
 
-const ProductContaner = ({ product, patchTypes,setIsDelete }: any) => {
+const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   // Memos
@@ -222,7 +221,7 @@ const ProductContaner = ({ product, patchTypes,setIsDelete }: any) => {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${jwt}`,
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           products: [product.id],
@@ -235,7 +234,7 @@ const ProductContaner = ({ product, patchTypes,setIsDelete }: any) => {
         })
         .then((res) => {
           console.log("res 444444add to cart", res);
-          setIsDelete((prevestate:any)=>!prevestate)
+          setIsDelete((prevestate: any) => !prevestate);
         });
     } else {
       const filterProduct = allProduct.map((item) => {
@@ -368,13 +367,13 @@ const ProductContaner = ({ product, patchTypes,setIsDelete }: any) => {
               }}
               className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
               title='Reset'>
-              edit
+              Edit
             </div>
             <div
               onClick={onDeleteProduct}
               className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
               title='Reset'>
-              delete
+              Delete
             </div>
           </div>
         </div>

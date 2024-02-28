@@ -10,5 +10,5 @@ export default {
   shared: require("./shared").default,
   info: require("./info").default,
   login: require("./login").default,
-  backing_type: require("./backing_type").default,
+  backing_type: require("./backing_type").default,  payment: require("./payment").default,
 };
