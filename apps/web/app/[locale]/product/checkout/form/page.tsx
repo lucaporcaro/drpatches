@@ -130,12 +130,12 @@ export default function Form() {
   async function registerWithErrors() {
 
 
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/guest-user`, {
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/authentication/register`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({
+      body: JSON.stringify({  
         email,
         fiscal: `${country} - ${city} - ${address} - ${fiscal}`,
         password,
@@ -207,7 +207,7 @@ export default function Form() {
   }
 
   //==============================================================//
-  const loginformdata = new FormData();
+
 
   async function loginWithErrors() {
    

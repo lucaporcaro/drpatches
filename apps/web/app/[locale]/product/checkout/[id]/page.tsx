@@ -128,7 +128,8 @@ const submitform=()=>{
                 router.push(ress);
               });
   }else{
-     router.push("/product/checkout/form")
+    localStorage.setItem("REDIRECT_AFTER_LOGIN"," /product/checkout/01HPWFPT68S4XXCDCP1NC2BP")
+     router.push("/login")
   }
  
 
