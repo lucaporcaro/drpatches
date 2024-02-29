@@ -1,0 +1,25 @@
+export default {
+    payment: 'paiement',
+    empty: 'vide',
+    Total_Price: 'Prix ​​total',
+    Add_New_Item: 'Ajoute un nouvel objet',
+    Product: 'Produit',
+    Patch_with: 'Patch avec',
+    Backing_Type: 'Type de support',
+    Patch_Type: 'Type de correctif',
+    Selected_Image: 'Image sélectionnée',
+    Text: 'Texte',
+    Border_Color: 'Couleur de la bordure',
+    Background_Color: 'Couleur de l\'arrière plan',
+    Text_Color: 'Couleur du texte',
+    preview: 'Aperçu',
+    Width: 'Largeur',
+    Height: 'Hauteur',
+    Note: 'Note',
+    Items: 'Articles',
+    Per_item: 'Par objet',
+    Edit: 'Modifier',
+    Delete: 'Supprimer',
+
+ 
+}

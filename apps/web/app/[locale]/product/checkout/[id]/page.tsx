@@ -38,7 +38,7 @@ const backingItems: SelectItem[] = [
 export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
   const [totalPrice, setTotalPrice] = useState(0);
-  const [isEmpty, setIsEmpty] = useState(false);
+
   const [productincart, setproductincart] = useState([]);
   const [isDelete, setIsDelete] = useState(false);
 
@@ -55,7 +55,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   const jwt = useJwt();
   const router = useRouter();
   const t = useTranslations("components.fillInformation");
-
+  const tr = useTranslations("pages.checkout");
   // Queries
   const [
     { data: productfromserver, refetch: refetchProduct },
@@ -92,6 +92,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   }, [productfromserver]);
   const formData = new FormData();
   useEffect(() => {
+    setIsDelete(false)
     if (jwt) {
       fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
         headers: {
@@ -133,52 +134,59 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   };
   // Conditions
   if (!productfromserver || !patchTypes || !productincart) return <Loading />;
+  console.log("tt", productfromserver.length);
+  console.log("ttyy", productincart.length);
+
   return (
     <div className='w-full'>
       <form className='w-full flex-auto p-6 flex flex-col lg:flex-row  items-start justify-center gap-6'>
         <div className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
-          {productfromserver &&
-            productfromserver.map((product: any) => {
-              return (
-                <ProductContaner
-                  key={product.id}
-                  patchTypes={patchTypes}
-                  product={product}></ProductContaner>
-              );
-            })}
-          {productfromserver &&
-            productincart.map((product: any) => {
-              return (
-                <ProductContaner
-                  key={product.id}
-                  setIsDelete={setIsDelete}
-                  patchTypes={patchTypes}
-                  product={product}></ProductContaner>
-              );
-            })}
-          {isEmpty && <h2 className=' text-center'>EMPTY</h2>}
+          {!jwt && productfromserver.map((product: any) => {
+            return (
+              <ProductContaner
+                key={product.id}
+                patchTypes={patchTypes}
+                setIsDelete={setIsDelete}
+                product={product}></ProductContaner>
+            );
+          })}
+       
+          {productincart.map((product: any) => {
+            return (
+              <ProductContaner
+                key={product.id}
+                setIsDelete={setIsDelete}
+                patchTypes={patchTypes}
+                product={product}></ProductContaner>
+            );
+          })}
+          {productfromserver.length === 0 && productincart.length === 0 && (
+            <h2 className=' text-5xl text-center w-full my-32 py-32'>
+              {tr("empty")}
+            </h2>
+          )}
         </div>
         <div className=' hidden lg:block w-[750px] h-4'></div>
 
         <div
-          className='w-full min-w-[220px] lg:w-[550px] p-28  lg:fixed   lg:right-3 top-[175px]  h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4
+          className='w-full min-w-[220px] lg:w-[350px] p-28  lg:fixed   lg:right-3 top-[375px]  h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4
                         flex flex-col  items-center justify-center gap-10'>
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
-              label={`Total Price`}
+              label={tr("Total_Price")}
               value={"€" + `${(totalPrice as number).toFixed(2)} `}
             />
           </div>
-          <div className='flex flex-col lg:flex-row justify-center items-center gap-3 mb-7 '>
+          <div className='flex flex-col  justify-center items-center gap-3 mb-7 '>
             <div
               onClick={submitform}
-              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'>
-              Payment
+              className='px-6 w-full text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-2 rounded-lg'>
+              {tr("payment")}
             </div>
             <div
               onClick={() => router.push("/product/create")}
-              className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'>
-              Add New Item
+              className='px-6 w-full text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-2 rounded-lg'>
+              {tr("Add_New_Item")}
             </div>
           </div>
         </div>
@@ -189,6 +197,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
 
 const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
   const router = useRouter();
+  const tr = useTranslations("pages.checkout");
   const dispatch = useDispatch();
   // Memos
   const perItemPrice = useMemo(() => {
@@ -234,7 +243,8 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
         })
         .then((res) => {
           console.log("res 444444add to cart", res);
-          setIsDelete((prevestate: any) => !prevestate);
+          console.log("type    ", typeof(setIsDelete));
+          setIsDelete(true);
         });
     } else {
       const filterProduct = allProduct.map((item) => {
@@ -258,19 +268,19 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
     <div className='w-full h-full flex bg-black border-primary-1 border-[1px] rounded-lg text-primary-1  flex-col items-center gap-10'>
       <div className='w-full  flex items-center justify-start px-6 py-5 border-b-primary-1 border-b-[1px]'>
         <p className='font-bold flex flex-wrap break-all  text-2xl'>
-          Product #{product.id}
+          {tr("Product")} #{product.id}
         </p>
       </div>
       <div className='w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-6 py-5 lg:py-10 gap-20'>
         <div className='w-full h-max flex flex-col items-start justify-center gap-10 font-bold'>
           <span>
-            Patch with
+            {tr("Patch_with")}
             {product.type
               ? " " + product.type[0]?.toUpperCase() + product.type?.slice(1)
               : ""}
           </span>
           <div className='w-full flex flex-row items-center justify-between gap-4'>
-            <span>Backing Type: </span>
+            <span>{tr("Backing_Type")}: </span>
             <div className='bg-primary-1 w-max p-2 rounded-lg'>
               <Image
                 src={backingType?.image || ""}
@@ -282,7 +292,7 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
           </div>
           {selectedPatchType && selectedPatchType.image ? (
             <div className='w-full flex flex-row items-center justify-between gap-4'>
-              <span>Patch Type: </span>
+              <span>{tr("Patch_Type")}: </span>
               <div className='bg-primary-1 w-max p-2 rounded-lg'>
                 <Image
                   src={selectedPatchType?.image || ""}
@@ -296,7 +306,7 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
         </div>
         {product.type === "image" ? (
           <div className='flex flex-col items-start justify-start gap-4'>
-            <span className='font-bold'>Selected Image</span>
+            <span className='font-bold'>{tr("Selected_Image")}</span>
             <Image
               src={process.env.NEXT_PUBLIC_BASE_URL + (product.image as any)}
               width={240}
@@ -308,21 +318,21 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
         ) : (
           <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
             <ShoppingItem
-              label='Text'
+              label={tr("Text")}
               value={product.text ?? "No text provided"}
             />
             <ShoppingItem
-              label='Border Color'
+              label={tr("Border_Color")}
               isColor
               value={product.borderColor}
             />
             <ShoppingItem
-              label='Background Color'
+              label={tr("Background_Color")}
               isColor
               value={product.backgroundColor}
             />
             <ShoppingItem
-              label='Text Color'
+              label={tr("Text_Color")}
               isColor
               value={product.textColor}
             />
@@ -331,7 +341,7 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
                 fontFamily: product.font ? "CustomFont" : undefined,
               }}
               className='w-full flex flex-row data-[color=true]:items-start items-center gap-6 justify-between text-primary-1'>
-              <span className='font-bold'>preview</span>
+              <span className='font-bold'>{tr("preview")}</span>
 
               <span
                 style={{
@@ -346,19 +356,25 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
           </div>
         )}
         <div className='w-full h-max flex flex-col items-start justify-center gap-10'>
-          <ShoppingItem label='Width' value={`${product.patchWidth} cm`} />
-          <ShoppingItem label='Height' value={`${product.patchHeight} cm`} />
+          <ShoppingItem
+            label={tr("Width")}
+            value={`${product.patchWidth} cm`}
+          />
+          <ShoppingItem
+            label={tr("Height")}
+            value={`${product.patchHeight} cm`}
+          />
         </div>
         <div className='  w-full'>
-          <ShoppingItem label='Note' value={`${product.note}`} />
+          <ShoppingItem label={tr("Note")} value={`${product.note}`} />
         </div>{" "}
         <div className='w-full min-w-[220px]  lg:w-max h-max bg-black border-[1px] border-primary-1 rounded-lg py-6 px-4 flex flex-col lg:flex-row items-center justify-center gap-10'>
           <div className='w-full h-max flex flex-col items-center justify-center gap-4'>
             <ShoppingItem
-              label={`${product.quantity} Items`}
+              label={`${product.quantity} ${tr("Items")}`}
               value={"€" + product.price.toString()}
             />
-            <ShoppingItem label={`Per item`} value={"€" + perItemPrice} />
+            <ShoppingItem label={tr("Per_item")} value={"€" + perItemPrice} />
           </div>
           <div className='flex flex-col justify-center items-center gap-3 mb-7 '>
             <div
@@ -367,13 +383,13 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
               }}
               className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
               title='Reset'>
-              Edit
+              {tr("Edit")}
             </div>
             <div
               onClick={onDeleteProduct}
               className='px-6 w-48 text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-6 rounded-lg'
               title='Reset'>
-              Delete
+              {tr("Delete")}
             </div>
           </div>
         </div>

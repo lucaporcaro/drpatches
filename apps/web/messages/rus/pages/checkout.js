@@ -1,0 +1,25 @@
+/** @format */
+
+export default {
+  payment: "оплата",
+  empty: "пустой",
+  Total_Price: "Итоговая цена",
+  Add_New_Item: "Добавить новый элемент",
+  Product: "Продукт",
+  Patch_with: "Патч с",
+  Backing_Type: "Тип поддержки",
+  Patch_Type: "Тип патча",
+  Selected_Image: "Выбранное изображение",
+  Text: "Текст",
+  Border_Color: "Цвет границы",
+  Background_Color: "Фоновый цвет",
+  Text_Color: "Цвет текста",
+  preview: "Предварительный просмотр",
+  Width: "Ширина",
+  Height: "Высота",
+  Note: "Примечание",
+  Items: "Предметы",
+  Per_item: "За единицу",
+  Edit: "Редактировать",
+  Delete: "Удалить",
+};

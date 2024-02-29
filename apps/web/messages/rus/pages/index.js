@@ -12,4 +12,5 @@ export default {
   info: require("./info").default,
   backing_type: require("./backing_type").default,
   payment: require("./payment").default,
+  checkout: require("./checkout").default,
 };

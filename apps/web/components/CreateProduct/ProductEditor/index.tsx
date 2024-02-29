@@ -204,7 +204,9 @@ export default function ProductEditor({
     { id: "velcro_b", image: VelcroBImage.src, name: b("velcro_B") },
     { id: "velcro_a_b", image: VelcroABImage.src, name: b("velcro_A_B") },
   ];
-
+  const productsStore = useSelector(
+    (state: RootState) => state.persistedProducts.products
+  );
   const addtocart = () => {
     if ((text && font && patchType) || image) {
       const data = {
@@ -219,12 +221,18 @@ export default function ProductEditor({
         body: JSON.stringify(data),
       })
         .then((res) => {
+          console.log("ad to cart  reeees ",res);
+          if(res.status === 201){
+           router.push(`/product/checkout/${product.id}`);
+          }else{
+           
+           
+            localStorage.setItem("created_products", JSON.stringify([...productsStore]));
+            router.push(`/product/checkout/${product.id}`);
+          }
           return res.json();
         })
-        .then((res) => {
-      
-          router.push(`/product/checkout/${product.id}`);
-        });
+       
     } else {
       toast.error(a("title"));
     }

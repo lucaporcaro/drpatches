@@ -30,11 +30,11 @@ export default function ProductProvider({ children }: any) {
   // Hooks
   const dispatch = useDispatch();
 
-  // Effects
-  useEffect(() => {
-    if (products.length !== 0)
-      localStorage.setItem("created_products", JSON.stringify([...products]));
-  }, [products]);
+  //Effects
+  // useEffect(() => {
+  //   if (products.length !== 0)
+  //     localStorage.setItem("created_products", JSON.stringify([...products]));
+  // }, [products]);
   useEffect(() => {
     const productsFromLocalStorage = localStorage.getItem("created_products");
     if (productsFromLocalStorage)
@@ -111,7 +111,7 @@ export default function ProductProvider({ children }: any) {
 
       })
     }
-  }, [jwt, products]);
+  }, [jwt]);
 
   return children;
 }

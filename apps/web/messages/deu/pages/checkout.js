@@ -1,0 +1,25 @@
+export default {
+    payment: 'Zahlung',
+    empty: 'leer',
+    Total_Price: 'Gesamtpreis',
+    Add_New_Item: 'Füge neuen Gegenstand hinzu',
+    Product: 'Produkt',
+    Patch_with: 'Patch mit',
+    Backing_Type: 'Unterstützungstyp',
+    Patch_Type: 'Patch-Typ',
+    Selected_Image: 'Ausgewähltes Bild',
+    Text: 'Text',
+    Border_Color: 'Randfarbe',
+    Background_Color: 'Hintergrundfarbe',
+    Text_Color: 'Textfarbe',
+    preview: 'Vorschau',
+    Width: 'Breite',
+    Height: 'Höhe',
+    Note: 'Notiz',
+    Items: 'Artikel',
+    Per_item: 'Pro Stück',
+    Edit: 'Bearbeiten',
+    Delete: 'Löschen',
+
+ 
+}
