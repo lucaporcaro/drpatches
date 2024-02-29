@@ -14,4 +14,4 @@ export default {
 
   level4:
     "Capovolgi il tessuto e pressa l'area dietro la Patch esercitando una pressione per almeno 30 secondi. Lascia raffreddare l'area per altri cinque minuti.",
-    Color:"Color table"};
+    Color:"Tabella colori"};
