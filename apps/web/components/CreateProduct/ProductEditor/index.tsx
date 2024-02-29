@@ -251,7 +251,7 @@ export default function ProductEditor({
           <FaArrowLeft size={20} className='text-white' />
         </button>
         <h2 className='font-bold text-2xl md:text-4xl text-black'>
-          {type ? tr("create_text_patch") : tr("create_image_patch")}
+          {type !== "image" ? tr("create_text_patch") : tr("create_image_patch")}
         </h2>
         <div className='hidden lg:block w-[68px] h-[44px]' />
       </div>
