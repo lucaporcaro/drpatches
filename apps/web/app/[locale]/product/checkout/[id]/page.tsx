@@ -38,7 +38,7 @@ const backingItems: SelectItem[] = [
 export default function CheckoutProductPage({ params: { id } }: Props) {
   // Hooks
   const [totalPrice, setTotalPrice] = useState(0);
-  const [isEmpty, setIsEmpty] = useState(false);
+
   const [productincart, setproductincart] = useState([]);
   const [isDelete, setIsDelete] = useState(false);
 
@@ -92,6 +92,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   }, [productfromserver]);
   const formData = new FormData();
   useEffect(() => {
+    setIsDelete(false)
     if (jwt) {
       fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
         headers: {
@@ -133,33 +134,37 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   };
   // Conditions
   if (!productfromserver || !patchTypes || !productincart) return <Loading />;
-  console.log("tt",productfromserver.length);
-  console.log("ttyy",productincart.length);
-  
+  console.log("tt", productfromserver.length);
+  console.log("ttyy", productincart.length);
+
   return (
     <div className='w-full'>
       <form className='w-full flex-auto p-6 flex flex-col lg:flex-row  items-start justify-center gap-6'>
         <div className='w-full flex-auto p-6 flex flex-col  items-start justify-center gap-6'>
-          { 
-            productfromserver.map((product: any) => {
-              return (
-                <ProductContaner
-                  key={product.id}
-                  patchTypes={patchTypes}
-                  product={product}></ProductContaner>
-              );
-            })}
-          { 
-            productincart.map((product: any) => {
-              return (
-                <ProductContaner
-                  key={product.id}
-                  setIsDelete={setIsDelete}
-                  patchTypes={patchTypes}
-                  product={product}></ProductContaner>
-              );
-            })}
-          {productfromserver.length ===0 && productincart.length === 0  && <h2 className=' text-5xl text-center w-full my-32 py-32'>{tr("empty")}</h2>}
+          {!jwt && productfromserver.map((product: any) => {
+            return (
+              <ProductContaner
+                key={product.id}
+                patchTypes={patchTypes}
+                setIsDelete={setIsDelete}
+                product={product}></ProductContaner>
+            );
+          })}
+       
+          {productincart.map((product: any) => {
+            return (
+              <ProductContaner
+                key={product.id}
+                setIsDelete={setIsDelete}
+                patchTypes={patchTypes}
+                product={product}></ProductContaner>
+            );
+          })}
+          {productfromserver.length === 0 && productincart.length === 0 && (
+            <h2 className=' text-5xl text-center w-full my-32 py-32'>
+              {tr("empty")}
+            </h2>
+          )}
         </div>
         <div className=' hidden lg:block w-[750px] h-4'></div>
 
@@ -238,7 +243,8 @@ const ProductContaner = ({ product, patchTypes, setIsDelete }: any) => {
         })
         .then((res) => {
           console.log("res 444444add to cart", res);
-          setIsDelete((prevestate: any) => !prevestate);
+          console.log("type    ", typeof(setIsDelete));
+          setIsDelete(true);
         });
     } else {
       const filterProduct = allProduct.map((item) => {
