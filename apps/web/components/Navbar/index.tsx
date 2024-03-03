@@ -18,7 +18,7 @@ const Navbar = () => {
     const [open, setOpen] = useState<boolean>(false);
     const t = useTranslations("components.navbar");
     const user: any = useSelector((state: RootState) => state.user);
-    console.log("Navbar  user:", user)
+
 
 
 
