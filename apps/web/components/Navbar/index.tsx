@@ -18,10 +18,12 @@ const Navbar = () => {
     const [open, setOpen] = useState<boolean>(false);
     const t = useTranslations("components.navbar");
     const user: any = useSelector((state: RootState) => state.user);
+    console.log("Navbar  user:", user)
+
 
 
     // Memo
-    const isLoggedIn = useMemo(() => Object.keys(user).length !== 0, [user]);
+    const isLoggedIn = Object.keys(user).length !== 0
 
     // Refs
     const ref = useRef<HTMLDivElement | null>(null);
