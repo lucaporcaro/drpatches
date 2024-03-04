@@ -20,8 +20,10 @@ const Navbar = () => {
     const user: any = useSelector((state: RootState) => state.user);
 
 
+
+
     // Memo
-    const isLoggedIn = useMemo(() => Object.keys(user).length !== 0, [user]);
+    const isLoggedIn = Object.keys(user).length !== 0
 
     // Refs
     const ref = useRef<HTMLDivElement | null>(null);
