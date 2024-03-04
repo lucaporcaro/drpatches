@@ -79,9 +79,8 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
   }, [productsIdList]);
 
   useEffect(() => {
-    setTotalPrice(0);
-
     if (productfromserver && !jwt) {
+      setTotalPrice(0);
       productfromserver.map((product: any) => {
         if (product.isReadyForPayment) {
           console.log(product.price);
