@@ -58,7 +58,7 @@ export default function LoginPage() {
   }
   return (
     <div className="w-full h-full flex-auto flex items-center justify-center my-10 lg:my-20 px-6 lg:px-12">
-      <div className="w-11/12 mx-auto h-max max-w-3xl bg-black border-primary-1 border-2 py-10 px-8 rounded-xl text-white flex flex-col items-center justify-center gap-10">
+      <div className="w-12/12 mx-auto lg:w-11/12 h-max max-w-3xl bg-black border-primary-1 border-2 py-10 px-8 rounded-xl text-white flex flex-col items-center justify-center gap-10">
         <h2 className="font-bold text-2xl lg:text-3xl">{t(`login`)}</h2>
         <form
           action={loginWithErrors}

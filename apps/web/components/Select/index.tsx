@@ -58,9 +58,13 @@ export default function Select({
         <div
           className='w-screen h-screen fixed z-20 top-0 left-0 bg-black/30 flex items-center justify-center'
           onClick={toggle}>
-          <div
-            className={`w-fit  ${label === "Selected Type" && "overflow-y-scroll "}h-screen m-16   py-10 px-4
-           bg-black rounded-lg flex flex-wrap gap-5 border-primary-1 border-2`}>
+
+
+
+          <div className={`w-fit   overflow-y-scroll h-screen m-16   py-10 px-4 bg-black rounded-lg flex flex-wrap gap-5 border-primary-1 border-2`}>
+
+
+
             {items.map((item, i) => (
               <div
                 key={`select_item_${item.id}_${i}`}
