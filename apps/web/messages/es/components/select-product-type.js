@@ -1,7 +1,7 @@
 export default {
   title: "Cómo deseas crear tu parche?",
   description:
-    "Puedes elegir entre los dos métodos que ofrecemos a los clientes para crear un parche personalizado:",
+    "Puedes elegir entre los dos métodos que ofrecemos a los clientes para crear un parche personalizado",
   types: {
     image: {
       title: "Imagen",

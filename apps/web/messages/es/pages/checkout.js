@@ -19,7 +19,7 @@ export default {
     Items: 'Elementos',
     Per_item: 'Por artículo',
     Edit: 'Editar',
-    Delete: 'Borrar',
+    Delete: 'Borrar',  delet_all_product:"Eliminar todo el producto"
 
  
 }

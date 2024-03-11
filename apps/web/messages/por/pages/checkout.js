@@ -22,4 +22,5 @@ export default {
   Per_item: "Por item",
   Edit: "Editar",
   Delete: "Excluir",
+  delet_all_product: "Excluir todos os produtos",
 };

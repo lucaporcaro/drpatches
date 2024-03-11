@@ -1,10 +1,13 @@
 /** @format */
 
 "use client";
-import { loadPersistedProducts } from "@app/store/slices/persistedProducts";
+
 import { getPatchTypes } from "@app/actions/patch-type";
 import { getProductinDB } from "@app/actions/product";
-
+import {
+  clearPersistedProducts,
+  loadPersistedProducts,
+} from "@app/store/slices/persistedProducts";
 import Loading from "@app/components/Loading";
 import useJwt from "@app/hooks/useJwt";
 import { useTranslations } from "next-intl";
@@ -73,6 +76,7 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
       },
     ],
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     refetchProduct();
@@ -137,6 +141,36 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
       router.push("/login");
     }
   };
+
+  const deleteAllProduct = () => {
+    if (jwt) {
+      const productsIdListForDelet = productincart.map((product: any) => {
+        if (product?.id !== undefined) {
+          return product.id;
+        }
+      });
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}v1/cart`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          products: productsIdListForDelet,
+        }),
+      })
+        .then((ressss) => {
+          return ressss.json();
+        })
+        .then((ress) => {
+          setIsDelete(true);
+        });
+    }
+
+    dispatch(clearPersistedProducts());
+  };
+  console.log(productincart);
+  console.log(productfromserver);
   // Conditions
   if (!productfromserver || !patchTypes || !productincart) return <Loading />;
 
@@ -147,23 +181,33 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
           {!jwt &&
             productfromserver.map((product: any) => {
               return (
-                <ProductContaner
-                  key={product.id}
-                  patchTypes={patchTypes}
-                  setIsDelete={setIsDelete}
-                  product={product}></ProductContaner>
+                <>
+                  <p>loooooo</p>
+                  <ProductContaner
+                    key={product.id}
+                    patchTypes={patchTypes}
+                    setIsDelete={setIsDelete}
+                    product={product}></ProductContaner>
+
+                  <p>joooooo</p>
+                </>
               );
             })}
 
-          {productincart.map((product: any) => {
-            return (
-              <ProductContaner
-                key={product.id}
-                setIsDelete={setIsDelete}
-                patchTypes={patchTypes}
-                product={product}></ProductContaner>
-            );
-          })}
+          {jwt &&
+            productincart.map((product: any) => {
+              return (
+                <>
+                  <p>kooooooooo</p>{" "}
+                  <ProductContaner
+                    key={product.id}
+                    setIsDelete={setIsDelete}
+                    patchTypes={patchTypes}
+                    product={product}></ProductContaner>
+                  <p>fooooooo</p>
+                </>
+              );
+            })}
           {productfromserver.length === 0 && productincart.length === 0 && (
             <h2 className=' text-5xl text-center w-full my-32 py-32'>
               {tr("empty")}
@@ -186,6 +230,11 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
               onClick={submitform}
               className='px-6 w-full text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-2 rounded-lg'>
               {tr("payment")}
+            </div>
+            <div
+              onClick={deleteAllProduct}
+              className='px-6 w-full text-center py-3 mt-5 cursor-pointer bg-primary-1 text-black mx-2 rounded-lg'>
+              {tr("delet_all_product")}
             </div>
             <div
               onClick={() => router.push("/product/create")}

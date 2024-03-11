@@ -1,7 +1,7 @@
 export default {
   title: "Como deseja criar seu patch?",
   description:
-    "Você pode escolher entre os dois métodos que oferecemos aos clientes para criar um patch personalizado:",
+    "Você pode escolher entre os dois métodos que oferecemos aos clientes para criar um patch personalizado",
   types: {
     image: {
       title: "Imagem",
