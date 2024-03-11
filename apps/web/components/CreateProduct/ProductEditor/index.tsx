@@ -219,20 +219,19 @@ export default function ProductEditor({
           Authorization: `Bearer ${jwt}`,
         },
         body: JSON.stringify(data),
-      })
-        .then((res) => {
-          console.log("ad to cart  reeees ",res);
-          if(res.status === 201){
-           router.push(`/product/checkout/${product.id}`);
-          }else{
-           
-           
-            localStorage.setItem("created_products", JSON.stringify([...productsStore]));
-            router.push(`/product/checkout/${product.id}`);
-          }
-          return res.json();
-        })
-       
+      }).then((res) => {
+        console.log("ad to cart  reeees ", res);
+        if (res.status === 201) {
+          router.push(`/product/checkout/${product.id}`);
+        } else {
+          localStorage.setItem(
+            "created_products",
+            JSON.stringify([...productsStore])
+          );
+          router.push(`/product/checkout/${product.id}`);
+        }
+        return res.json();
+      });
     } else {
       toast.error(a("title"));
     }
@@ -260,10 +259,7 @@ export default function ProductEditor({
         <div className='bg-primary-1 text-black relative flex flex-col items-start justify-start gap-6 py-10 px-6 rounded-xl lg:col-span-2'>
           {type === "image" ? (
             <>
-              <span className='font-bold text-3xl'>
-              {tr("image")}
-               {" "}
-              </span>
+              <span className='font-bold text-3xl'>{tr("image")} </span>
 
               <div
                 onClick={() => imageRef.current?.click()}
@@ -408,13 +404,14 @@ export default function ProductEditor({
             min={1}
             max={50000}
           />
-          <div className='w-max flex flex-col items-end justify-start gap-6 mb-0 mt-2'>
+          <div className=' w-full flex flex-col items-end justify-start gap-6 mb-0 mt-2'>
             <Select
               value={backingType}
               items={backingItems}
               label={t("select_backing_type")}
               onChange={update("backingType")}
             />
+            <p className=" font-normal text-lg md:text-xl lg:text-2xl ">{t("more_info")}</p>
           </div>
           <div className='w-full h-max md:col-span-2'>
             <Input

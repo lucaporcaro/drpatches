@@ -18,4 +18,5 @@ export default {
   image_patch: "图像补丁",
   text_patch: "自定义文本补丁",
   preview: "预览",
+  more_info:""
 };

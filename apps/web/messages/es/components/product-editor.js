@@ -18,4 +18,5 @@ export default {
   image_patch: "Parche de imagen",
   text_patch: "Parche de texto personalizado",
   preview: "Avance",
+  more_info:"En la sección 'Información útil', puedes encontrar más detalles sobre el 'Respaldo Seleccionado'."
 };

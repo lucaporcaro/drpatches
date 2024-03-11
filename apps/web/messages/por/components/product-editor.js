@@ -20,4 +20,5 @@ export default {
   image_patch: "Patch de imagem",
   text_patch: "Patch de texto personalizado",
   preview: "Visualização",
+  more_info:"Na seção 'Informações úteis', você pode encontrar mais detalhes sobre o 'Suporte Selecionado'."
 };
