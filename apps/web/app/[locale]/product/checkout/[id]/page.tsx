@@ -182,14 +182,14 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
             productfromserver.map((product: any) => {
               return (
                 <>
-                  <p>loooooo</p>
+              
                   <ProductContaner
                     key={product.id}
                     patchTypes={patchTypes}
                     setIsDelete={setIsDelete}
                     product={product}></ProductContaner>
 
-                  <p>joooooo</p>
+          
                 </>
               );
             })}
@@ -198,13 +198,13 @@ export default function CheckoutProductPage({ params: { id } }: Props) {
             productincart.map((product: any) => {
               return (
                 <>
-                  <p>kooooooooo</p>{" "}
+             
                   <ProductContaner
                     key={product.id}
                     setIsDelete={setIsDelete}
                     patchTypes={patchTypes}
                     product={product}></ProductContaner>
-                  <p>fooooooo</p>
+             
                 </>
               );
             })}
