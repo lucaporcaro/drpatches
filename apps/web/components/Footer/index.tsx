@@ -27,32 +27,42 @@ export default function Footer() {
             href='/privacy'
             className='px-2 link'
             style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect'>{t("privacy")}</span>
+            <span className='hoverEffect uppercase'>{t("privacy")}</span>
           </Link>
           <Link
             href='/condizioni_generali'
             className='px-2 link'
             style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect'> {t("condizioni_generali")}</span>
+            <span className='hoverEffect uppercase'>
+              {" "}
+              {t("condizioni_generali")}
+            </span>
           </Link>
           <Link
             href='/spedizioni'
             className='px-2 link'
             style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect'>{t("spedizioni")}</span>
+            <span className='hoverEffect uppercase'>{t("spedizioni")}</span>
           </Link>
           <Link
             href='/contact'
             className='px-2 link'
             style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect'>{t("contact")}</span>
+            <span className='hoverEffect uppercase'>{t("contact")}</span>
           </Link>
 
           <Link
             href='/info'
             className='px-2 link'
             style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect'>{tr("info")}</span>
+            <span className='hoverEffect uppercase'>{tr("info")}</span>
+          </Link>
+
+          <Link
+            href='/latestworks'
+            className='px-2 link'
+            style={{ color: "#FFCC10", cursor: "pointer" }}>
+            <span className='hoverEffect uppercase'>{tr("latest_works")}</span>
           </Link>
         </div>
       </div>
