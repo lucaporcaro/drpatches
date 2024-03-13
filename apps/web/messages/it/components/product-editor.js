@@ -3,7 +3,7 @@ export default {
     patching: "Opzioni di Patch",
     text: "Testo",
     colors: "Colori",
-    image:"image"
+    image:"immagine"
   },
   border: "Bordo",
   text: "Testo",
@@ -18,4 +18,5 @@ export default {
   image_patch: "Patch di immagine",
   text_patch: "Patch di testo personalizzato",
   preview: "Anteprima",
+  more_info:"Nella sezione 'Informazioni utili', puoi trovare ulteriori dettagli sul 'Supporto Selezionato'."
 };

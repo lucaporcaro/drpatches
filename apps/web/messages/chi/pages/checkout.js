@@ -20,6 +20,6 @@ export default {
     Per_item: '每件',
     Edit: '编辑',
     Delete: '删除',
-
+    delet_all_product:"删除所有产品"
  
 }

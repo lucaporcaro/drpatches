@@ -1,7 +1,7 @@
 export default {
   title: "Comment souhaitez-vous créer votre écusson ?",
   description:
-    "Vous pouvez choisir entre les deux méthodes que nous proposons aux clients pour créer un écusson personnalisé :",
+    "Vous pouvez choisir entre les deux méthodes que nous proposons aux clients pour créer un écusson personnalisé ",
   types: {
     image: {
       title: "Image",

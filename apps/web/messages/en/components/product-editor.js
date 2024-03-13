@@ -18,4 +18,5 @@ export default {
   image_patch: "Image Patch",
   text_patch: "Custom Text Patch",
   preview: "Preview",
+  more_info:"In the 'Useful Information' section, you can find further details about the 'Selected Backing'."
 };

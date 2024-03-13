@@ -18,4 +18,5 @@ export default {
   image_patch: "Bildpatch",
   text_patch: "Benutzerdefinierter Text-Patch",
   preview: "Vorschau",
+  more_info:"In der Rubrik 'Nützliche Informationen' findest du weitere Details zum 'Ausgewählte Unterlage'."
 };

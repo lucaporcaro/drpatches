@@ -20,6 +20,7 @@ export default {
     Per_item: 'لكل بند',
     Edit: 'يحرر',
     Delete: 'يمسح',
+    delet_all_product:"حذف كافة المنتجات"
 
  
 }

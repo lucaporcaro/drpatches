@@ -20,6 +20,6 @@ export default {
     Per_item: 'Pro Stück',
     Edit: 'Bearbeiten',
     Delete: 'Löschen',
-
+    delet_all_product:"Alle Produkte löschen"
  
 }

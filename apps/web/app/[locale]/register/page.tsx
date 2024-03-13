@@ -84,7 +84,7 @@ export default function RegisterPage() {
             required
           />
           <PhoneInput required name='phone' label={tr("telephone")} />
-          <Input label={t("fiscal_code")} name='fiscal' type='text' required />
+          {/* <Input label={t("fiscal_code")} name='fiscal' type='text' required /> */}
           <Button>{tr("register")}</Button>
           <div className='w-max mx-auto font-semibold underline text-black'>
             <Link href='/login'>{tr("have_accont")}</Link>

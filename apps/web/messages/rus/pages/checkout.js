@@ -22,4 +22,5 @@ export default {
   Per_item: "За единицу",
   Edit: "Редактировать",
   Delete: "Удалить",
+  delet_all_product: "Удалить все продукты",
 };
