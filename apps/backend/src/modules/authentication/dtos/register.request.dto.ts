@@ -36,6 +36,6 @@ export default class RegisterRequestDto {
 
   @ApiProperty({})
   // @IsVatOrFiscalCode({ message: 'Fiscal Code is not valid' })
-  @IsNotEmpty()
+  // @IsNotEmpty()
   fiscal: string;
 }
