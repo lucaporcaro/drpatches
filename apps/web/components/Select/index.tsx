@@ -61,7 +61,7 @@ export default function Select({
 
 
 
-          <div className={`w-fit   overflow-y-scroll h-screen m-16   py-10 px-4 bg-black rounded-lg flex flex-wrap gap-5 border-primary-1 border-2`}>
+          <div className={`w-fit   overflow-y-scroll max-h-96 m-16   py-10 px-4 bg-black rounded-lg flex flex-wrap gap-5 border-primary-1 border-2`}>
 
 
 
