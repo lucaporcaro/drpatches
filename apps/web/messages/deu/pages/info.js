@@ -1,7 +1,6 @@
 /** @format */
 
 export default {
-    
   titel: "  Anleitung für Thermokleber",
 
   level1:
@@ -15,5 +14,14 @@ export default {
 
   level4:
     "Drehen Sie den Stoff um und bügeln Sie den Bereich hinter dem Fleck, wobei Sie mindestens 30 Sekunden lang Druck ausüben. Lassen Sie den Bereich weitere fünf Minuten abkühlen.",
-    Color:"Farbtabelle"
+  Color: "Farbtabelle",
+  SELECTED_SUPPORT: "AUSGEWÄHLTER SUPPORT",
+  TO_SEW: "ZU NÄHEN",
+  TO_SEW_text:
+    "Dies ist die traditionelle Methode zum Anbringen eines Patches. Es erfordert die Verwendung einer Nadel und eines Fadens, um den Aufnäher direkt auf den Stoff des Kleidungsstücks oder Artikels zu nähen. Es kann ein mühsamer Prozess sein, aber er sorgt für eine starke Haftung und eine längere Haltbarkeit. Dies wird in der Regel dann empfohlen, wenn nur eine kleine Menge an Pflastern aufzutragen ist oder wenn Sie eine extrem lange Haltbarkeit der Anwendung erreichen möchten.",
+  THERMO_ADHESIVE: "Thermoklebstoff",
+  THERMO_ADHESIVE_text:
+    "Einige Flicken sind möglicherweise mit einem Thermokleber oder einer aufbügelbaren Rückseite ausgestattet. Das bedeutet, dass der Kleber beim Erhitzen aktiviert wird und mit dem Stoff verschmilzt, wodurch das Pflaster dauerhaft befestigt wird. Diese Methode ist schneller als das Nähen, erfordert jedoch zum Auftragen die Verwendung einer Heißpresse oder eines Bügeleisens. Es ist ein empfehlenswerter Abschluss, wenn Sie schnell eine große Anzahl von Pflastern auftragen und so ein schnelles und langanhaltendes Ergebnis erzielen möchten.",
+  VELCRO: "KLETTVERSCHLUSS",
+  VELCRO_text: "Klettverschluss ist ein besonderer Klettverschluss, der sich durch zwei ebene Flächen auszeichnet",
 };

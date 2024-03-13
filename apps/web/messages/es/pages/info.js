@@ -14,5 +14,14 @@ export default {
 
   level4:
     "Dé la vuelta a la tela y planche la zona situada detrás del parche, aplicando presión durante al menos 30 segundos. Deje enfriar la zona otros cinco minutos.",
-    Color:"Tabla de colores"
-  };
+  Color: "Tabla de colores",
+  SELECTED_SUPPORT: "SOPORTE SELECCIONADO",
+  TO_SEW: "COSER",
+  TO_SEW_text:
+    "Este es el método tradicional de aplicar cualquier parche. Requiere el uso de aguja e hilo para coser el parche directamente sobre la tela de la prenda o artículo. Puede ser un proceso laborioso, pero asegura una fuerte adherencia y mayor durabilidad en el tiempo. Suele recomendarse cuando se trata de una pequeña cantidad de parches a aplicar o en los casos en los que se desea obtener una resistencia de la aplicación extremadamente duradera.",
+  THERMO_ADHESIVE: "TERMOADHESIVO",
+  THERMO_ADHESIVE_text:
+    "Algunos parches pueden venir con un adhesivo térmico o un respaldo termoadhesivo. Esto significa que cuando se calienta, el adhesivo se activa y se fusiona con la tela, fijando el parche de forma permanente. Este método es más rápido que coser, pero requiere el uso de una prensa térmica o plancha para su aplicación. Es un toque final recomendado cuando se desea aplicar rápidamente una gran cantidad de parches, obteniendo un resultado rápido y duradero.",
+  VELCRO: "VELCRO",
+  VELCRO_text: "El velcro es un cierre de velcro particular caracterizado por dos superficies planas",
+};

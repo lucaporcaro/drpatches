@@ -33,6 +33,22 @@ export default function Info() {
         <p className='  text-3xl  w-8/12'>{t(`level4`)}</p>
       </div>
       <DownloadPDF></DownloadPDF>
+
+      <div className='flex flex-col  gap-5  w-full md:w-8/12  mb-12'>
+        <h1 className='  text-3xl  w-8/12'>{t(`SELECTED_SUPPORT`)}</h1>
+
+        <h2 className='  text-3xl  w-8/12'>{t(`TO_SEW`)}</h2>
+
+        <p className='  text-3xl  w-8/12'>{t(`TO_SEW_text`)}</p>
+
+        <h2 className='  text-3xl  w-8/12'>{t(`THERMO_ADHESIVE`)}</h2>
+
+        <p className='  text-3xl  w-8/12'>{t(`THERMO_ADHESIVE_text`)}</p>
+
+        <h2 className='  text-3xl  w-8/12'>{t(`VELCRO`)}</h2>
+
+        <p className='  text-3xl  w-8/12'>{t(`VELCRO_text`)}</p>
+      </div>
     </div>
   );
 }
