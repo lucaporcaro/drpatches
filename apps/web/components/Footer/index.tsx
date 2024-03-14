@@ -58,12 +58,7 @@ export default function Footer() {
             <span className='hoverEffect uppercase'>{tr("info")}</span>
           </Link>
 
-          <Link
-            href='/latestworks'
-            className='px-2 link'
-            style={{ color: "#FFCC10", cursor: "pointer" }}>
-            <span className='hoverEffect uppercase'>{tr("latest_works")}</span>
-          </Link>
+          
         </div>
       </div>
 
