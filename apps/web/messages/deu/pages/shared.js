@@ -12,7 +12,7 @@ export default {
   email: "E-Mail",
   image: "Bild",
   info: "NÜTZLICHE INFORMATIONEN",
-  latest_works: "neueste Werke",
+  latest_works: "Neueste Werke",
   register: "Registrieren",
   have_accont: "Hast du schon eins?",
 };

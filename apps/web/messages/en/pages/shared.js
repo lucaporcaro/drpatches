@@ -11,5 +11,5 @@ export default {
     image: 'Image',
     info: 'USEFUL INFORMATION'
     ,register:"Register",
-    latest_works: "latest works", have_accont:"Already have one?"
+    latest_works: "Latest works", have_accont:"Already have one?"
 }
