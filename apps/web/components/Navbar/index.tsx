@@ -66,7 +66,7 @@ const Navbar = () => {
         </div>
         <div className='w-max h-max flex items-center justify-center gap-6 text-white font-bold text-base'>
           <Link href='/latestworks' className='link'>
-            <span className='hoverEffect uppercase'>{tr("latest_works")}</span>
+            <span className='hoverEffect'>{tr("latest_works")}</span>
           </Link>{" "}
           <Link href='/about' className='link'>
             <span className='hoverEffect'> {t("links.aboutus")}</span>
