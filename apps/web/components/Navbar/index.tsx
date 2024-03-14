@@ -29,7 +29,7 @@ const Navbar = () => {
 
   // Memo
   const isLoggedIn = Object.keys(user).length !== 0;
-
+  const tr = useTranslations("pages.shared");
   // Refs
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -65,6 +65,9 @@ const Navbar = () => {
           </a>
         </div>
         <div className='w-max h-max flex items-center justify-center gap-6 text-white font-bold text-base'>
+          <Link href='/latestworks' className='link'>
+            <span className='hoverEffect uppercase'>{tr("latest_works")}</span>
+          </Link>{" "}
           <Link href='/about' className='link'>
             <span className='hoverEffect'> {t("links.aboutus")}</span>
           </Link>
@@ -104,6 +107,7 @@ const Navbar = () => {
             src={Logo}
           />
         </Link>
+
         <div className='w-max h-max items-center justify-center gap-6 text-white font-bold text-base hidden md:flex'>
           <Link href='/product/create' className='link'>
             {/* <span className="hoverEffect"> {t("links.examples")}</span> */}
